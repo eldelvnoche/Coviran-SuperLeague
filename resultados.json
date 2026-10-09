@@ -7,6 +7,13 @@
       "visitante": "dm",
       "gl": 1,
       "gv": 2
+    },
+    {
+      "j": 1,
+      "local": "ej",
+      "visitante": "md",
+      "gl": 0,
+      "gv": 15
     }
   ]
 }
