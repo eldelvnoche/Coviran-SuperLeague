@@ -88,10 +88,27 @@ main{max-width:640px;margin:0 auto;padding:16px 12px 110px}
 .r1 .l{text-align:right}
 .r1 .s{text-align:center;color:var(--gold);font-weight:800;font-size:26px;font-family:"Barlow Condensed",sans-serif}
 .empty{padding:18px 14px;color:var(--mute)}
+/* players and posts */
+.pj{padding:16px 14px;border-bottom:1px solid var(--line)}.pj:last-child{border-bottom:0}
+.pjh{display:flex;align-items:center;gap:14px}
+.av{width:76px;height:76px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);flex:none;display:block;background:var(--panel2)}
+.avc{display:flex;align-items:center;justify-content:center}
+.pi{min-width:0;flex:1}
+.pnm{display:block;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:800;font-size:30px;line-height:1}
+.pi .tc{margin-top:6px}
+.rk{font-family:"Barlow Condensed",sans-serif;font-weight:800;font-size:22px;color:var(--gold);border:1px solid var(--gold);border-radius:999px;padding:2px 11px}
+.bio{margin:12px 0 0}.bio.no{color:var(--mute)}
+.sg{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;margin-top:14px;text-align:center}
+.pj .fm{justify-content:flex-start;margin-top:12px}
+.po{padding:16px 14px;border-bottom:1px solid var(--line)}.po:last-child{border-bottom:0}
+.po .mt{color:var(--gold);font-weight:600;font-size:14px}
+.po h3{margin:4px 0 8px;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:28px;line-height:1.05;font-weight:800}
+.po p{margin:0 0 10px}.po p:last-child{margin:0}
 /* nav */
 nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;background:var(--panel);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
 nav div{display:flex;width:100%;max-width:640px}
-nav button{flex:1;background:none;border:0;color:var(--mute);padding:9px 4px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:600;font-size:15px}
+nav button{flex:1;min-width:0;white-space:nowrap;background:none;border:0;color:var(--mute);padding:9px 2px 10px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-weight:600;font-size:13px;letter-spacing:-.2px}
+@media (max-width:420px){nav button{font-size:11.5px;letter-spacing:-.3px;gap:2px}}
 nav svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 nav button[aria-selected="true"]{color:var(--gold)}
 @media (min-width:480px){.hdr,.main{grid-template-columns:26px 1fr 30px 42px 44px}}
@@ -123,12 +140,17 @@ nav button[aria-selected="true"]{color:var(--gold)}
 <div class="card" id="rl"></div>
 <p class="hint" id="upd3"></p>
 </section>
+<section id="v4" hidden><div class="card" id="pl"></div></section>
+
+<section id="v5" hidden><div class="card" id="po"></div></section>
 </main>
 
 <nav><div role="tablist">
-<button role="tab" id="t1" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Clasificación</button>
+<button role="tab" id="t1" aria-selected="true"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Tabla</button>
 <button role="tab" id="t2" aria-selected="false"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/></svg>Calendario</button>
 <button role="tab" id="t3" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8l3 2-1 4h-4l-1-4z"/></svg>Resultados</button>
+<button role="tab" id="t4" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.4"/><path d="M16.5 14.2c2.6.2 4.5 2.2 4.5 4.8"/></svg>Jugadores</button>
+<button role="tab" id="t5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Crónicas</button>
 </div></nav>
 
 <script>
@@ -208,20 +230,42 @@ function renderAll(){
 var t=fecha?"Actualizado el "+fmt(fecha):"";
 ["upd","upd2","upd3"].forEach(function(i){$(i).textContent=t});
 for(var q=0;q<J.length;q++){if(!doneJ(q)){cur=q;break}}
-renderTable();renderChips();renderJ();renderRes()}
-var NAMES=["tabla","calendario","resultados"];
+renderTable();renderChips();renderJ();renderRes();renderPlayers();renderPosts()}
+var NAMES=["tabla","calendario","resultados","jugadores","cronicas"],NT=NAMES.length;
 function tab(n,keep){
-[1,2,3].forEach(function(i){$("v"+i).hidden=n!==i;$("t"+i).setAttribute("aria-selected",n===i)});
+for(var i=1;i<=NT;i++){$("v"+i).hidden=n!==i;$("t"+i).setAttribute("aria-selected",n===i)}
 if(!keep){try{history.replaceState(null,"","#"+NAMES[n-1])}catch(e){}window.scrollTo(0,0)}}
-[1,2,3].forEach(function(i){$("t"+i).addEventListener("click",function(){tab(i)})});
+for(var q2=1;q2<=NT;q2++){(function(i){$("t"+i).addEventListener("click",function(){tab(i)})})(q2)}
 var h0=NAMES.indexOf((location.hash||"").slice(1));
 if(h0>0)tab(h0+1,true);
+var PL={},PO=[];
+function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function okFoto(f){return typeof f==="string"&&/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/.test(f)}
+function renderPlayers(){
+var L=table();
+$("pl").innerHTML=L.map(function(r,i){
+var d=PL[r.id]||{};
+var av=okFoto(d.foto)?'<img class="av" alt="Foto de '+esc(T[r.id].p)+'" src="'+d.foto+'">':'<div class="av avc">'+logo(r.id)+'</div>';
+var ap=d.apodo?'<span class="tt">'+esc(d.apodo)+'</span>':'';
+var bio=d.bio?'<p class="bio">'+esc(d.bio).replace(/\n/g,"<br>")+'</p>':'<p class="bio no">Sin presentación todavía.</p>';
+var f=r.f.slice(-5).map(function(x){return '<i class="'+x+'"></i>'}).join("")||'<span class="tt">Sin partidos</span>';
+return '<article class="pj"><div class="pjh">'+av+'<div class="pi"><span class="pnm">'+esc(T[r.id].p)+'</span>'+ap+'<span class="tc">'+logo(r.id)+'<span class="nm">'+T[r.id].t+'</span></span></div><span class="rk">'+(i+1)+'º</span></div>'+bio+
+'<div class="sg"><div class="st"><b>'+r.pj+'</b><span>PJ</span></div><div class="st"><b>'+r.pg+'</b><span>G</span></div><div class="st"><b>'+r.pe+'</b><span>E</span></div><div class="st"><b>'+r.pp+'</b><span>P</span></div><div class="st"><b>'+r.gf+'</b><span title="Goles a favor">GF</span></div><div class="st"><b>'+r.gc+'</b><span title="Goles en contra">GC</span></div></div><div class="fm">'+f+'</div></article>'}).join("")}
+function renderPosts(){
+var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
+$("po").innerHTML=L.map(function(p){
+var meta=(p.jornada?"Jornada "+(+p.jornada):"")+(p.jornada&&p.fecha?", ":"")+(p.fecha?fmt(p.fecha):"");
+var body=String(p.texto||"").split(/\n{2,}/).map(function(x){return '<p>'+esc(x).replace(/\n/g,"<br>")+'</p>'}).join("");
+return '<article class="po"><div class="mt">'+esc(meta)+'</div><h3>'+esc(p.titulo)+'</h3>'+body+'</article>'}).join("")||'<div class="empty">Aún no hay crónicas.</div>'}
 renderAll();
-fetch("resultados.json?v="+Date.now()).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){
+function getJ(u){return fetch(u+"?v="+Date.now()).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
+getJ("resultados.json").then(function(d){
 fecha=d.actualizado||"";
 (d.resultados||[]).forEach(function(x){R[k(x.j-1,x.local,x.visitante)]=[+x.gl,+x.gv]});
 renderAll()}).catch(function(){
 var e=$("err");e.hidden=false;e.textContent="No se han podido cargar los resultados. Recarga la página en un momento."});
+getJ("jugadores.json").then(function(d){PL=d||{};renderPlayers()}).catch(function(){});
+getJ("cronicas.json").then(function(d){PO=(d&&d.cronicas)||[];renderPosts()}).catch(function(){});
 </script>
 </body>
 </html>
