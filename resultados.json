@@ -46,6 +46,20 @@
           "par": 1
         }
       }
+    },
+    {
+      "j": 1,
+      "local": "fd",
+      "visitante": "th",
+      "gl": 2,
+      "gv": 13
+    },
+    {
+      "j": 1,
+      "local": "hi",
+      "visitante": "zk",
+      "gl": 2,
+      "gv": 5
     }
   ],
   "mvp": {},
