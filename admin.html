@@ -118,8 +118,16 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 <script>
 var OWNER="eldelvnoche",REPO="Coviran-SuperLeague";
 var BASE="https://api.github.com/repos/"+OWNER+"/"+REPO+"/contents/";
-var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"}};
-var V1=["bd-dm,hs-rb,ej-md,fd-th|zk","zk-fd,th-ej,md-hs,rb-bd|dm","dm-rb,bd-md,hs-th,ej-zk|fd","fd-ej,zk-hs,th-bd,md-dm|rb","rb-md,dm-th,bd-zk,hs-fd|ej","ej-hs,fd-bd,zk-dm,th-rb|md","md-th,rb-zk,dm-fd,bd-ej|hs","hs-bd,ej-dm,fd-rb,zk-md|th","th-zk,md-fd,rb-ej,dm-hs|bd"];
+var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"},hi:{p:"Hicham",t:"España"}};
+var V1=["bd-dm,hs-rb,ej-md,fd-th,hi-zk|",
+"zk-fd,th-ej,md-hs,rb-bd,dm-hi|",
+"dm-rb,bd-md,hs-th,ej-zk,hi-fd|",
+"fd-ej,zk-hs,th-bd,md-dm,rb-hi|",
+"rb-md,dm-th,bd-zk,hs-fd,hi-ej|",
+"ej-hs,fd-bd,zk-dm,th-rb,md-hi|",
+"md-th,rb-zk,dm-fd,bd-ej,hi-hs|",
+"hs-bd,ej-dm,fd-rb,zk-md,th-hi|",
+"th-zk,md-fd,rb-ej,dm-hs,hi-bd|"];
 var J=[];
 function parse(s,f){var a=s.split("|");return{rest:a[1],ms:a[0].split(",").map(function(x){var p=x.split("-");return f?[p[1],p[0]]:[p[0],p[1]]})}}
 V1.forEach(function(s){J.push(parse(s,false))});V1.forEach(function(s){J.push(parse(s,true))});
@@ -161,7 +169,7 @@ $("jt").textContent="Jornada "+(cur+1);$("jv").textContent=cur<9?"· Primera vue
 var r=J[cur];
 $("jm").innerHTML=r.ms.map(function(m){var k=key(cur,m[0],m[1]),v=R[k]||["",""];
 return '<div class="m" data-k="'+k+'">'+side(m[0],"h")+'<input type="number" min="0" max="99" inputmode="numeric" value="'+v[0]+'" aria-label="Goles '+T[m[0]].t+'"><span class="d">-</span><input type="number" min="0" max="99" inputmode="numeric" value="'+v[1]+'" aria-label="Goles '+T[m[1]].t+'">'+side(m[1],"a")+'</div>'}).join("")+
-'<p class="mute">Descansa: '+T[r.rest].t+' ('+T[r.rest].p+')</p>';
+(r.rest?'<p class="mute">Descansa: '+T[r.rest].t+' ('+T[r.rest].p+')</p>':'');
 chips()}
 function loadR(){
 say("msg","Cargando...");
