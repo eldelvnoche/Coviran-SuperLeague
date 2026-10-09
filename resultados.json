@@ -6,7 +6,39 @@
       "local": "bd",
       "visitante": "dm",
       "gl": 1,
-      "gv": 2
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 55,
+          "tir": 12,
+          "tpu": 7,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 119,
+          "pac": 96,
+          "cen": 0,
+          "int": 23,
+          "ent": 9,
+          "par": 1
+        },
+        "v": {
+          "pos": 45,
+          "tir": 6,
+          "tpu": 4,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 92,
+          "pac": 57,
+          "cen": 0,
+          "int": 20,
+          "ent": 7,
+          "par": 5
+        }
+      }
     },
     {
       "j": 1,
