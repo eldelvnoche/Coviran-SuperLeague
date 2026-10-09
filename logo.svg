@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Superliga Covirán">
 <defs>
-<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5cf0ff"/><stop offset=".55" stop-color="#6aa6ff"/><stop offset="1" stop-color="#9a7bff"/></linearGradient>
-<linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101a38"/><stop offset="1" stop-color="#060914"/></linearGradient>
-<radialGradient id="r" cx=".5" cy=".38" r=".7"><stop offset="0" stop-color="#5cf0ff" stop-opacity=".28"/><stop offset="1" stop-color="#5cf0ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff0c2"/><stop offset=".5" stop-color="#f0be4d"/><stop offset="1" stop-color="#c2761a"/></linearGradient>
+<linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241a0a"/><stop offset="1" stop-color="#0b0905"/></linearGradient>
+<radialGradient id="r" cx=".5" cy=".38" r=".7"><stop offset="0" stop-color="#f0be4d" stop-opacity=".28"/><stop offset="1" stop-color="#f0be4d" stop-opacity="0"/></radialGradient>
 </defs>
 <polygon points="128,14 226,71 226,185 128,242 30,185 30,71" fill="url(#f)" stroke="url(#g)" stroke-width="8" stroke-linejoin="round"/>
 <polygon points="128,14 226,71 226,185 128,242 30,185 30,71" fill="url(#r)"/>
-<polygon points="128,36 207,82 207,174 128,220 49,174 49,82" fill="none" stroke="url(#g)" stroke-width="1.6" opacity=".4" stroke-linejoin="round"/>
+<polygon points="128,36 207,82 207,174 128,220 49,174 49,82" fill="none" stroke="url(#g)" stroke-width="1.6" opacity=".45" stroke-linejoin="round"/>
 <circle cx="128" cy="128" r="54" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round" stroke-dasharray="248 92" transform="rotate(42 128 128)"/>
 <circle cx="184" cy="128" r="10" fill="url(#g)"/>
-<path d="M128 100 L134 122 L156 128 L134 134 L128 156 L122 134 L100 128 L122 122 Z" fill="#eaf8ff"/>
+<path d="M128 100 L134 122 L156 128 L134 134 L128 156 L122 134 L100 128 L122 122 Z" fill="#fff6dc"/>
 </svg>

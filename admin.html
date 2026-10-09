@@ -6,10 +6,10 @@
 <meta name="robots" content="noindex">
 <title>Admin · Superliga Covirán</title>
 <style>
-:root{--bg:#04060f;--panel:#0f162b;--line:#26335a;--text:#eaf2ff;--mute:#8b97b3;--gold:#5cf0ff;--win:#3df2b0;--loss:#ff6b8a;--field:#0a1020;--on:#04101c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:light){:root{--bg:#eef2fb;--panel:#fff;--line:#cdd7ef;--text:#0c1430;--mute:#56627f;--gold:#0a7fa8;--win:#0d9467;--loss:#d6335a;--field:#f3f6fd;--on:#fff}}
+:root{--bg:#0d0b07;--panel:#17130b;--line:#3a2f17;--text:#fbf4e1;--mute:#b3a483;--gold:#f0be4d;--win:#4fd89a;--loss:#ff6b5e;--field:#110e08;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root{--bg:#faf5e6;--panel:#fffdf6;--line:#e3d5a8;--text:#2a2008;--mute:#7d6b3c;--gold:#a87408;--win:#12915c;--loss:#d33a3a;--field:#f4ecd4}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Space Grotesk","Inter",system-ui,sans-serif;font-size:16px;line-height:1.35}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-size:17px;line-height:1.35}
 main{max-width:640px;margin:0 auto;padding:18px 12px 40px}
 h1{margin:0;font-size:30px;line-height:1;font-weight:800}
 h1 small{display:block;color:var(--gold);font-size:17px;font-weight:600;margin-top:6px}
@@ -17,7 +17,7 @@ h1 small{display:block;color:var(--gold);font-size:17px;font-weight:600;margin-t
 input,textarea,select{font:inherit;font-size:17px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;min-width:0}
 textarea{min-height:130px;resize:vertical;font-family:system-ui,sans-serif;font-size:16px}
 label{display:block;margin:12px 0 4px;color:var(--mute);font-size:15px}
-button{font:inherit;font-weight:800;font-size:18px;background:var(--gold);color:var(--on);border:1px solid var(--gold);border-radius:10px;padding:11px 16px;cursor:pointer}
+button{font:inherit;font-weight:800;font-size:18px;background:var(--gold);color:#1a1300;border:1px solid var(--gold);border-radius:10px;padding:11px 16px;cursor:pointer}
 button.sec{background:transparent;color:var(--mute);border-color:var(--line);font-weight:600;font-size:16px;padding:7px 12px}
 button.del{background:transparent;color:var(--loss);border-color:var(--line);font-weight:600;font-size:16px;padding:7px 12px}
 button:disabled{opacity:.5;cursor:default}
@@ -26,10 +26,10 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tabs{display:flex;gap:6px;margin-top:14px}
 .tabs button{flex:1;background:var(--panel);color:var(--mute);border-color:var(--line);font-size:17px;padding:9px 6px}
-.tabs button[aria-selected="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
+.tabs button[aria-selected="true"]{background:var(--gold);color:#1a1300;border-color:var(--gold)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-top:14px}
 .chips button{flex:0 0 auto;min-width:44px;background:var(--panel);color:var(--text);border-color:var(--line);font-size:17px;padding:8px 10px;position:relative}
-.chips button[aria-pressed="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
+.chips button[aria-pressed="true"]{background:var(--gold);color:#1a1300;border-color:var(--gold)}
 .chips button.done::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--win)}
 .m{display:grid;grid-template-columns:1fr 50px 10px 50px 1fr;gap:6px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
 .m .h,.m .a{text-align:center}.m .h b,.m .a b{display:block}.m .h i,.m .a i{display:block;color:var(--mute);font-size:13px;font-style:normal;line-height:1.1}
@@ -46,7 +46,7 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 </head>
 <body>
 <main>
-<h1><img src="logo.svg" alt="" style="width:34px;height:34px;vertical-align:-8px;margin-right:8px">Admin<small>Superliga Covirán</small></h1>
+<h1><img src="logo.svg" alt="" style="width:36px;height:36px;vertical-align:-9px;margin-right:8px">Admin<small>Superliga Covirán</small></h1>
 
 <section id="lg" class="card" hidden>
 <p><b>Entrar</b></p>
