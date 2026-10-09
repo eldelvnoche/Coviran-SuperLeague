@@ -39,6 +39,14 @@
       "titulo": "El ASFAR de Rabat de adelanta a los españoles en un partido curioso",
       "texto": "Bárbaro !!!",
       "foto": "fotos/cronica-1791553801026.jpg?v=1791553803730"
+    },
+    {
+      "id": 1791558647953,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Animación de Personajes de los Jugadores",
+      "texto": "En la pagina web, empezaremos la implementación de animación de personajes para cada jugador, de esta manera crearemos contenido y escenas relacionadas a cada gran evento de nuestra grandiosa SuperLeague !!",
+      "foto": "fotos/cronica-1791558647953.jpg?v=1791558650475"
     }
   ]
 }
