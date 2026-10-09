@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Admin · Superliga Covirán</title>
+<style>
+:root{--bg:#0a1430;--panel:#101c40;--line:#233463;--text:#eef2ff;--mute:#8b9bc7;--gold:#f2c14e;--win:#3ddc97;--loss:#ff6b6b;--field:#0d1a3a;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root{--bg:#eef2fb;--panel:#fff;--line:#cfd8ee;--text:#0f1b3d;--mute:#5a6a96;--gold:#a87400;--win:#12945f;--loss:#d63c3c;--field:#f4f7ff}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-size:17px;line-height:1.35}
+main{max-width:640px;margin:0 auto;padding:18px 12px 40px}
+h1{margin:0;font-size:30px;line-height:1;font-weight:800}
+h1 small{display:block;color:var(--gold);font-size:17px;font-weight:600;margin-top:6px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;margin-top:14px;padding:14px}
+input{font:inherit;font-size:17px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;min-width:0}
+button{font:inherit;font-weight:800;font-size:18px;background:var(--gold);color:#1a1300;border:1px solid var(--gold);border-radius:10px;padding:11px 16px;cursor:pointer}
+button.sec{background:transparent;color:var(--mute);border-color:var(--line);font-weight:600;font-size:16px;padding:7px 12px}
+button:disabled{opacity:.5;cursor:default}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-top:14px}
+.chips button{flex:0 0 auto;min-width:44px;background:var(--panel);color:var(--text);border-color:var(--line);font-size:17px;padding:8px 10px;position:relative}
+.chips button[aria-pressed="true"]{background:var(--gold);color:#1a1300;border-color:var(--gold)}
+.chips button.done::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--win)}
+.m{display:grid;grid-template-columns:1fr 50px 10px 50px 1fr;gap:6px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+.m .h,.m .a{text-align:center}.m .h b,.m .a b{display:block}.m .h i,.m .a i{display:block;color:var(--mute);font-size:13px;font-style:normal;line-height:1.1}
+.m input{text-align:center;font-weight:800;font-size:21px;color:var(--gold);padding:8px 0}
+.m>span.d{text-align:center;color:var(--mute)}
+.msg{min-height:22px;color:var(--win)}.msg.bad{color:var(--loss)}
+.warn{color:var(--gold)}
+</style>
+</head>
+<body>
+<main>
+<h1>Admin<small>Superliga Covirán</small></h1>
+
+<section id="lg" class="card" hidden>
+<p><b>Entrar</b></p>
+<p class="mute">Pega tu token de GitHub. Se guarda solo en este navegador y no lo ve nadie más.</p>
+<input id="tk" type="password" autocomplete="off" placeholder="Token de GitHub" aria-label="Token de GitHub">
+<p><button id="go">Entrar</button></p>
+<p class="msg bad" id="le" role="alert"></p>
+</section>
+
+<section id="ad" hidden>
+<div class="top"><span class="mute">Sesión iniciada</span><button class="sec" id="out">Cerrar sesión</button></div>
+<div class="chips" id="chips"></div>
+<div class="card">
+<p><b id="jt"></b> <span class="mute" id="jv"></span></p>
+<div id="jm"></div>
+<p class="mute">Deja los dos campos vacíos para borrar un resultado.</p>
+<p class="warn" id="dirty"></p>
+<p><button id="pub">Publicar cambios</button> <button class="sec" id="rel">Recargar</button></p>
+<p class="msg" id="msg" role="status"></p>
+<p class="mute">Tras publicar, la web pública tarda 1 o 2 minutos en mostrar los cambios.</p>
+</div>
+</section>
+</main>
+<script>
+var OWNER="eldelvnoche",REPO="Coviran-SuperLeague",FILE="resultados.json";
+var API="https://api.github.com/repos/"+OWNER+"/"+REPO+"/contents/"+FILE;
+var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"}};
+var V1=["bd-dm,hs-rb,ej-md,fd-th|zk","zk-fd,th-ej,md-hs,rb-bd|dm","dm-rb,bd-md,hs-th,ej-zk|fd","fd-ej,zk-hs,th-bd,md-dm|rb","rb-md,dm-th,bd-zk,hs-fd|ej","ej-hs,fd-bd,zk-dm,th-rb|md","md-th,rb-zk,dm-fd,bd-ej|hs","hs-bd,ej-dm,fd-rb,zk-md|th","th-zk,md-fd,rb-ej,dm-hs|bd"];
+var J=[];
+function parse(s,f){var a=s.split("|");return{rest:a[1],ms:a[0].split(",").map(function(x){var p=x.split("-");return f?[p[1],p[0]]:[p[0],p[1]]})}}
+V1.forEach(function(s){J.push(parse(s,false))});V1.forEach(function(s){J.push(parse(s,true))});
+function $(i){return document.getElementById(i)}
+function key(j,h,a){return(j+1)+":"+h+":"+a}
+var tok="";try{tok=localStorage.getItem("sl-token")||""}catch(e){}
+var sha="",R={},cur=0,dirty=false;
+function hdr(){return{"Authorization":"Bearer "+tok,"Accept":"application/vnd.github+json"}}
+function msg(t,bad){var e=$("msg");e.textContent=t;e.className=bad?"msg bad":"msg"}
+function setDirty(v){dirty=v;$("dirty").textContent=v?"Tienes cambios sin publicar.":""}
+function view(logged){$("lg").hidden=logged;$("ad").hidden=!logged}
+function doneJ(j){return J[j].ms.every(function(m){return R[key(j,m[0],m[1])]})}
+function chips(){$("chips").innerHTML=J.map(function(_,j){return '<button data-j="'+j+'" aria-pressed="'+(j===cur)+'" class="'+(doneJ(j)?"done":"")+'" aria-label="Jornada '+(j+1)+'">'+(j+1)+'</button>'}).join("")}
+function side(id,c){return '<span class="'+c+'"><b>'+T[id].t+'</b><i>'+T[id].p+'</i></span>'}
+function render(){
+$("jt").textContent="Jornada "+(cur+1);$("jv").textContent=cur<9?"· Primera vuelta":"· Segunda vuelta";
+var r=J[cur];
+$("jm").innerHTML=r.ms.map(function(m){var v=R[key(cur,m[0],m[1])]||["",""],k=key(cur,m[0],m[1]);
+return '<div class="m" data-k="'+k+'">'+side(m[0],"h")+'<input type="number" min="0" max="99" inputmode="numeric" value="'+v[0]+'" aria-label="Goles '+T[m[0]].t+'"><span class="d">-</span><input type="number" min="0" max="99" inputmode="numeric" value="'+v[1]+'" aria-label="Goles '+T[m[1]].t+'">'+side(m[1],"a")+'</div>'}).join("")+
+'<p class="mute">Descansa: '+T[r.rest].t+' ('+T[r.rest].p+')</p>';
+chips()}
+function load(){
+msg("Cargando...");
+return fetch(API,{headers:hdr(),cache:"no-store"}).then(function(r){
+if(r.status===401||r.status===403||r.status===404){var e=new Error("auth");e.code=r.status;throw e}
+if(!r.ok)throw new Error("http "+r.status);return r.json()}).then(function(d){
+sha=d.sha;
+var j=JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g,"")))));
+R={};(j.resultados||[]).forEach(function(x){R[key(x.j-1,x.local,x.visitante)]=[+x.gl,+x.gv]});
+for(var q=0;q<J.length;q++){if(!doneJ(q)){cur=q;break}}
+setDirty(false);render();msg("")})}
+function enter(){
+view(true);
+load().catch(function(e){
+if(e.message==="auth"){try{localStorage.removeItem("sl-token")}catch(x){}tok="";view(false);$("le").textContent="El token no vale o no tiene acceso al repositorio. Revisa que sea el correcto y que tenga permiso de Contents: Read and write."}
+else{msg("No se pudo cargar. Comprueba la conexión y pulsa Recargar.",true)}})}
+$("go").addEventListener("click",function(){
+var t=$("tk").value.trim();if(!t){$("le").textContent="Pega el token.";return}
+tok=t;$("le").textContent="";try{localStorage.setItem("sl-token",tok)}catch(e){}enter()});
+$("out").addEventListener("click",function(){
+if(dirty&&!window.confirm("Tienes cambios sin publicar. ¿Cerrar sesión igualmente?"))return;
+try{localStorage.removeItem("sl-token")}catch(e){}tok="";$("tk").value="";view(false)});
+$("rel").addEventListener("click",function(){
+if(dirty&&!window.confirm("Se perderán los cambios sin publicar. ¿Recargar?"))return;
+load().catch(function(){msg("No se pudo recargar.",true)})});
+$("chips").addEventListener("click",function(e){var j=e.target.getAttribute("data-j");if(j===null)return;cur=+j;render()});
+$("jm").addEventListener("change",function(e){
+var row=e.target.parentNode;var k=row.getAttribute("data-k");if(!k)return;
+var i=row.querySelectorAll("input"),a=i[0].value,b=i[1].value;
+if(a===""&&b===""){delete R[k]}
+else if(a===""||b===""){msg("Escribe los goles de los dos equipos.",true);return}
+else{R[k]=[Math.max(0,parseInt(a,10)||0),Math.max(0,parseInt(b,10)||0)]}
+msg("");setDirty(true);chips()});
+function today(){var d=new Date(),p=function(n){return(n<10?"0":"")+n};return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+$("pub").addEventListener("click",function(){
+var list=[];
+J.forEach(function(r,j){r.ms.forEach(function(m){var v=R[key(j,m[0],m[1])];if(v)list.push({j:j+1,local:m[0],visitante:m[1],gl:v[0],gv:v[1]})})});
+var txt=JSON.stringify({actualizado:today(),resultados:list},null,2)+"\n";
+var b=$("pub");b.disabled=true;msg("Publicando...");
+fetch(API,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},hdr()),body:JSON.stringify({message:"Actualizar resultados",content:btoa(unescape(encodeURIComponent(txt))),sha:sha})})
+.then(function(r){return r.json().then(function(d){return{ok:r.ok,s:r.status,d:d}})})
+.then(function(x){
+b.disabled=false;
+if(x.ok){sha=x.d.content.sha;setDirty(false);msg("Publicado. La web lo mostrará en 1 o 2 minutos.")}
+else if(x.s===409||x.s===422){msg("El archivo ha cambiado desde que lo cargaste. Pulsa Recargar y vuelve a intentarlo.",true)}
+else if(x.s===401||x.s===403||x.s===404){msg("El token no tiene permiso para escribir en el repositorio.",true)}
+else{msg("No se pudo publicar (error "+x.s+").",true)}})
+.catch(function(){b.disabled=false;msg("No se pudo publicar. Comprueba la conexión.",true)})});
+if(tok){enter()}else{view(false)}
+</script>
+</body>
+</html>
