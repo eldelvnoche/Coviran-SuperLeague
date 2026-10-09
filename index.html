@@ -103,6 +103,7 @@ main{max-width:640px;margin:0 auto;padding:16px 12px 110px}
 .po{padding:16px 14px;border-bottom:1px solid var(--line)}.po:last-child{border-bottom:0}
 .po .mt{color:var(--gold);font-weight:600;font-size:14px}
 .po h3{margin:4px 0 8px;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:28px;line-height:1.05;font-weight:800}
+.pf{width:100%;max-height:320px;object-fit:cover;border-radius:12px;border:1px solid var(--line);display:block;margin:0 0 12px}
 .po p{margin:0 0 10px}.po p:last-child{margin:0}
 /* nav */
 nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;background:var(--panel);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -256,7 +257,8 @@ var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
 $("po").innerHTML=L.map(function(p){
 var meta=(p.jornada?"Jornada "+(+p.jornada):"")+(p.jornada&&p.fecha?", ":"")+(p.fecha?fmt(p.fecha):"");
 var body=String(p.texto||"").split(/\n{2,}/).map(function(x){return '<p>'+esc(x).replace(/\n/g,"<br>")+'</p>'}).join("");
-return '<article class="po"><div class="mt">'+esc(meta)+'</div><h3>'+esc(p.titulo)+'</h3>'+body+'</article>'}).join("")||'<div class="empty">Aún no hay crónicas.</div>'}
+var im=okFoto(p.foto)?'<img class="pf" alt="" loading="lazy" src="'+p.foto+'">':'';
+return '<article class="po"><div class="mt">'+esc(meta)+'</div><h3>'+esc(p.titulo)+'</h3>'+im+body+'</article>'}).join("")||'<div class="empty">Aún no hay crónicas.</div>'}
 renderAll();
 function getJ(u){return fetch(u+"?v="+Date.now()).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
 getJ("resultados.json").then(function(d){

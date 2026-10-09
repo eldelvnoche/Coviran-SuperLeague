@@ -40,6 +40,7 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .li{display:flex;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
 .li:last-child{border-bottom:0}.li span{flex:1;min-width:0}.li small{display:block;color:var(--mute)}
 .row2{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.pv2{width:100%;max-height:200px;object-fit:cover;border-radius:10px;border:1px solid var(--line);margin-top:8px;display:block}
 .pv{width:84px;height:84px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);background:var(--field);display:block;margin-top:8px}
 </style>
 </head>
@@ -85,6 +86,11 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 <input id="cti" maxlength="80" placeholder="Por ejemplo: Demian estrena la liga con victoria">
 <label for="ctx">Texto (deja una línea en blanco para separar párrafos)</label>
 <textarea id="ctx" maxlength="3000"></textarea>
+<label for="cfo">Foto que ilustra la crónica (opcional)</label>
+<input id="cfo" type="file" accept="image/*">
+<img class="pv2" id="cpv" alt="" hidden>
+<p class="mute">Sube solo fotos propias o con permiso de quien aparece. La web es pública.</p>
+<button class="sec" id="cquit" type="button" hidden>Quitar foto</button>
 <div class="row2"><button id="csave">Publicar crónica</button><button class="sec" id="ccancel" hidden>Cancelar edición</button></div>
 <p class="msg" id="cmsg" role="status"></p>
 </div>
@@ -185,38 +191,52 @@ if(x.ok){sha=x.d.content.sha;setDirty(false);say("msg","Publicado. La web lo mos
 else say("msg",why(x),true)}).catch(function(){b.disabled=false;say("msg","No se pudo publicar. Comprueba la conexión.",true)})});
 
 /* Crónicas */
-var PO=[],editId=null;
+var PO=[],editId=null,cfoto="",cquit=false,FOK=/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/;
 (function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=18;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("cj").innerHTML=h})();
 function fmtd(f){var p=(f||"").split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:""}
 function listPosts(){
 var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
 $("clist").innerHTML=L.map(function(p){
-return '<div class="li"><span>'+esc(p.titulo)+'<small>'+(p.jornada?"Jornada "+(+p.jornada)+", ":"")+esc(fmtd(p.fecha))+'</small></span><button class="sec" data-e="'+(+p.id)+'">Editar</button><button class="del" data-d="'+(+p.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay crónicas.</p>'}
+return '<div class="li"><span>'+esc(p.titulo)+'<small>'+(p.jornada?"Jornada "+(+p.jornada)+", ":"")+esc(fmtd(p.fecha))+(p.foto?", con foto":"")+'</small></span><button class="sec" data-e="'+(+p.id)+'">Editar</button><button class="del" data-d="'+(+p.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay crónicas.</p>'}
 function loadP(){return getF("cronicas.json",{cronicas:[]}).then(function(x){PO=x.data.cronicas||[];listPosts()})}
-function resetForm(){editId=null;$("ct").textContent="Nueva crónica";$("cti").value="";$("ctx").value="";$("cj").value="0";$("ccancel").hidden=true;$("csave").textContent="Publicar crónica"}
+function showCp(src){var v=$("cpv");if(src){v.src=src;v.hidden=false;$("cquit").hidden=false}else{v.hidden=true;$("cquit").hidden=true}}
+function resetForm(){editId=null;cfoto="";cquit=false;$("ct").textContent="Nueva crónica";$("cti").value="";$("ctx").value="";$("cj").value="0";$("cfo").value="";showCp("");$("ccancel").hidden=true;$("csave").textContent="Publicar crónica"}
 $("ccancel").addEventListener("click",function(){resetForm();say("cmsg","")});
+$("cfo").addEventListener("change",function(){var f=this.files[0];if(f){cquit=false;showCp(URL.createObjectURL(f))}});
+$("cquit").addEventListener("click",function(){cquit=true;$("cfo").value="";showCp("")});
 $("clist").addEventListener("click",function(e){
 var ed=e.target.getAttribute("data-e"),dl=e.target.getAttribute("data-d");
 if(ed!==null){var p=PO.filter(function(x){return String(x.id)===ed})[0];if(!p)return;
-editId=p.id;$("ct").textContent="Editar crónica";$("cti").value=p.titulo||"";$("ctx").value=p.texto||"";$("cj").value=String(p.jornada||0);$("ccancel").hidden=false;$("csave").textContent="Guardar cambios";window.scrollTo(0,0)}
+resetForm();editId=p.id;cfoto=p.foto||"";$("ct").textContent="Editar crónica";$("cti").value=p.titulo||"";$("ctx").value=p.texto||"";$("cj").value=String(p.jornada||0);$("ccancel").hidden=false;$("csave").textContent="Guardar cambios";showCp(FOK.test(cfoto)?cfoto:"");window.scrollTo(0,0)}
 if(dl!==null){
 if(!window.confirm("¿Borrar esta crónica?"))return;
+var gone=PO.filter(function(p){return String(p.id)===dl})[0];
 say("cmsg","Borrando...");
 getF("cronicas.json",{cronicas:[]}).then(function(x){
 var L=(x.data.cronicas||[]).filter(function(p){return String(p.id)!==dl});
 return putF("cronicas.json",b64(JSON.stringify({cronicas:L},null,2)+"\n"),x.sha,"Borrar crónica").then(function(r){
-if(r.ok){PO=L;listPosts();if(String(editId)===dl)resetForm();say("cmsg","Crónica borrada.")}else say("cmsg",why(r),true)})}).catch(function(){say("cmsg","No se pudo borrar.",true)})}});
+if(r.ok){PO=L;listPosts();if(String(editId)===dl)resetForm();say("cmsg","Crónica borrada.");
+if(gone&&FOK.test(gone.foto||"")){var fp=gone.foto.split("?")[0];http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:"Borrar foto de crónica",sha:q.d.sha})})}}
+else say("cmsg",why(r),true)})}).catch(function(){say("cmsg","No se pudo borrar.",true)})}});
 $("csave").addEventListener("click",function(){
 var ti=$("cti").value.trim(),tx=$("ctx").value.trim();
 if(!ti||!tx){say("cmsg","Escribe el título y el texto.",true);return}
-var b=$("csave");b.disabled=true;say("cmsg","Publicando...");
-getF("cronicas.json",{cronicas:[]}).then(function(x){
+var f=$("cfo").files[0],pid=editId!==null?editId:Date.now(),b=$("csave"),nf=null;
+b.disabled=true;say("cmsg","Publicando...");
+var step=Promise.resolve();
+if(f){var fp="fotos/cronica-"+pid+".jpg";
+step=resize(f,900).then(function(data){return http(fp).then(function(x){
+return putF(fp,data,x.ok?x.d.sha:"","Foto de crónica").then(function(r){
+if(!r.ok)throw new Error("foto "+r.s);nf=fp+"?v="+Date.now()})})})}
+step.then(function(){return getF("cronicas.json",{cronicas:[]})}).then(function(x){
 var L=x.data.cronicas||[],jn=parseInt($("cj").value,10)||0;
-if(editId!==null){L=L.map(function(p){return String(p.id)===String(editId)?{id:p.id,fecha:p.fecha,jornada:jn,titulo:ti,texto:tx}:p})}
-else{L.push({id:Date.now(),fecha:today(),jornada:jn,titulo:ti,texto:tx})}
+if(editId!==null){L=L.map(function(p){if(String(p.id)!==String(editId))return p;
+var fo=nf!==null?nf:(cquit?"":(p.foto||""));
+return{id:p.id,fecha:p.fecha,jornada:jn,titulo:ti,texto:tx,foto:fo}})}
+else{L.push({id:pid,fecha:today(),jornada:jn,titulo:ti,texto:tx,foto:nf||""})}
 return putF("cronicas.json",b64(JSON.stringify({cronicas:L},null,2)+"\n"),x.sha,"Crónica: "+ti).then(function(r){
 b.disabled=false;
-if(r.ok){PO=L;listPosts();resetForm();say("cmsg","Publicada. La web la mostrará en 1 o 2 minutos.")}else say("cmsg",why(r),true)})}).catch(function(){b.disabled=false;say("cmsg","No se pudo publicar. Comprueba la conexión.",true)})});
+if(r.ok){PO=L;listPosts();resetForm();say("cmsg","Publicada. La web la mostrará en 1 o 2 minutos.")}else say("cmsg",why(r),true)})}).catch(function(){b.disabled=false;say("cmsg","No se pudo publicar. Revisa la foto y la conexión.",true)})});
 
 /* Jugadores */
 var JG={};
@@ -229,10 +249,10 @@ say("pmsg","")}
 function loadG(){return getF("jugadores.json",{}).then(function(x){JG=x.data||{};fillP()})}
 $("pj").addEventListener("change",fillP);
 $("pfo").addEventListener("change",function(){var f=this.files[0];if(f){$("pv").src=URL.createObjectURL(f);$("pv").hidden=false}});
-function resize(file){return new Promise(function(res,rej){
+function resize(file,mx){return new Promise(function(res,rej){
 var fr=new FileReader();
 fr.onload=function(){var im=new Image();
-im.onload=function(){var m=480,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
+im.onload=function(){var m=mx||480,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
 c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
 c.getContext("2d").drawImage(im,0,0,c.width,c.height);
 res(c.toDataURL("image/jpeg",.85).split(",")[1])};
