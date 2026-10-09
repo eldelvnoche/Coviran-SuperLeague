@@ -52,14 +52,78 @@
       "local": "fd",
       "visitante": "th",
       "gl": 2,
-      "gv": 13
+      "gv": 13,
+      "st": {
+        "l": {
+          "pos": 42,
+          "tir": 8,
+          "tpu": 5,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 131,
+          "pac": 100,
+          "cen": 1,
+          "int": 31,
+          "ent": 4,
+          "par": 2
+        },
+        "v": {
+          "pos": 58,
+          "tir": 16,
+          "tpu": 16,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 137,
+          "pac": 93,
+          "cen": 1,
+          "int": 24,
+          "ent": 3,
+          "par": 2
+        }
+      }
     },
     {
       "j": 1,
       "local": "hi",
       "visitante": "zk",
       "gl": 2,
-      "gv": 5
+      "gv": 5,
+      "st": {
+        "l": {
+          "pos": 47,
+          "tir": 8,
+          "tpu": 4,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 1,
+          "tli": 0,
+          "pas": 104,
+          "pac": 69,
+          "cen": 0,
+          "int": 31,
+          "ent": 7,
+          "par": 4
+        },
+        "v": {
+          "pos": 53,
+          "tir": 13,
+          "tpu": 8,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 2,
+          "pas": 131,
+          "pac": 96,
+          "cen": 0,
+          "int": 31,
+          "ent": 5,
+          "par": 4
+        }
+      }
     }
   ],
   "mvp": {},
