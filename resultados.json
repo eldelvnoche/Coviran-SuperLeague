@@ -13,14 +13,41 @@
       "local": "ej",
       "visitante": "md",
       "gl": 0,
-      "gv": 15
-    },
-    {
-      "j": 1,
-      "local": "hi",
-      "visitante": "zk",
-      "gl": 2,
-      "gv": 5
+      "gv": 15,
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 2,
+          "tpu": 0,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 2,
+          "pas": 155,
+          "pac": 119,
+          "cen": 0,
+          "int": 19,
+          "ent": 3,
+          "par": 9
+        },
+        "v": {
+          "pos": 50,
+          "tir": 29,
+          "tpu": 25,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 7,
+          "tli": 0,
+          "pas": 107,
+          "pac": 78,
+          "cen": 2,
+          "int": 29,
+          "ent": 12,
+          "par": 1
+        }
+      }
     }
-  ]
+  ],
+  "mvp": {},
+  "champions": {}
 }
