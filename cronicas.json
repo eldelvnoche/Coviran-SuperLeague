@@ -47,6 +47,14 @@
       "titulo": "Animación de Personajes de los Jugadores",
       "texto": "En la pagina web, empezaremos la implementación de animación de personajes para cada jugador, de esta manera crearemos contenido y escenas relacionadas a cada gran evento de nuestra grandiosa SuperLeague !!",
       "foto": "fotos/cronica-1791558647953.jpg?v=1791558650475"
+    },
+    {
+      "id": 1791559028734,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Demian el Demonio, O Doubl3 D ? como sea, la bestia esta lista para todo !!",
+      "texto": "Se aproxima la segunda jornada, y después del logro inesperado en su debut, el demonio del e-football busca asegurar una racha de victorias y acabar con todas las dudas !!",
+      "foto": "fotos/cronica-1791559028734.jpg?v=1791559031252"
     }
   ]
 }
