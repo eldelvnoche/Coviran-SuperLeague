@@ -6,10 +6,10 @@
 <meta name="robots" content="noindex">
 <title>Admin · Superliga Covirán</title>
 <style>
-:root{--bg:#0d0b07;--panel:#17130b;--line:#3a2f17;--text:#fbf4e1;--mute:#b3a483;--gold:#f0be4d;--win:#4fd89a;--loss:#ff6b5e;--field:#110e08;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:light){:root{--bg:#faf5e6;--panel:#fffdf6;--line:#e3d5a8;--text:#2a2008;--mute:#7d6b3c;--gold:#a87408;--win:#12915c;--loss:#d33a3a;--field:#f4ecd4}}
+:root{--bg:#04060f;--panel:#0f162b;--line:#26335a;--text:#eaf2ff;--mute:#8b97b3;--gold:#5cf0ff;--win:#3df2b0;--loss:#ff6b8a;--field:#0a1020;--on:#04101c;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root{--bg:#eef2fb;--panel:#fff;--line:#cdd7ef;--text:#0c1430;--mute:#56627f;--gold:#0a7fa8;--win:#0d9467;--loss:#d6335a;--field:#f3f6fd;--on:#fff}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;font-size:17px;line-height:1.35}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"Space Grotesk","Inter",system-ui,sans-serif;font-size:16px;line-height:1.35}
 main{max-width:640px;margin:0 auto;padding:18px 12px 40px}
 h1{margin:0;font-size:30px;line-height:1;font-weight:800}
 h1 small{display:block;color:var(--gold);font-size:17px;font-weight:600;margin-top:6px}
@@ -17,7 +17,7 @@ h1 small{display:block;color:var(--gold);font-size:17px;font-weight:600;margin-t
 input,textarea,select{font:inherit;font-size:17px;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:10px;width:100%;min-width:0}
 textarea{min-height:130px;resize:vertical;font-family:system-ui,sans-serif;font-size:16px}
 label{display:block;margin:12px 0 4px;color:var(--mute);font-size:15px}
-button{font:inherit;font-weight:800;font-size:18px;background:var(--gold);color:#1a1300;border:1px solid var(--gold);border-radius:10px;padding:11px 16px;cursor:pointer}
+button{font:inherit;font-weight:800;font-size:18px;background:var(--gold);color:var(--on);border:1px solid var(--gold);border-radius:10px;padding:11px 16px;cursor:pointer}
 button.sec{background:transparent;color:var(--mute);border-color:var(--line);font-weight:600;font-size:16px;padding:7px 12px}
 button.del{background:transparent;color:var(--loss);border-color:var(--line);font-weight:600;font-size:16px;padding:7px 12px}
 button:disabled{opacity:.5;cursor:default}
@@ -26,10 +26,10 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tabs{display:flex;gap:6px;margin-top:14px}
 .tabs button{flex:1;background:var(--panel);color:var(--mute);border-color:var(--line);font-size:17px;padding:9px 6px}
-.tabs button[aria-selected="true"]{background:var(--gold);color:#1a1300;border-color:var(--gold)}
+.tabs button[aria-selected="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-top:14px}
 .chips button{flex:0 0 auto;min-width:44px;background:var(--panel);color:var(--text);border-color:var(--line);font-size:17px;padding:8px 10px;position:relative}
-.chips button[aria-pressed="true"]{background:var(--gold);color:#1a1300;border-color:var(--gold)}
+.chips button[aria-pressed="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
 .chips button.done::after{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--win)}
 .m{display:grid;grid-template-columns:1fr 50px 10px 50px 1fr;gap:6px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
 .m .h,.m .a{text-align:center}.m .h b,.m .a b{display:block}.m .h i,.m .a i{display:block;color:var(--mute);font-size:13px;font-style:normal;line-height:1.1}
@@ -46,7 +46,7 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 </head>
 <body>
 <main>
-<h1>Admin<small>Superliga Covirán</small></h1>
+<h1><img src="logo.svg" alt="" style="width:34px;height:34px;vertical-align:-8px;margin-right:8px">Admin<small>Superliga Covirán</small></h1>
 
 <section id="lg" class="card" hidden>
 <p><b>Entrar</b></p>
@@ -118,16 +118,18 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 <script>
 var OWNER="eldelvnoche",REPO="Coviran-SuperLeague";
 var BASE="https://api.github.com/repos/"+OWNER+"/"+REPO+"/contents/";
-var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"},hi:{p:"Hicham",t:"España"}};
-var V1=["bd-dm,hs-rb,ej-md,fd-th,hi-zk|",
-"zk-fd,th-ej,md-hs,rb-bd,dm-hi|",
-"dm-rb,bd-md,hs-th,ej-zk,hi-fd|",
-"fd-ej,zk-hs,th-bd,md-dm,rb-hi|",
-"rb-md,dm-th,bd-zk,hs-fd,hi-ej|",
-"ej-hs,fd-bd,zk-dm,th-rb,md-hi|",
-"md-th,rb-zk,dm-fd,bd-ej,hi-hs|",
-"hs-bd,ej-dm,fd-rb,zk-md,th-hi|",
-"th-zk,md-fd,rb-ej,dm-hs,hi-bd|"];
+var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"},hi:{p:"Hicham",t:"España"},ch:{p:"Chele",t:"Olympique de Lyon"}};
+var V1=["bd-dm,hs-rb,ej-md,fd-th,hi-zk|ch",
+"rb-ch,bd-md,th-hs,ej-zk,hi-fd|dm",
+"dm-md,th-ch,bd-zk,hi-hs,ej-fd|rb",
+"th-rb,dm-zk,hi-ch,bd-fd,ej-hs|md",
+"md-zk,hi-rb,dm-fd,ej-ch,bd-hs|th",
+"hi-th,md-fd,ej-rb,dm-hs,bd-ch|zk",
+"zk-fd,ej-th,md-hs,bd-rb,dm-ch|hi",
+"ej-hi,zk-hs,bd-th,md-ch,dm-rb|fd",
+"fd-hs,bd-hi,zk-ch,dm-th,md-rb|ej",
+"bd-ej,fd-ch,dm-hi,zk-rb,md-th|hs",
+"hs-ch,dm-ej,fd-rb,md-hi,zk-th|bd"];
 var J=[];
 function parse(s,f){var a=s.split("|");return{rest:a[1],ms:a[0].split(",").map(function(x){var p=x.split("-");return f?[p[1],p[0]]:[p[0],p[1]]})}}
 V1.forEach(function(s){J.push(parse(s,false))});V1.forEach(function(s){J.push(parse(s,true))});
@@ -165,7 +167,7 @@ function doneJ(j){return J[j].ms.every(function(m){return R[key(j,m[0],m[1])]})}
 function chips(){$("chips").innerHTML=J.map(function(_,j){return '<button data-j="'+j+'" aria-pressed="'+(j===cur)+'" class="'+(doneJ(j)?"done":"")+'" aria-label="Jornada '+(j+1)+'">'+(j+1)+'</button>'}).join("")}
 function side(id,c){return '<span class="'+c+'"><b>'+T[id].t+'</b><i>'+T[id].p+'</i></span>'}
 function render(){
-$("jt").textContent="Jornada "+(cur+1);$("jv").textContent=cur<9?"· Primera vuelta":"· Segunda vuelta";
+$("jt").textContent="Jornada "+(cur+1);$("jv").textContent=cur<11?"· Primera vuelta":"· Segunda vuelta";
 var r=J[cur];
 $("jm").innerHTML=r.ms.map(function(m){var k=key(cur,m[0],m[1]),v=R[k]||["",""];
 return '<div class="m" data-k="'+k+'">'+side(m[0],"h")+'<input type="number" min="0" max="99" inputmode="numeric" value="'+v[0]+'" aria-label="Goles '+T[m[0]].t+'"><span class="d">-</span><input type="number" min="0" max="99" inputmode="numeric" value="'+v[1]+'" aria-label="Goles '+T[m[1]].t+'">'+side(m[1],"a")+'</div>'}).join("")+
@@ -200,7 +202,7 @@ else say("msg",why(x),true)}).catch(function(){b.disabled=false;say("msg","No se
 
 /* Crónicas */
 var PO=[],editId=null,cfoto="",cquit=false,FOK=/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/;
-(function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=18;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("cj").innerHTML=h})();
+(function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=22;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("cj").innerHTML=h})();
 function fmtd(f){var p=(f||"").split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:""}
 function listPosts(){
 var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
