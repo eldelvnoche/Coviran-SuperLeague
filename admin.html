@@ -25,7 +25,7 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tabs{display:flex;gap:6px;margin-top:14px}
-.tabs button{flex:1;min-width:0;background:var(--panel);color:var(--mute);border-color:var(--line);font-size:15px;padding:9px 2px}
+.tabs button{flex:1;background:var(--panel);color:var(--mute);border-color:var(--line);font-size:17px;padding:9px 6px}
 .tabs button[aria-selected="true"]{background:var(--gold);color:#1a1300;border-color:var(--gold)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-top:14px}
 .chips button{flex:0 0 auto;min-width:44px;background:var(--panel);color:var(--text);border-color:var(--line);font-size:17px;padding:8px 10px;position:relative}
@@ -41,19 +41,10 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .li:last-child{border-bottom:0}.li span{flex:1;min-width:0}.li small{display:block;color:var(--mute)}
 .row2{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .pv2{width:100%;max-height:260px;object-fit:contain;background:var(--field);border-radius:10px;border:1px solid var(--line);margin-top:8px;display:block}
-.sx{grid-column:1/-1;margin-top:-4px}
-.sx>button{width:100%;font-size:15px}
-.sx>button.ok{color:var(--win);border-color:var(--win)}
-.se{margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--field)}
-.sr{display:grid;grid-template-columns:64px 1fr 64px;gap:6px;align-items:center;margin-top:6px}
-.sr span{text-align:center;color:var(--mute);font-size:14px;line-height:1.1}
-.sr input{text-align:center;padding:6px 0;font-weight:700}
-.sr.h b{text-align:center;font-size:14px;color:var(--gold)}
-.u3{display:grid;grid-template-columns:1fr 54px 54px 1fr;gap:6px;align-items:center;margin-top:6px}
-.u3 input{text-align:center;padding:8px 0;font-weight:800}
-details summary{cursor:pointer;padding:4px 0}
-.pv3{width:96px;height:62px;object-fit:contain;border:1px solid var(--line);border-radius:8px;background:#fff;display:block;margin-top:8px}
 .pv{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:center 22%;border:2px solid var(--gold);background:var(--field);display:block;margin-top:8px}
+.sx{margin:2px 0 0;border-bottom:1px solid var(--line);padding:6px 0 10px}.sx summary{cursor:pointer;color:var(--mute);font-size:15px}
+.sx .sr{display:grid;grid-template-columns:64px 1fr 64px;gap:8px;align-items:center;margin-top:6px;text-align:center}.sx .sr span{color:var(--mute);font-size:15px}
+.sx .sr input{text-align:center;font-weight:700;padding:6px 0;font-size:18px}
 </style>
 </head>
 <body>
@@ -73,8 +64,8 @@ details summary{cursor:pointer;padding:4px 0}
 <div class="tabs" role="tablist">
 <button role="tab" id="s1" aria-selected="true">Resultados</button>
 <button role="tab" id="s2" aria-selected="false">Crónicas</button>
-<button role="tab" id="s4" aria-selected="false">Golazos</button>
 <button role="tab" id="s3" aria-selected="false">Jugadores</button>
+<button role="tab" id="s4" aria-selected="false">Goles</button>
 </div>
 
 <div id="p1">
@@ -82,13 +73,7 @@ details summary{cursor:pointer;padding:4px 0}
 <div class="card">
 <p><b id="jt"></b> <span class="mute" id="jv"></span></p>
 <div id="jm"></div>
-<label for="mvp">⭐ MVP de la jornada (lo votáis en el grupo)</label>
-<select id="mvp"></select>
-<p class="mute">Deja los dos campos de goles vacíos para borrar un resultado. Las estadísticas de eFootball son opcionales: copia los números de la pantalla final del partido. Ojo: en esa pantalla el equipo de la izquierda no siempre es el local, fíjate en el nombre.</p>
-<details id="ucd"><summary><b>🏆 Mercadona Champions League</b> <span class="mute">(al acabar la liga)</span></summary>
-<p class="mute">Semifinales: 1º contra 4º y 2º contra 3º. Si una eliminatoria acaba en empate, elige quién ganó en los penaltis. Se guarda con «Publicar cambios».</p>
-<p><button class="sec" id="ufill" type="button">Rellenar con los 4 primeros de la tabla</button></p>
-<div id="ucb"></div></details>
+<p class="mute">Deja los dos campos vacíos para borrar un resultado.</p>
 <p class="warn" id="dirty"></p>
 <p><button id="pub">Publicar cambios</button> <button class="sec" id="rel">Recargar</button></p>
 <p class="msg" id="msg" role="status"></p>
@@ -105,38 +90,19 @@ details summary{cursor:pointer;padding:4px 0}
 <input id="cti" maxlength="80" placeholder="Por ejemplo: Demian estrena la liga con victoria">
 <label for="ctx">Texto (deja una línea en blanco para separar párrafos)</label>
 <textarea id="ctx" maxlength="3000"></textarea>
-<label for="cfo">Foto o vídeo que ilustra la crónica (opcional)</label>
-<input id="cfo" type="file" accept="image/*,video/*">
+<label for="cfo">Foto que ilustra la crónica (opcional)</label>
+<input id="cfo" type="file" accept="image/*">
 <img class="pv2" id="cpv" alt="" hidden>
-<video class="pv2" id="cpvd" controls playsinline preload="metadata" hidden></video>
-<p class="mute">Elige una foto o un vídeo (solo uno por crónica). Para vídeo, mejor MP4 y de menos de 25 MB. Sube solo contenido propio o con permiso de quien aparece. La web es pública.</p>
-<button class="sec" id="cquit" type="button" hidden>Quitar foto o vídeo</button>
+<p class="mute">Sube solo fotos propias o con permiso de quien aparece. La web es pública.</p>
+<button class="sec" id="cquit" type="button" hidden>Quitar foto</button>
+<label for="cvi">Vídeo o animación (opcional: mp4, webm o html, máximo 20 MB)</label>
+<input id="cvi" type="file" accept=".mp4,.webm,.html,video/mp4,video/webm,text/html">
+<p class="mute" id="cvn"></p>
+<button class="sec" id="cvquit" type="button" hidden>Quitar vídeo</button>
 <div class="row2"><button id="csave">Publicar crónica</button><button class="sec" id="ccancel" hidden>Cancelar edición</button></div>
 <p class="msg" id="cmsg" role="status"></p>
 </div>
 <div class="card"><p><b>Crónicas publicadas</b></p><div id="clist"></div></div>
-</div>
-
-<div id="p4" hidden>
-<div class="card">
-<p><b>Nuevo golazo</b></p>
-<label for="gti">Título</label>
-<input id="gti" maxlength="80" placeholder="Por ejemplo: Chilena de Mouad en el último minuto">
-<label for="gju">Quién lo marcó</label>
-<select id="gju"></select>
-<label for="gjo">Jornada</label>
-<select id="gjo"></select>
-<label for="gtx">Comentario (opcional)</label>
-<input id="gtx" maxlength="200">
-<label for="gvi">Vídeo del gol (opcional, mejor MP4 y de menos de 25 MB)</label>
-<input id="gvi" type="file" accept="video/*">
-<label for="gen">O enlace al vídeo (YouTube u otra web, opcional)</label>
-<input id="gen" type="url" inputmode="url" placeholder="https://youtu.be/...">
-<p class="mute">Graba o guarda la repetición del gol en eFootball. Si el vídeo pesa mucho, súbelo a YouTube como «oculto» y pega aquí el enlace.</p>
-<div class="row2"><button id="gsave">Publicar golazo</button></div>
-<p class="msg" id="gmsg" role="status"></p>
-</div>
-<div class="card"><p><b>Golazos publicados</b></p><div id="glist"></div></div>
 </div>
 
 <div id="p3" hidden>
@@ -151,13 +117,32 @@ details summary{cursor:pointer;padding:4px 0}
 <input id="pfo" type="file" accept="image/*">
 <img class="pv" id="pv" alt="" hidden>
 <p class="mute">Sube fotos solo si el jugador está de acuerdo. La web es pública.</p>
-<label for="pes">Escudo del equipo (opcional, sustituye al que trae la web)</label>
+<label for="pes">Escudo del equipo (opcional)</label>
 <input id="pes" type="file" accept="image/*">
-<img class="pv3" id="pesv" alt="" hidden>
-<p class="mute">Por ejemplo, para el Lyon: descarga su escudo (PNG con fondo transparente) y súbelo aquí.</p>
-<div class="row2"><button id="psave">Guardar ficha</button><button class="sec" id="pnofoto">Quitar foto</button><button class="sec" id="pnoesc">Quitar escudo</button></div>
+<img class="pv2" id="pesv" style="max-height:90px;width:auto" alt="" hidden>
+<p class="mute">Cualquier imagen del escudo sirve (por ejemplo, recortada de una captura del juego). Se ajusta sola.</p>
+<div class="row2"><button id="psave">Guardar ficha</button><button class="sec" id="pnofoto">Quitar foto</button><button class="sec" id="pnoes">Quitar escudo</button></div>
 <p class="msg" id="pmsg" role="status"></p>
 </div>
+</div>
+<div id="p4" hidden>
+<div class="card">
+<p><b>Nuevo gol bonito</b></p>
+<label for="gti">Título</label>
+<input id="gti" maxlength="80" placeholder="Por ejemplo: Volea de Mouad desde fuera del área">
+<label for="gju">Jugador</label>
+<select id="gju"></select>
+<label for="gjo">Jornada</label>
+<select id="gjo"></select>
+<label for="gen">Enlace al vídeo (opcional, que empiece por https://)</label>
+<input id="gen" type="url" placeholder="https://...">
+<label for="gfo">Foto o captura (opcional)</label>
+<input id="gfo" type="file" accept="image/*">
+<img class="pv2" id="gpv" alt="" hidden>
+<div class="row2"><button id="gsave">Publicar gol</button></div>
+<p class="msg" id="gmsg" role="status"></p>
+</div>
+<div class="card"><p><b>Goles publicados</b></p><div id="glist"></div></div>
 </div>
 </section>
 </main>
@@ -207,156 +192,90 @@ function panel(n){[1,2,3,4].forEach(function(i){$("p"+i).hidden=n!==i;$("s"+i).s
 [1,2,3,4].forEach(function(i){$("s"+i).addEventListener("click",function(){panel(i)})});
 
 /* Resultados */
-var sha="",R={},SS={},MV={},UC={},cur=0,dirty=false;
-var SK=[["pos","Posesión %"],["tir","Tiros"],["tpu","Tiros a puerta"],["fal","Faltas"],["fdj","Fueras de juego"],["cor","Córners"],["tli","Tiros libres"],["pas","Pases"],["pac","Pases completados"],["cen","Centros"],["int","Intercepciones"],["ent","Entradas"],["par","Paradas"]];
-function stEd(k,h,a){var d=SS[k]||{l:{},v:{}};
-return '<div class="sr h"><b>'+T[h].t+'</b><span></span><b>'+T[a].t+'</b></div>'+SK.map(function(q){
-function inp(sd){var v=d[sd]&&d[sd][q[0]]!=null?d[sd][q[0]]:"";return '<input type="number" min="0" max="999" inputmode="numeric" data-s="'+sd+'|'+q[0]+'" value="'+v+'" aria-label="'+q[1]+' '+T[sd==="l"?h:a].t+'">'}
-return '<div class="sr">'+inp("l")+'<span>'+q[1]+'</span>'+inp("v")+'</div>'}).join("")+'<p><button class="del" type="button" data-clr="'+k+'">Borrar estadísticas</button></p>'}
-function stLbl(k){return SS[k]?"✓ Estadísticas de eFootball apuntadas":"+ Añadir estadísticas de eFootball"}
+var sha="",R={},E={},cur=0,dirty=false;
+var SK=[["pos","Posesión (%)"],["tiros","Tiros"],["puerta","Tiros a puerta"],["faltas","Faltas"],["fuera","Fueras de juego"],["corners","Córneres"],["libres","Tiros libres"],["pases","Pases"],["comp","Pases completados"],["centros","Centros"],["inter","Pases interceptados"],["entradas","Entradas"],["paradas","Paradas"]];
+function cleanE(e){if(!e)return null;var o={},n=0;SK.forEach(function(s){var v=e[s[0]];if(!v)return;var x=v[0],y=v[1];if(x===""&&y==="")return;o[s[0]]=[x===""?0:+x,y===""?0:+y];n++});return n?o:null}
 function setDirty(v){dirty=v;$("dirty").textContent=v?"Tienes cambios sin publicar.":""}
 function doneJ(j){return J[j].ms.every(function(m){return R[key(j,m[0],m[1])]})}
 function chips(){$("chips").innerHTML=J.map(function(_,j){return '<button data-j="'+j+'" aria-pressed="'+(j===cur)+'" class="'+(doneJ(j)?"done":"")+'" aria-label="Jornada '+(j+1)+'">'+(j+1)+'</button>'}).join("")}
 function side(id,c){return '<span class="'+c+'"><b>'+T[id].t+'</b><i>'+T[id].p+'</i></span>'}
+function statsBox(k){var e=E[k]||{};
+return '<details class="sx" data-k="'+k+'"><summary>Estadísticas del partido (opcional)</summary>'+SK.map(function(s){var v=e[s[0]]||["",""];
+return '<div class="sr"><input type="number" min="0" max="999" inputmode="numeric" data-s="'+s[0]+'" data-i="0" value="'+v[0]+'" aria-label="'+s[1]+' local"><span>'+s[1]+'</span><input type="number" min="0" max="999" inputmode="numeric" data-s="'+s[0]+'" data-i="1" value="'+v[1]+'" aria-label="'+s[1]+' visitante"></div>'}).join("")+'</details>'}
 function render(){
 $("jt").textContent="Jornada "+(cur+1);$("jv").textContent=cur<11?"· Primera vuelta":"· Segunda vuelta";
 var r=J[cur];
 $("jm").innerHTML=r.ms.map(function(m){var k=key(cur,m[0],m[1]),v=R[k]||["",""];
-return '<div class="m" data-k="'+k+'">'+side(m[0],"h")+'<input type="number" min="0" max="99" inputmode="numeric" value="'+v[0]+'" aria-label="Goles '+T[m[0]].t+'"><span class="d">-</span><input type="number" min="0" max="99" inputmode="numeric" value="'+v[1]+'" aria-label="Goles '+T[m[1]].t+'">'+side(m[1],"a")+
-'<div class="sx"><button class="sec'+(SS[k]?" ok":"")+'" type="button" data-tg="'+k+'">'+stLbl(k)+'</button><div class="se" data-se="'+k+'" hidden>'+stEd(k,m[0],m[1])+'</div></div></div>'}).join("")+
+return '<div class="m" data-k="'+k+'">'+side(m[0],"h")+'<input type="number" min="0" max="99" inputmode="numeric" value="'+v[0]+'" aria-label="Goles '+T[m[0]].t+'"><span class="d">-</span><input type="number" min="0" max="99" inputmode="numeric" value="'+v[1]+'" aria-label="Goles '+T[m[1]].t+'">'+side(m[1],"a")+'</div>'+statsBox(k)}).join("")+
 (r.rest?'<p class="mute">Descansa: '+T[r.rest].t+' ('+T[r.rest].p+')</p>':'');
-var ids=[];r.ms.forEach(function(m){ids.push(m[0],m[1])});
-$("mvp").innerHTML='<option value="">Sin MVP</option>'+ids.map(function(i){return '<option value="'+i+'"'+(MV[cur+1]===i?" selected":"")+'>'+T[i].p+' ('+T[i].t+')</option>'}).join("");
-chips();renderUC()}
+chips()}
 function loadR(){
 say("msg","Cargando...");
 return getF("resultados.json",{resultados:[]}).then(function(x){
-sha=x.sha;R={};SS={};(x.data.resultados||[]).forEach(function(y){var kk=key(y.j-1,y.local,y.visitante);R[kk]=[+y.gl,+y.gv];if(y.st&&y.st.l&&y.st.v)SS[kk]=y.st});
-MV=x.data.mvp&&typeof x.data.mvp==="object"?x.data.mvp:{};UC=x.data.champions&&typeof x.data.champions==="object"?x.data.champions:{};
+sha=x.sha;R={};E={};(x.data.resultados||[]).forEach(function(y){var kk=key(y.j-1,y.local,y.visitante);R[kk]=[+y.gl,+y.gv];if(y.est&&typeof y.est==="object"){var o={};SK.forEach(function(s){if(y.est[s[0]])o[s[0]]=[y.est[s[0]][0],y.est[s[0]][1]]});E[kk]=o}});
 for(var q=0;q<J.length;q++){if(!doneJ(q)){cur=q;break}}
 setDirty(false);render();say("msg","")})}
 $("rel").addEventListener("click",function(){
 if(dirty&&!window.confirm("Se perderán los cambios sin publicar. ¿Recargar?"))return;
 loadR().catch(function(){say("msg","No se pudo recargar.",true)})});
 $("chips").addEventListener("click",function(e){var j=e.target.getAttribute("data-j");if(j===null)return;cur=+j;render()});
-$("jm").addEventListener("click",function(e){
-var tg=e.target.getAttribute("data-tg"),cl=e.target.getAttribute("data-clr");
-if(tg){var se=document.querySelector('[data-se="'+tg+'"]');se.hidden=!se.hidden}
-if(cl){if(!window.confirm("¿Borrar las estadísticas de este partido?"))return;delete SS[cl];var bx=document.querySelector('[data-se="'+cl+'"]');bx.querySelectorAll("input").forEach(function(i){i.value=""});var b2=document.querySelector('[data-tg="'+cl+'"]');b2.textContent=stLbl(cl);b2.className="sec";setDirty(true)}});
-$("jm").addEventListener("input",function(e){
-var ds=e.target.getAttribute("data-s");if(!ds)return;
-var box=e.target.closest(".se"),k=box.getAttribute("data-se"),d={l:{},v:{}},any=false;
-box.querySelectorAll("input[data-s]").forEach(function(i){var p=i.getAttribute("data-s").split("|");if(i.value!==""){d[p[0]][p[1]]=Math.max(0,parseInt(i.value,10)||0);any=true}});
-if(any)SS[k]=d;else delete SS[k];
-var b=document.querySelector('[data-tg="'+k+'"]');b.textContent=stLbl(k);b.className="sec"+(SS[k]?" ok":"");setDirty(true)});
-$("mvp").addEventListener("change",function(){var v=this.value;if(v)MV[cur+1]=v;else delete MV[cur+1];setDirty(true)});
 $("jm").addEventListener("change",function(e){
-if(e.target.getAttribute("data-s"))return;
 var row=e.target.parentNode,k=row.getAttribute("data-k");if(!k)return;
 var i=row.querySelectorAll("input"),a=i[0].value,b=i[1].value;
-if(a===""&&b===""){delete R[k]}
+if(a===""&&b===""){delete R[k];delete E[k]}
 else if(a===""||b===""){say("msg","Escribe los goles de los dos equipos.",true);return}
 else{R[k]=[Math.max(0,parseInt(a,10)||0),Math.max(0,parseInt(b,10)||0)]}
 say("msg","");setDirty(true);chips()});
+$("jm").addEventListener("change",function(ev){
+var t=ev.target,s=t.getAttribute("data-s");if(!s)return;
+var d=t.closest("details"),kk=d.getAttribute("data-k"),i=+t.getAttribute("data-i");
+var e=E[kk]||(E[kk]={}),arr=e[s]||(e[s]=["",""]);
+arr[i]=t.value===""?"":Math.max(0,parseInt(t.value,10)||0);
+if(s==="pos"&&i===0&&arr[0]!==""&&arr[1]===""){arr[1]=Math.max(0,100-arr[0]);d.querySelector('[data-s="pos"][data-i="1"]').value=arr[1]}
+setDirty(true)});
 $("pub").addEventListener("click",function(){
 var list=[];
-var lost=0;
-J.forEach(function(r,j){r.ms.forEach(function(m){var kk=key(j,m[0],m[1]),v=R[kk];if(v){var o={j:j+1,local:m[0],visitante:m[1],gl:v[0],gv:v[1]};if(SS[kk])o.st=SS[kk];list.push(o)}else if(SS[kk])lost++})});
-if(lost&&!window.confirm("Hay estadísticas en partidos sin resultado y no se guardarán. ¿Publicar igualmente?"))return;
-var txt=JSON.stringify({actualizado:today(),resultados:list,mvp:MV,champions:UC},null,2)+"\n";
+J.forEach(function(r,j){r.ms.forEach(function(m){var v=R[key(j,m[0],m[1])];if(v){var o={j:j+1,local:m[0],visitante:m[1],gl:v[0],gv:v[1]},ce=cleanE(E[key(j,m[0],m[1])]);if(ce)o.est=ce;list.push(o)}})});
+var txt=JSON.stringify({actualizado:today(),resultados:list},null,2)+"\n";
 var b=$("pub");b.disabled=true;say("msg","Publicando...");
 putF("resultados.json",b64(txt),sha,"Actualizar resultados").then(function(x){
 b.disabled=false;
 if(x.ok){sha=x.d.content.sha;setDirty(false);say("msg","Publicado. La web lo mostrará en 1 o 2 minutos.")}
 else say("msg",why(x),true)}).catch(function(){b.disabled=false;say("msg","No se pudo publicar. Comprueba la conexión.",true)})});
 
-/* Mercadona Champions League */
-var UK=[["sf1","Semifinal 1 (1º contra 4º)"],["sf2","Semifinal 2 (2º contra 3º)"],["final","Final"]];
-function standings(){var S={};Object.keys(T).forEach(function(i){S[i]={id:i,pts:0,gf:0,gc:0}});
-Object.keys(R).forEach(function(kk){var p=kk.split(":"),v=R[kk],H=S[p[1]],A=S[p[2]];if(!H||!A)return;H.gf+=v[0];H.gc+=v[1];A.gf+=v[1];A.gc+=v[0];if(v[0]>v[1])H.pts+=3;else if(v[1]>v[0])A.pts+=3;else{H.pts++;A.pts++}});
-return Object.keys(S).map(function(i){return S[i]}).sort(function(a,b){return b.pts-a.pts||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf||T[a.id].t.localeCompare(T[b.id].t)}).map(function(r){return r.id})}
-function uwin(t){if(!t||!t.g||!t.a||!t.b)return"";if(t.g[0]>t.g[1])return t.a;if(t.g[1]>t.g[0])return t.b;return t.pen||""}
-function opts(sel){return '<option value="">Elegir equipo</option>'+Object.keys(T).map(function(i){return '<option value="'+i+'"'+(sel===i?" selected":"")+'>'+T[i].t+' ('+T[i].p+')</option>'}).join("")}
-function renderUC(){
-$("ucb").innerHTML=UK.map(function(u){var t=UC[u[0]]||{},g=t.g||["",""];
-return '<p style="margin-top:14px"><b>'+u[1]+'</b></p><div class="u3" data-u="'+u[0]+'"><select data-f="a">'+opts(t.a)+'</select><input type="number" min="0" max="99" inputmode="numeric" data-f="g0" value="'+g[0]+'" aria-label="Goles"><input type="number" min="0" max="99" inputmode="numeric" data-f="g1" value="'+g[1]+'" aria-label="Goles"><select data-f="b">'+opts(t.b)+'</select></div>'+
-'<label>Si hay empate, ganador en los penaltis</label><select data-u="'+u[0]+'" data-f="pen">'+'<option value="">Nadie (no hubo empate)</option>'+[t.a,t.b].filter(function(x){return T[x]}).map(function(i){return '<option value="'+i+'"'+(t.pen===i?" selected":"")+'>'+T[i].t+'</option>'}).join("")+'</select>'}).join("")}
-function readUC(u){var box=document.querySelector('.u3[data-u="'+u+'"]'),t={};
-t.a=box.querySelector('[data-f="a"]').value;t.b=box.querySelector('[data-f="b"]').value;
-var a=box.querySelector('[data-f="g0"]').value,b=box.querySelector('[data-f="g1"]').value;
-if(a!==""&&b!=="")t.g=[Math.max(0,parseInt(a,10)||0),Math.max(0,parseInt(b,10)||0)];
-var pe=document.querySelector('select[data-u="'+u+'"][data-f="pen"]').value;if(pe&&(pe===t.a||pe===t.b))t.pen=pe;
-if(!t.a&&!t.b&&!t.g)delete UC[u];else UC[u]=t}
-$("ucb").addEventListener("change",function(e){
-var box=e.target.closest("[data-u]");if(!box)return;var u=box.getAttribute("data-u");
-readUC(u);if(e.target.getAttribute("data-f")==="a"||e.target.getAttribute("data-f")==="b")renderUC();setDirty(true)});
-$("ufill").addEventListener("click",function(){
-var q=standings();UC.sf1=Object.assign({},UC.sf1,{a:q[0],b:q[3]});UC.sf2=Object.assign({},UC.sf2,{a:q[1],b:q[2]});
-var w1=uwin(UC.sf1),w2=uwin(UC.sf2);if(w1||w2)UC.final=Object.assign({},UC.final,{a:w1||(UC.final||{}).a,b:w2||(UC.final||{}).b});
-renderUC();setDirty(true)});
-
-/* Golazos */
-var GL=[];
-(function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=22;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("gjo").innerHTML=h;
-$("gju").innerHTML=Object.keys(T).map(function(i){return '<option value="'+i+'">'+T[i].p+' - '+T[i].t+'</option>'}).join("")})();
-function listG(){
-var L=GL.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
-$("glist").innerHTML=L.map(function(g){return '<div class="li"><span>'+esc(g.titulo)+'<small>'+(T[g.jugador]?T[g.jugador].p+", ":"")+(g.jornada?"Jornada "+(+g.jornada)+", ":"")+esc(fmtd(g.fecha))+(g.video?", con vídeo":g.enlace?", con enlace":"")+'</small></span><button class="del" data-gd="'+(+g.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay golazos.</p>'}
-function loadGL(){return getF("goles.json",{goles:[]}).then(function(x){GL=x.data.goles||[];listG()})}
-function fileB64(f){return new Promise(function(res,rej){var fr=new FileReader();fr.onload=function(){res(String(fr.result).split(",")[1])};fr.onerror=rej;fr.readAsDataURL(f)})}
-$("glist").addEventListener("click",function(e){
-var id=e.target.getAttribute("data-gd");if(id===null)return;
-if(!window.confirm("¿Borrar este golazo?"))return;
-say("gmsg","Borrando...");
-getF("goles.json",{goles:[]}).then(function(x){
-var gone=(x.data.goles||[]).filter(function(g){return String(g.id)===id})[0];
-var L=(x.data.goles||[]).filter(function(g){return String(g.id)!==id});
-return putF("goles.json",b64(JSON.stringify({goles:L},null,2)+"\n"),x.sha,"Borrar golazo").then(function(r){
-if(!r.ok){say("gmsg",why(r),true);return}
-GL=L;listG();say("gmsg","Golazo borrado.");
-if(gone&&/^fotos\/goles\/[A-Za-z0-9_.-]+(\?v=\d+)?$/.test(gone.video||"")){var fp=gone.video.split("?")[0];http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:"Borrar vídeo de golazo",sha:q.d.sha})})}})}).catch(function(){say("gmsg","No se pudo borrar.",true)})});
-$("gsave").addEventListener("click",function(){
-var ti=$("gti").value.trim(),en=$("gen").value.trim(),f=$("gvi").files[0];
-if(!ti){say("gmsg","Escribe un título.",true);return}
-if(en&&!/^https:\/\/[^\s"'<>]+$/.test(en)){say("gmsg","El enlace debe empezar por https://",true);return}
-if(!f&&!en){say("gmsg","Sube un vídeo o pega un enlace.",true);return}
-if(f&&f.size>25*1024*1024){say("gmsg","El vídeo pesa más de 25 MB. Súbelo a YouTube y pega el enlace.",true);return}
-var id=Date.now(),b=$("gsave"),vp="";b.disabled=true;say("gmsg",f?"Subiendo vídeo (puede tardar un poco)...":"Publicando...");
-var step=Promise.resolve();
-if(f){var ext=((f.name||"").match(/\.(mp4|m4v|webm|mov)$/i)||[0,"mp4"])[1].toLowerCase();var fp="fotos/goles/gol-"+id+"."+ext;
-step=fileB64(f).then(function(data){return putF(fp,data,"","Vídeo de golazo").then(function(r){if(!r.ok)throw new Error("video "+r.s);vp=fp})})}
-step.then(function(){return getF("goles.json",{goles:[]})}).then(function(x){
-var L=x.data.goles||[];L.push({id:id,fecha:today(),jornada:parseInt($("gjo").value,10)||0,jugador:$("gju").value,titulo:ti,texto:$("gtx").value.trim(),video:vp,enlace:en});
-return putF("goles.json",b64(JSON.stringify({goles:L},null,2)+"\n"),x.sha,"Golazo: "+ti).then(function(r){
-b.disabled=false;
-if(r.ok){GL=L;listG();$("gti").value="";$("gtx").value="";$("gen").value="";$("gvi").value="";say("gmsg","Publicado. La web lo mostrará en 1 o 2 minutos.")}else say("gmsg",why(r),true)})})
-.catch(function(){b.disabled=false;say("gmsg","No se pudo publicar. Si el vídeo es grande, prueba con un enlace de YouTube.",true)})});
-
 /* Crónicas */
-var PO=[],editId=null,cfoto="",cvideo="",cquit=false,FOK=/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/;
-function isVid(f){return !!f&&(/^video\//i.test(f.type||"")||/\.(mp4|m4v|webm|mov)$/i.test(f.name||""))}
-function basePath(p){return String(p||"").split("?")[0]}
-function delFile(p,msg){var fp=basePath(p);if(!FOK.test(fp))return;http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:msg,sha:q.d.sha})})}
+function upVideo(f,pid){return new Promise(function(res,rej){
+var m=/\.(mp4|webm|html)$/i.exec(f.name||"");
+if(!m){rej(new Error("VID:El archivo debe ser mp4, webm o html."));return}
+if(f.size>20*1048576){rej(new Error("VID:El archivo pesa más de 20 MB. Comprímelo antes de subirlo."));return}
+var ext=m[1].toLowerCase(),path="videos/cronica-"+pid+"."+ext;
+var fr=new FileReader();
+fr.onload=function(){var data=String(fr.result).split(",")[1]||"";
+http(path).then(function(x){return putF(path,data,x.ok?x.d.sha:"","Vídeo de crónica").then(function(r){
+if(!r.ok){rej(new Error("VID:No se pudo subir el vídeo (error "+r.s+")."));return}
+var v=path+"?v="+Date.now();res(ext==="html"?{video:"",embed:v}:{video:v,embed:""})})}).catch(rej)};
+fr.onerror=function(){rej(new Error("VID:No se pudo leer el archivo."))};
+fr.readAsDataURL(f)})}
+function showCv(name){$("cvn").textContent=name?"Vídeo: "+name:"";$("cvquit").hidden=!name}
+$("cvi").addEventListener("change",function(){var f=this.files[0];if(f){cvquit=false;$("cvn").textContent="Archivo elegido: "+f.name+" ("+(f.size/1048576).toFixed(1)+" MB)";$("cvquit").hidden=false}});
+$("cvquit").addEventListener("click",function(){cvquit=true;$("cvi").value="";showCv("")});
+var PO=[],editId=null,cfoto="",cquit=false,cvid="",cvquit=false,VOK=/^videos\/[A-Za-z0-9_.-]+\.(mp4|webm|html)(\?v=\d+)?$/,FOK=/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/;
 (function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=22;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("cj").innerHTML=h})();
 function fmtd(f){var p=(f||"").split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:""}
 function listPosts(){
 var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
 $("clist").innerHTML=L.map(function(p){
-return '<div class="li"><span>'+esc(p.titulo)+'<small>'+(p.jornada?"Jornada "+(+p.jornada)+", ":"")+esc(fmtd(p.fecha))+(p.video?", con vídeo":p.foto?", con foto":"")+'</small></span><button class="sec" data-e="'+(+p.id)+'">Editar</button><button class="del" data-d="'+(+p.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay crónicas.</p>'}
+return '<div class="li"><span>'+esc(p.titulo)+'<small>'+(p.jornada?"Jornada "+(+p.jornada)+", ":"")+esc(fmtd(p.fecha))+(p.foto?", con foto":"")+(p.video||p.embed?", con vídeo":"")+'</small></span><button class="sec" data-e="'+(+p.id)+'">Editar</button><button class="del" data-d="'+(+p.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay crónicas.</p>'}
 function loadP(){return getF("cronicas.json",{cronicas:[]}).then(function(x){PO=x.data.cronicas||[];listPosts()})}
-function showCp(src,vid){var v=$("cpv"),d=$("cpvd");
-v.hidden=true;d.hidden=true;v.removeAttribute("src");d.pause();d.removeAttribute("src");
-if(src){if(vid){d.src=src;d.hidden=false}else{v.src=src;v.hidden=false}$("cquit").hidden=false}else{$("cquit").hidden=true}}
-function resetForm(){editId=null;cfoto="";cvideo="";cquit=false;$("ct").textContent="Nueva crónica";$("cti").value="";$("ctx").value="";$("cj").value="0";$("cfo").value="";showCp("");$("ccancel").hidden=true;$("csave").textContent="Publicar crónica"}
+function showCp(src){var v=$("cpv");if(src){v.src=src;v.hidden=false;$("cquit").hidden=false}else{v.hidden=true;$("cquit").hidden=true}}
+function resetForm(){editId=null;cfoto="";cquit=false;cvid="";cvquit=false;$("cvi").value="";showCv("");$("ct").textContent="Nueva crónica";$("cti").value="";$("ctx").value="";$("cj").value="0";$("cfo").value="";showCp("");$("ccancel").hidden=true;$("csave").textContent="Publicar crónica"}
 $("ccancel").addEventListener("click",function(){resetForm();say("cmsg","")});
-$("cfo").addEventListener("change",function(){var f=this.files[0];if(f){
-if(isVid(f)&&f.size>25*1024*1024){this.value="";showCp("");say("cmsg","El vídeo pesa más de 25 MB. Comprímelo o elige uno más corto.",true);return}
-say("cmsg","");cquit=false;showCp(URL.createObjectURL(f),isVid(f))}});
+$("cfo").addEventListener("change",function(){var f=this.files[0];if(f){cquit=false;showCp(URL.createObjectURL(f))}});
 $("cquit").addEventListener("click",function(){cquit=true;$("cfo").value="";showCp("")});
 $("clist").addEventListener("click",function(e){
 var ed=e.target.getAttribute("data-e"),dl=e.target.getAttribute("data-d");
 if(ed!==null){var p=PO.filter(function(x){return String(x.id)===ed})[0];if(!p)return;
-resetForm();editId=p.id;cfoto=p.foto||"";cvideo=p.video||"";$("ct").textContent="Editar crónica";$("cti").value=p.titulo||"";$("ctx").value=p.texto||"";$("cj").value=String(p.jornada||0);$("ccancel").hidden=false;$("csave").textContent="Guardar cambios";if(FOK.test(cvideo))showCp(cvideo,true);else showCp(FOK.test(cfoto)?cfoto:"");window.scrollTo(0,0)}
+resetForm();editId=p.id;cfoto=p.foto||"";$("ct").textContent="Editar crónica";$("cti").value=p.titulo||"";$("ctx").value=p.texto||"";$("cj").value=String(p.jornada||0);$("ccancel").hidden=false;$("csave").textContent="Guardar cambios";showCp(FOK.test(cfoto)?cfoto:"");cvid=p.video||p.embed||"";showCv(VOK.test(cvid)?cvid.split("?")[0].replace("videos/",""):"");window.scrollTo(0,0)}
 if(dl!==null){
 if(!window.confirm("¿Borrar esta crónica?"))return;
 var gone=PO.filter(function(p){return String(p.id)===dl})[0];
@@ -365,91 +284,120 @@ getF("cronicas.json",{cronicas:[]}).then(function(x){
 var L=(x.data.cronicas||[]).filter(function(p){return String(p.id)!==dl});
 return putF("cronicas.json",b64(JSON.stringify({cronicas:L},null,2)+"\n"),x.sha,"Borrar crónica").then(function(r){
 if(r.ok){PO=L;listPosts();if(String(editId)===dl)resetForm();say("cmsg","Crónica borrada.");
-if(gone){delFile(gone.foto,"Borrar foto de crónica");delFile(gone.video,"Borrar vídeo de crónica")}}
+if(gone&&FOK.test(gone.foto||"")){var fp=gone.foto.split("?")[0];http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:"Borrar foto de crónica",sha:q.d.sha})})}var vf=gone&&(gone.video||gone.embed||"");if(VOK.test(vf)){var vp=vf.split("?")[0];http(vp).then(function(q){if(q.ok)http(vp,"DELETE",{message:"Borrar vídeo de crónica",sha:q.d.sha})})}}
 else say("cmsg",why(r),true)})}).catch(function(){say("cmsg","No se pudo borrar.",true)})}});
 $("csave").addEventListener("click",function(){
 var ti=$("cti").value.trim(),tx=$("ctx").value.trim();
 if(!ti||!tx){say("cmsg","Escribe el título y el texto.",true);return}
-var f=$("cfo").files[0],pid=editId!==null?editId:Date.now(),b=$("csave"),nf=null,nv=null,toDel=[];
-if(f&&isVid(f)&&f.size>25*1024*1024){say("cmsg","El vídeo pesa más de 25 MB. Comprímelo o elige uno más corto.",true);return}
-b.disabled=true;say("cmsg",f&&isVid(f)?"Subiendo vídeo (puede tardar un poco)...":"Publicando...");
+var f=$("cfo").files[0],pid=editId!==null?editId:Date.now(),b=$("csave"),nf=null,fv=$("cvi").files[0],nvv=null,nve=null;
+b.disabled=true;say("cmsg","Publicando...");
 var step=Promise.resolve();
-if(f&&isVid(f)){var ext=((f.name||"").match(/\.(mp4|m4v|webm|mov)$/i)||[0,"mp4"])[1].toLowerCase();var vp="fotos/cronica-"+pid+"."+ext;
-step=fileB64(f).then(function(data){return http(vp).then(function(x){
-return putF(vp,data,x.ok?x.d.sha:"","Vídeo de crónica").then(function(r){
-if(!r.ok)throw new Error("video "+r.s);nv=vp+"?v="+Date.now()})})})}
-else if(f){var fp="fotos/cronica-"+pid+".jpg";
+if(f){var fp="fotos/cronica-"+pid+".jpg";
 step=resize(f,900).then(function(data){return http(fp).then(function(x){
 return putF(fp,data,x.ok?x.d.sha:"","Foto de crónica").then(function(r){
 if(!r.ok)throw new Error("foto "+r.s);nf=fp+"?v="+Date.now()})})})}
+if(fv){step=step.then(function(){return upVideo(fv,pid).then(function(r){nvv=r.video;nve=r.embed})})}
 step.then(function(){return getF("cronicas.json",{cronicas:[]})}).then(function(x){
 var L=x.data.cronicas||[],jn=parseInt($("cj").value,10)||0;
-function mk(base,oldFoto,oldVideo){
-var fo,vi;
-if(nv!==null){fo="";vi=nv}
-else if(nf!==null){fo=nf;vi=""}
-else if(cquit){fo="";vi=""}
-else{fo=oldFoto||"";vi=oldVideo||""}
-[[oldFoto,fo,"Borrar foto de crónica"],[oldVideo,vi,"Borrar vídeo de crónica"]].forEach(function(q){if(q[0]&&basePath(q[0])!==basePath(q[1]))toDel.push([q[0],q[2]])});
-var o=base;o.foto=fo;if(vi)o.video=vi;return o}
 if(editId!==null){L=L.map(function(p){if(String(p.id)!==String(editId))return p;
-return mk({id:p.id,fecha:p.fecha,jornada:jn,titulo:ti,texto:tx},p.foto,p.video)})}
-else{L.push(mk({id:pid,fecha:today(),jornada:jn,titulo:ti,texto:tx},"",""))}
+var fo=nf!==null?nf:(cquit?"":(p.foto||""));
+var vv=nvv!==null?nvv:(cvquit?"":(p.video||"")),ee=nve!==null?nve:(cvquit?"":(p.embed||""));return{id:p.id,fecha:p.fecha,jornada:jn,titulo:ti,texto:tx,foto:fo,video:vv,embed:ee}})}
+else{L.push({id:pid,fecha:today(),jornada:jn,titulo:ti,texto:tx,foto:nf||"",video:nvv||"",embed:nve||""})}
 return putF("cronicas.json",b64(JSON.stringify({cronicas:L},null,2)+"\n"),x.sha,"Crónica: "+ti).then(function(r){
 b.disabled=false;
-if(r.ok){PO=L;listPosts();resetForm();say("cmsg","Publicada. La web la mostrará en 1 o 2 minutos.");toDel.forEach(function(q){delFile(q[0],q[1])})}else say("cmsg",why(r),true)})}).catch(function(){b.disabled=false;say("cmsg","No se pudo publicar. Si el vídeo es grande, prueba con uno más corto o más comprimido.",true)})});
+if(r.ok){PO=L;listPosts();resetForm();say("cmsg","Publicada. La web la mostrará en 1 o 2 minutos.")}else say("cmsg",why(r),true)})}).catch(function(e){b.disabled=false;say("cmsg",e&&/^VID:/.test(e.message)?e.message.slice(4):"No se pudo publicar. Revisa la foto, el vídeo y la conexión.",true)})});
 
 /* Jugadores */
 var JG={};
 $("pj").innerHTML=Object.keys(T).map(function(i){return '<option value="'+i+'">'+T[i].p+' - '+T[i].t+'</option>'}).join("");
 function fillP(){
 var d=JG[$("pj").value]||{};
-$("pap").value=d.apodo||"";$("pbio").value=d.bio||"";$("pfo").value="";
+$("pap").value=d.apodo||"";$("pes").value="";var ev=$("pesv");if(/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/.test(d.escudo||"")){ev.src=d.escudo;ev.hidden=false}else{ev.hidden=true}$("pbio").value=d.bio||"";$("pfo").value="";
 var pv=$("pv");if(/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/.test(d.foto||"")){pv.src=d.foto;pv.hidden=false}else{pv.hidden=true}
-var ev=$("pesv");$("pes").value="";if(/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/.test(d.escudo||"")){ev.src=d.escudo;ev.hidden=false}else{ev.hidden=true}
 say("pmsg","")}
 function loadG(){return getF("jugadores.json",{}).then(function(x){JG=x.data||{};fillP()})}
 $("pj").addEventListener("change",fillP);
-$("pes").addEventListener("change",function(){var f=this.files[0];if(f){$("pesv").src=URL.createObjectURL(f);$("pesv").hidden=false}});
-$("pnoesc").addEventListener("click",function(){
-if(!window.confirm("¿Quitar el escudo subido y volver al de la web?"))return;
-say("pmsg","Guardando...");
-saveG($("pj").value,{escudo:""},"Escudo quitado.").catch(function(){say("pmsg","No se pudo guardar.",true)})});
 $("pfo").addEventListener("change",function(){var f=this.files[0];if(f){$("pv").src=URL.createObjectURL(f);$("pv").hidden=false}});
-function resize(file,mx,png){return new Promise(function(res,rej){
+function resize(file,mx){return new Promise(function(res,rej){
 var fr=new FileReader();
 fr.onload=function(){var im=new Image();
 im.onload=function(){var m=mx||480,s=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
 c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);
 c.getContext("2d").drawImage(im,0,0,c.width,c.height);
-res((png?c.toDataURL("image/png"):c.toDataURL("image/jpeg",.85)).split(",")[1])};
+res(c.toDataURL("image/jpeg",.85).split(",")[1])};
 im.onerror=rej;im.src=fr.result};
 fr.onerror=rej;fr.readAsDataURL(file)})}
 function saveG(id,patch,okMsg){
 return getF("jugadores.json",{}).then(function(x){
-var all=x.data||{},d=all[id]||{apodo:"",bio:"",foto:"",escudo:""};
+var all=x.data||{},d=all[id]||{apodo:"",bio:"",foto:""};
 Object.keys(patch).forEach(function(k){d[k]=patch[k]});all[id]=d;
 return putF("jugadores.json",b64(JSON.stringify(all,null,2)+"\n"),x.sha,"Ficha de "+T[id].p).then(function(r){
 if(r.ok){JG=all;fillP();say("pmsg",okMsg)}else say("pmsg",why(r),true)})})}
+function crestResize(file){return new Promise(function(res,rej){
+var fr=new FileReader();fr.onload=function(){var im=new Image();im.onload=function(){
+var W=296,H=192,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+var bg="#ffffff";try{var t=document.createElement("canvas");t.width=1;t.height=1;var tx=t.getContext("2d");tx.drawImage(im,0,0,1,1);var px=tx.getImageData(0,0,1,1).data;if(px[3]>200)bg="rgb("+px[0]+","+px[1]+","+px[2]+")"}catch(e){}
+x.fillStyle=bg;x.fillRect(0,0,W,H);
+var s=Math.min(W/im.width,H/im.height)*0.92,w=im.width*s,h=im.height*s;
+x.drawImage(im,(W-w)/2,(H-h)/2,w,h);
+res(c.toDataURL("image/jpeg",.9).split(",")[1])};im.onerror=rej;im.src=fr.result};fr.onerror=rej;fr.readAsDataURL(file)})}
+$("pes").addEventListener("change",function(){var f=this.files[0];if(f){$("pesv").src=URL.createObjectURL(f);$("pesv").hidden=false}});
 $("psave").addEventListener("click",function(){
-var id=$("pj").value,f=$("pfo").files[0],b=$("psave");
+var id=$("pj").value,f=$("pfo").files[0],fe=$("pes").files[0],b=$("psave");
 var patch={apodo:$("pap").value.trim(),bio:$("pbio").value.trim()};
 b.disabled=true;say("pmsg","Guardando...");
 var step=Promise.resolve();
-if(f){step=resize(f).then(function(data){
+if(f){step=step.then(function(){return resize(f).then(function(data){
 return http("fotos/"+id+".jpg").then(function(x){
 return putF("fotos/"+id+".jpg",data,x.ok?x.d.sha:"","Foto de "+T[id].p).then(function(r){
 if(!r.ok)throw new Error("foto "+r.s);
-patch.foto="fotos/"+id+".jpg?v="+Date.now()})})})}
-var fe=$("pes").files[0];
-if(fe){step=step.then(function(){return resize(fe,256,true)}).then(function(data){var ep="fotos/escudo-"+id+".png";
-return http(ep).then(function(x){return putF(ep,data,x.ok?x.d.sha:"","Escudo de "+T[id].t).then(function(r){if(!r.ok)throw new Error("escudo "+r.s);patch.escudo=ep+"?v="+Date.now()})})})}
+patch.foto="fotos/"+id+".jpg?v="+Date.now()})})})})}
+if(fe){step=step.then(function(){return crestResize(fe).then(function(data){var pp="fotos/escudo-"+id+".jpg";
+return http(pp).then(function(x){
+return putF(pp,data,x.ok?x.d.sha:"","Escudo de "+T[id].t).then(function(r){
+if(!r.ok)throw new Error("escudo "+r.s);
+patch.escudo=pp+"?v="+Date.now()})})})})}
 step.then(function(){return saveG(id,patch,"Guardado. La web lo mostrará en 1 o 2 minutos.")})
-.then(function(){b.disabled=false}).catch(function(){b.disabled=false;say("pmsg","No se pudo guardar. Revisa la foto y la conexión.",true)})});
+.then(function(){b.disabled=false;$("pes").value=""}).catch(function(){b.disabled=false;say("pmsg","No se pudo guardar. Revisa las imágenes y la conexión.",true)})});
+$("pnoes").addEventListener("click",function(){
+if(!window.confirm("¿Quitar el escudo personalizado y volver al original?"))return;
+say("pmsg","Guardando...");
+saveG($("pj").value,{escudo:""},"Escudo quitado.").catch(function(){say("pmsg","No se pudo guardar.",true)})});
 $("pnofoto").addEventListener("click",function(){
 if(!window.confirm("¿Quitar la foto de este jugador?"))return;
 say("pmsg","Guardando...");
 saveG($("pj").value,{foto:""},"Foto quitada.").catch(function(){say("pmsg","No se pudo guardar.",true)})});
+
+/* Goles bonitos */
+var GO=[];
+$("gju").innerHTML=Object.keys(T).map(function(i){return '<option value="'+i+'">'+T[i].p+' - '+T[i].t+'</option>'}).join("");
+(function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=22;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("gjo").innerHTML=h})();
+function listGo(){
+var L=GO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
+$("glist").innerHTML=L.map(function(g){return '<div class="li"><span>'+esc(g.titulo)+'<small>'+(T[g.jugador]?esc(T[g.jugador].p)+", ":"")+(g.jornada?"Jornada "+(+g.jornada)+", ":"")+esc(fmtd(g.fecha))+'</small></span><button class="del" data-g="'+(+g.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay goles publicados.</p>'}
+function loadGo(){return getF("golazos.json",{golazos:[]}).then(function(x){GO=x.data.golazos||[];listGo()})}
+$("gfo").addEventListener("change",function(){var f=this.files[0];if(f){$("gpv").src=URL.createObjectURL(f);$("gpv").hidden=false}});
+$("gsave").addEventListener("click",function(){
+var ti=$("gti").value.trim(),en=$("gen").value.trim();
+if(!ti){say("gmsg","Escribe un título.",true);return}
+if(en&&!/^https:\/\/[^\s"'<>]+$/.test(en)){say("gmsg","El enlace debe empezar por https://",true);return}
+var f=$("gfo").files[0],pid=Date.now(),b=$("gsave"),nf="";
+b.disabled=true;say("gmsg","Publicando...");
+var step=Promise.resolve();
+if(f){var fp="fotos/gol-"+pid+".jpg";step=resize(f,900).then(function(data){return http(fp).then(function(x){return putF(fp,data,x.ok?x.d.sha:"","Foto de gol bonito").then(function(r){if(!r.ok)throw new Error("foto "+r.s);nf=fp+"?v="+Date.now()})})})}
+step.then(function(){return getF("golazos.json",{golazos:[]})}).then(function(x){
+var L=x.data.golazos||[];L.push({id:pid,fecha:today(),jornada:parseInt($("gjo").value,10)||0,jugador:$("gju").value,titulo:ti,foto:nf,enlace:en});
+return putF("golazos.json",b64(JSON.stringify({golazos:L},null,2)+"\n"),x.sha,"Gol bonito: "+ti).then(function(r){
+b.disabled=false;
+if(r.ok){GO=L;listGo();$("gti").value="";$("gen").value="";$("gfo").value="";$("gpv").hidden=true;say("gmsg","Publicado. La web lo mostrará en 1 o 2 minutos.")}else say("gmsg",why(r),true)})}).catch(function(){b.disabled=false;say("gmsg","No se pudo publicar. Revisa la foto y la conexión.",true)})});
+$("glist").addEventListener("click",function(e){var d=e.target.getAttribute("data-g");if(d===null)return;
+if(!window.confirm("¿Borrar este gol?"))return;
+var gone=GO.filter(function(g){return String(g.id)===d})[0];say("gmsg","Borrando...");
+getF("golazos.json",{golazos:[]}).then(function(x){var L=(x.data.golazos||[]).filter(function(g){return String(g.id)!==d});
+return putF("golazos.json",b64(JSON.stringify({golazos:L},null,2)+"\n"),x.sha,"Borrar gol bonito").then(function(r){
+if(r.ok){GO=L;listGo();say("gmsg","Gol borrado.");
+if(gone&&FOK.test(gone.foto||"")){var fp=gone.foto.split("?")[0];http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:"Borrar foto de gol",sha:q.d.sha})})}}
+else say("gmsg",why(r),true)})}).catch(function(){say("gmsg","No se pudo borrar.",true)})});
 
 /* Acceso */
 function enter(){
@@ -459,7 +407,7 @@ if(!r.ok){var e=new Error("auth");throw e}
 loadR().catch(function(){say("msg","No se pudo cargar. Comprueba la conexión y pulsa Recargar.",true)});
 loadP().catch(function(){say("cmsg","No se pudieron cargar las crónicas.",true)});
 loadG().catch(function(){say("pmsg","No se pudieron cargar las fichas.",true)});
-loadGL().catch(function(){say("gmsg","No se pudieron cargar los golazos.",true)})
+loadGo().catch(function(){say("gmsg","No se pudieron cargar los goles.",true)})
 }).catch(function(e){
 if(e.message==="auth"){try{localStorage.removeItem("sl-token")}catch(x){}tok="";view(false);$("le").textContent="El token no vale o no tiene acceso al repositorio. Revisa que sea el correcto y que tenga permiso de Contents: Read and write."}
 else{say("msg","No se pudo conectar. Comprueba la conexión.",true)}})}
