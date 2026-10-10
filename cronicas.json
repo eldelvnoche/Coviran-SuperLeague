@@ -159,6 +159,14 @@
       "titulo": "El Gran Clásico de la SuperLeague !!",
       "texto": "En la 4ta Jornada, se enfrentan el Arsenal y el Barça, un duelo de invictos, a por el liderazgo de la SuperLeague !!",
       "foto": "fotos/cronica-1791648422180.jpg?v=1791648425140"
+    },
+    {
+      "id": 1791659031458,
+      "fecha": "2026-10-10",
+      "jornada": 7,
+      "titulo": "EL BOCA DEVORA A LA GAZELLA CATALAN",
+      "texto": "El Bocajuniors sigue defendiendo su liderazgo, y se queda a la espera del gran clasico entre el Arsenal y el Barça",
+      "foto": "fotos/cronica-1791659031458.jpg?v=1791659033639"
     }
   ]
 }
