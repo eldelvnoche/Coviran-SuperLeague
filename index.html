@@ -571,7 +571,7 @@ var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
 $("po").innerHTML=L.map(function(p){
 var meta=(p.jornada?"Jornada "+(+p.jornada):"")+(p.jornada&&p.fecha?", ":"")+(p.fecha?fmt(p.fecha):"");
 var body=String(p.texto||"").split(/\n{2,}/).map(function(x){return '<p>'+esc(x).replace(/\n/g,"<br>")+'</p>'}).join("");
-var im=okFoto(p.foto)?'<img class="pf" alt="" loading="lazy" src="'+p.foto+'">':'';
+var im=okFoto(p.video)?'<video class="pf" controls playsinline preload="metadata" src="'+p.video+'"></video>':okFoto(p.foto)?'<img class="pf" alt="" loading="lazy" src="'+p.foto+'">':'';
 return '<article class="po"><div class="mt">'+esc(meta)+'</div><h3>'+esc(p.titulo)+'</h3>'+im+body+'</article>'}).join("")||'<div class="empty">Aún no hay crónicas.</div>'}
 function ytId(u){var m=String(u||"").match(/^https:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);return m?m[1]:null}
 function okUrl(u){return typeof u==="string"&&/^https:\/\/[^\s"'<>]+$/.test(u)}

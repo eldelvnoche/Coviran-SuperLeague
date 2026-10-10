@@ -105,11 +105,12 @@ details summary{cursor:pointer;padding:4px 0}
 <input id="cti" maxlength="80" placeholder="Por ejemplo: Demian estrena la liga con victoria">
 <label for="ctx">Texto (deja una línea en blanco para separar párrafos)</label>
 <textarea id="ctx" maxlength="3000"></textarea>
-<label for="cfo">Foto que ilustra la crónica (opcional)</label>
-<input id="cfo" type="file" accept="image/*">
+<label for="cfo">Foto o vídeo que ilustra la crónica (opcional)</label>
+<input id="cfo" type="file" accept="image/*,video/*">
 <img class="pv2" id="cpv" alt="" hidden>
-<p class="mute">Sube solo fotos propias o con permiso de quien aparece. La web es pública.</p>
-<button class="sec" id="cquit" type="button" hidden>Quitar foto</button>
+<video class="pv2" id="cpvd" controls playsinline preload="metadata" hidden></video>
+<p class="mute">Elige una foto o un vídeo (solo uno por crónica). Para vídeo, mejor MP4 y de menos de 25 MB. Sube solo contenido propio o con permiso de quien aparece. La web es pública.</p>
+<button class="sec" id="cquit" type="button" hidden>Quitar foto o vídeo</button>
 <div class="row2"><button id="csave">Publicar crónica</button><button class="sec" id="ccancel" hidden>Cancelar edición</button></div>
 <p class="msg" id="cmsg" role="status"></p>
 </div>
@@ -332,23 +333,30 @@ if(r.ok){GL=L;listG();$("gti").value="";$("gtx").value="";$("gen").value="";$("g
 .catch(function(){b.disabled=false;say("gmsg","No se pudo publicar. Si el vídeo es grande, prueba con un enlace de YouTube.",true)})});
 
 /* Crónicas */
-var PO=[],editId=null,cfoto="",cquit=false,FOK=/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/;
+var PO=[],editId=null,cfoto="",cvideo="",cquit=false,FOK=/^fotos\/[A-Za-z0-9_.-]+(\?v=\d+)?$/;
+function isVid(f){return !!f&&(/^video\//i.test(f.type||"")||/\.(mp4|m4v|webm|mov)$/i.test(f.name||""))}
+function basePath(p){return String(p||"").split("?")[0]}
+function delFile(p,msg){var fp=basePath(p);if(!FOK.test(fp))return;http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:msg,sha:q.d.sha})})}
 (function(){var h='<option value="0">Sin jornada</option>';for(var i=1;i<=22;i++)h+='<option value="'+i+'">Jornada '+i+'</option>';$("cj").innerHTML=h})();
 function fmtd(f){var p=(f||"").split("-");return p.length===3?p[2]+"/"+p[1]+"/"+p[0]:""}
 function listPosts(){
 var L=PO.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
 $("clist").innerHTML=L.map(function(p){
-return '<div class="li"><span>'+esc(p.titulo)+'<small>'+(p.jornada?"Jornada "+(+p.jornada)+", ":"")+esc(fmtd(p.fecha))+(p.foto?", con foto":"")+'</small></span><button class="sec" data-e="'+(+p.id)+'">Editar</button><button class="del" data-d="'+(+p.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay crónicas.</p>'}
+return '<div class="li"><span>'+esc(p.titulo)+'<small>'+(p.jornada?"Jornada "+(+p.jornada)+", ":"")+esc(fmtd(p.fecha))+(p.video?", con vídeo":p.foto?", con foto":"")+'</small></span><button class="sec" data-e="'+(+p.id)+'">Editar</button><button class="del" data-d="'+(+p.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay crónicas.</p>'}
 function loadP(){return getF("cronicas.json",{cronicas:[]}).then(function(x){PO=x.data.cronicas||[];listPosts()})}
-function showCp(src){var v=$("cpv");if(src){v.src=src;v.hidden=false;$("cquit").hidden=false}else{v.hidden=true;$("cquit").hidden=true}}
-function resetForm(){editId=null;cfoto="";cquit=false;$("ct").textContent="Nueva crónica";$("cti").value="";$("ctx").value="";$("cj").value="0";$("cfo").value="";showCp("");$("ccancel").hidden=true;$("csave").textContent="Publicar crónica"}
+function showCp(src,vid){var v=$("cpv"),d=$("cpvd");
+v.hidden=true;d.hidden=true;v.removeAttribute("src");d.pause();d.removeAttribute("src");
+if(src){if(vid){d.src=src;d.hidden=false}else{v.src=src;v.hidden=false}$("cquit").hidden=false}else{$("cquit").hidden=true}}
+function resetForm(){editId=null;cfoto="";cvideo="";cquit=false;$("ct").textContent="Nueva crónica";$("cti").value="";$("ctx").value="";$("cj").value="0";$("cfo").value="";showCp("");$("ccancel").hidden=true;$("csave").textContent="Publicar crónica"}
 $("ccancel").addEventListener("click",function(){resetForm();say("cmsg","")});
-$("cfo").addEventListener("change",function(){var f=this.files[0];if(f){cquit=false;showCp(URL.createObjectURL(f))}});
+$("cfo").addEventListener("change",function(){var f=this.files[0];if(f){
+if(isVid(f)&&f.size>25*1024*1024){this.value="";showCp("");say("cmsg","El vídeo pesa más de 25 MB. Comprímelo o elige uno más corto.",true);return}
+say("cmsg","");cquit=false;showCp(URL.createObjectURL(f),isVid(f))}});
 $("cquit").addEventListener("click",function(){cquit=true;$("cfo").value="";showCp("")});
 $("clist").addEventListener("click",function(e){
 var ed=e.target.getAttribute("data-e"),dl=e.target.getAttribute("data-d");
 if(ed!==null){var p=PO.filter(function(x){return String(x.id)===ed})[0];if(!p)return;
-resetForm();editId=p.id;cfoto=p.foto||"";$("ct").textContent="Editar crónica";$("cti").value=p.titulo||"";$("ctx").value=p.texto||"";$("cj").value=String(p.jornada||0);$("ccancel").hidden=false;$("csave").textContent="Guardar cambios";showCp(FOK.test(cfoto)?cfoto:"");window.scrollTo(0,0)}
+resetForm();editId=p.id;cfoto=p.foto||"";cvideo=p.video||"";$("ct").textContent="Editar crónica";$("cti").value=p.titulo||"";$("ctx").value=p.texto||"";$("cj").value=String(p.jornada||0);$("ccancel").hidden=false;$("csave").textContent="Guardar cambios";if(FOK.test(cvideo))showCp(cvideo,true);else showCp(FOK.test(cfoto)?cfoto:"");window.scrollTo(0,0)}
 if(dl!==null){
 if(!window.confirm("¿Borrar esta crónica?"))return;
 var gone=PO.filter(function(p){return String(p.id)===dl})[0];
@@ -357,27 +365,39 @@ getF("cronicas.json",{cronicas:[]}).then(function(x){
 var L=(x.data.cronicas||[]).filter(function(p){return String(p.id)!==dl});
 return putF("cronicas.json",b64(JSON.stringify({cronicas:L},null,2)+"\n"),x.sha,"Borrar crónica").then(function(r){
 if(r.ok){PO=L;listPosts();if(String(editId)===dl)resetForm();say("cmsg","Crónica borrada.");
-if(gone&&FOK.test(gone.foto||"")){var fp=gone.foto.split("?")[0];http(fp).then(function(q){if(q.ok)http(fp,"DELETE",{message:"Borrar foto de crónica",sha:q.d.sha})})}}
+if(gone){delFile(gone.foto,"Borrar foto de crónica");delFile(gone.video,"Borrar vídeo de crónica")}}
 else say("cmsg",why(r),true)})}).catch(function(){say("cmsg","No se pudo borrar.",true)})}});
 $("csave").addEventListener("click",function(){
 var ti=$("cti").value.trim(),tx=$("ctx").value.trim();
 if(!ti||!tx){say("cmsg","Escribe el título y el texto.",true);return}
-var f=$("cfo").files[0],pid=editId!==null?editId:Date.now(),b=$("csave"),nf=null;
-b.disabled=true;say("cmsg","Publicando...");
+var f=$("cfo").files[0],pid=editId!==null?editId:Date.now(),b=$("csave"),nf=null,nv=null,toDel=[];
+if(f&&isVid(f)&&f.size>25*1024*1024){say("cmsg","El vídeo pesa más de 25 MB. Comprímelo o elige uno más corto.",true);return}
+b.disabled=true;say("cmsg",f&&isVid(f)?"Subiendo vídeo (puede tardar un poco)...":"Publicando...");
 var step=Promise.resolve();
-if(f){var fp="fotos/cronica-"+pid+".jpg";
+if(f&&isVid(f)){var ext=((f.name||"").match(/\.(mp4|m4v|webm|mov)$/i)||[0,"mp4"])[1].toLowerCase();var vp="fotos/cronica-"+pid+"."+ext;
+step=fileB64(f).then(function(data){return http(vp).then(function(x){
+return putF(vp,data,x.ok?x.d.sha:"","Vídeo de crónica").then(function(r){
+if(!r.ok)throw new Error("video "+r.s);nv=vp+"?v="+Date.now()})})})}
+else if(f){var fp="fotos/cronica-"+pid+".jpg";
 step=resize(f,900).then(function(data){return http(fp).then(function(x){
 return putF(fp,data,x.ok?x.d.sha:"","Foto de crónica").then(function(r){
 if(!r.ok)throw new Error("foto "+r.s);nf=fp+"?v="+Date.now()})})})}
 step.then(function(){return getF("cronicas.json",{cronicas:[]})}).then(function(x){
 var L=x.data.cronicas||[],jn=parseInt($("cj").value,10)||0;
+function mk(base,oldFoto,oldVideo){
+var fo,vi;
+if(nv!==null){fo="";vi=nv}
+else if(nf!==null){fo=nf;vi=""}
+else if(cquit){fo="";vi=""}
+else{fo=oldFoto||"";vi=oldVideo||""}
+[[oldFoto,fo,"Borrar foto de crónica"],[oldVideo,vi,"Borrar vídeo de crónica"]].forEach(function(q){if(q[0]&&basePath(q[0])!==basePath(q[1]))toDel.push([q[0],q[2]])});
+var o=base;o.foto=fo;if(vi)o.video=vi;return o}
 if(editId!==null){L=L.map(function(p){if(String(p.id)!==String(editId))return p;
-var fo=nf!==null?nf:(cquit?"":(p.foto||""));
-return{id:p.id,fecha:p.fecha,jornada:jn,titulo:ti,texto:tx,foto:fo}})}
-else{L.push({id:pid,fecha:today(),jornada:jn,titulo:ti,texto:tx,foto:nf||""})}
+return mk({id:p.id,fecha:p.fecha,jornada:jn,titulo:ti,texto:tx},p.foto,p.video)})}
+else{L.push(mk({id:pid,fecha:today(),jornada:jn,titulo:ti,texto:tx},"",""))}
 return putF("cronicas.json",b64(JSON.stringify({cronicas:L},null,2)+"\n"),x.sha,"Crónica: "+ti).then(function(r){
 b.disabled=false;
-if(r.ok){PO=L;listPosts();resetForm();say("cmsg","Publicada. La web la mostrará en 1 o 2 minutos.")}else say("cmsg",why(r),true)})}).catch(function(){b.disabled=false;say("cmsg","No se pudo publicar. Revisa la foto y la conexión.",true)})});
+if(r.ok){PO=L;listPosts();resetForm();say("cmsg","Publicada. La web la mostrará en 1 o 2 minutos.");toDel.forEach(function(q){delFile(q[0],q[1])})}else say("cmsg",why(r),true)})}).catch(function(){b.disabled=false;say("cmsg","No se pudo publicar. Si el vídeo es grande, prueba con uno más corto o más comprimido.",true)})});
 
 /* Jugadores */
 var JG={};
