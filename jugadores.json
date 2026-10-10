@@ -2,51 +2,58 @@
   "dm": {
     "apodo": "Doubl3 D",
     "bio": "",
-    "foto": "fotos/dm.jpg?v=1791536819664"
+    "foto": "fotos/dm.jpg?v=1791558902639"
   },
   "rb": {
-    "apodo": "",
+    "apodo": "El Culer",
     "bio": "",
-    "foto": ""
+    "foto": "fotos/rb.jpg?v=1791570337300"
   },
   "th": {
-    "apodo": "",
+    "apodo": "El Mago",
     "bio": "",
-    "foto": ""
+    "foto": "fotos/th.jpg?v=1791561142518"
   },
   "md": {
-    "apodo": "",
+    "apodo": "EL NESSAB",
     "bio": "",
-    "foto": ""
+    "foto": "fotos/md.jpg?v=1791573455370"
   },
   "hs": {
     "apodo": "Lilb 47",
     "bio": "",
-    "foto": "fotos/hs.jpg?v=1791537014941"
+    "foto": "fotos/hs.jpg?v=1791558449323",
+    "escudo": ""
   },
   "zk": {
     "apodo": "",
     "bio": "",
-    "foto": ""
+    "foto": "fotos/zk.jpg?v=1791569339893"
   },
   "bd": {
-    "apodo": "",
-    "bio": "",
-    "foto": ""
+    "apodo": "eldelvnoche",
+    "bio": "CEO de Covirán SuperLeague",
+    "foto": "fotos/bd.jpg?v=1791560081758"
   },
   "ej": {
-    "apodo": "",
+    "apodo": "YOICHI ISAGI",
     "bio": "",
-    "foto": ""
+    "foto": "fotos/ej.jpg?v=1791576097390"
   },
   "fd": {
     "apodo": "",
     "bio": "",
-    "foto": "fotos/fd.jpg?v=1791537106380"
+    "foto": "fotos/fd.jpg?v=1791560002917"
   },
   "ch": {
-    "apodo": "",
+    "apodo": "La Máquina",
     "bio": "",
-    "foto": ""
+    "foto": "fotos/ch.jpg?v=1791561045439"
+  },
+  "hi": {
+    "apodo": "El Matador",
+    "bio": "",
+    "foto": "fotos/hi.jpg?v=1791570929099",
+    "escudo": ""
   }
 }

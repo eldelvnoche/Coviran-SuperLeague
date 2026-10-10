@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-09",
+  "actualizado": "2026-10-10",
   "resultados": [
     {
       "j": 1,
@@ -7,59 +7,76 @@
       "visitante": "dm",
       "gl": 1,
       "gv": 2,
-      "est": {
-        "pos": [
-          55,
-          45
-        ],
-        "tiros": [
-          12,
-          6
-        ],
-        "puerta": [
-          7,
-          4
-        ],
-        "faltas": [
-          0,
-          0
-        ],
-        "fuera": [
-          0,
-          0
-        ],
-        "corners": [
-          1,
-          2
-        ],
-        "libres": [
-          0,
-          0
-        ],
-        "pases": [
-          119,
-          92
-        ],
-        "comp": [
-          96,
-          57
-        ],
-        "centros": [
-          0,
-          0
-        ],
-        "inter": [
-          23,
-          20
-        ],
-        "entradas": [
-          9,
-          7
-        ],
-        "paradas": [
-          1,
-          5
-        ]
+      "st": {
+        "l": {
+          "pos": 55,
+          "tir": 12,
+          "tpu": 7,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 119,
+          "pac": 96,
+          "cen": 0,
+          "int": 23,
+          "ent": 9,
+          "par": 1
+        },
+        "v": {
+          "pos": 45,
+          "tir": 6,
+          "tpu": 4,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 92,
+          "pac": 57,
+          "cen": 0,
+          "int": 20,
+          "ent": 7,
+          "par": 5
+        }
+      }
+    },
+    {
+      "j": 1,
+      "local": "hs",
+      "visitante": "rb",
+      "gl": 4,
+      "gv": 9,
+      "st": {
+        "l": {
+          "pos": 45,
+          "tir": 13,
+          "tpu": 7,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 3,
+          "tli": 0,
+          "pas": 122,
+          "pac": 88,
+          "cen": 2,
+          "int": 27,
+          "ent": 9,
+          "par": 1
+        },
+        "v": {
+          "pos": 55,
+          "tir": 15,
+          "tpu": 10,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 196,
+          "pac": 161,
+          "cen": 1,
+          "int": 30,
+          "ent": 6,
+          "par": 3
+        }
       }
     },
     {
@@ -68,60 +85,1058 @@
       "visitante": "md",
       "gl": 0,
       "gv": 15,
-      "est": {
-        "pos": [
-          50,
-          50
-        ],
-        "tiros": [
-          2,
-          29
-        ],
-        "puerta": [
-          0,
-          25
-        ],
-        "faltas": [
-          0,
-          2
-        ],
-        "fuera": [
-          0,
-          2
-        ],
-        "corners": [
-          0,
-          7
-        ],
-        "libres": [
-          2,
-          0
-        ],
-        "pases": [
-          155,
-          107
-        ],
-        "comp": [
-          119,
-          78
-        ],
-        "centros": [
-          0,
-          2
-        ],
-        "inter": [
-          19,
-          29
-        ],
-        "entradas": [
-          3,
-          12
-        ],
-        "paradas": [
-          9,
-          1
-        ]
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 2,
+          "tpu": 0,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 2,
+          "pas": 155,
+          "pac": 119,
+          "cen": 0,
+          "int": 19,
+          "ent": 3,
+          "par": 9
+        },
+        "v": {
+          "pos": 50,
+          "tir": 29,
+          "tpu": 25,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 7,
+          "tli": 0,
+          "pas": 107,
+          "pac": 78,
+          "cen": 2,
+          "int": 29,
+          "ent": 12,
+          "par": 1
+        }
+      }
+    },
+    {
+      "j": 1,
+      "local": "fd",
+      "visitante": "th",
+      "gl": 2,
+      "gv": 13,
+      "st": {
+        "l": {
+          "pos": 42,
+          "tir": 8,
+          "tpu": 5,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 131,
+          "pac": 100,
+          "cen": 1,
+          "int": 31,
+          "ent": 4,
+          "par": 2
+        },
+        "v": {
+          "pos": 58,
+          "tir": 16,
+          "tpu": 16,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 137,
+          "pac": 93,
+          "cen": 1,
+          "int": 24,
+          "ent": 3,
+          "par": 2
+        }
+      }
+    },
+    {
+      "j": 1,
+      "local": "hi",
+      "visitante": "zk",
+      "gl": 2,
+      "gv": 5,
+      "st": {
+        "l": {
+          "pos": 47,
+          "tir": 8,
+          "tpu": 4,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 1,
+          "tli": 0,
+          "pas": 104,
+          "pac": 69,
+          "cen": 0,
+          "int": 31,
+          "ent": 7,
+          "par": 4
+        },
+        "v": {
+          "pos": 53,
+          "tir": 13,
+          "tpu": 8,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 2,
+          "pas": 131,
+          "pac": 96,
+          "cen": 0,
+          "int": 31,
+          "ent": 5,
+          "par": 4
+        }
+      }
+    },
+    {
+      "j": 2,
+      "local": "rb",
+      "visitante": "ch",
+      "gl": 7,
+      "gv": 1,
+      "st": {
+        "l": {
+          "pos": 59,
+          "tir": 12,
+          "tpu": 11,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 209,
+          "pac": 174,
+          "cen": 10,
+          "int": 30,
+          "ent": 16,
+          "par": 0
+        },
+        "v": {
+          "pos": 41,
+          "tir": 2,
+          "tpu": 1,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 0,
+          "pas": 118,
+          "pac": 83,
+          "cen": 0,
+          "int": 27,
+          "ent": 6,
+          "par": 1
+        }
+      }
+    },
+    {
+      "j": 2,
+      "local": "bd",
+      "visitante": "md",
+      "gl": 2,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 51,
+          "tir": 8,
+          "tpu": 5,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 3,
+          "tli": 1,
+          "pas": 109,
+          "pac": 82,
+          "cen": 1,
+          "int": 34,
+          "ent": 4,
+          "par": 8
+        },
+        "v": {
+          "pos": 49,
+          "tir": 13,
+          "tpu": 11,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 3,
+          "tli": 0,
+          "pas": 145,
+          "pac": 98,
+          "cen": 4,
+          "int": 23,
+          "ent": 7,
+          "par": 2
+        }
+      }
+    },
+    {
+      "j": 2,
+      "local": "th",
+      "visitante": "hs",
+      "gl": 4,
+      "gv": 3,
+      "st": {
+        "l": {
+          "pos": 47,
+          "tir": 9,
+          "tpu": 7,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 0,
+          "tli": 1,
+          "pas": 96,
+          "pac": 66,
+          "cen": 0,
+          "int": 23,
+          "ent": 13,
+          "par": 9
+        },
+        "v": {
+          "pos": 53,
+          "tir": 15,
+          "tpu": 10,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 3,
+          "tli": 1,
+          "pas": 131,
+          "pac": 99,
+          "cen": 1,
+          "int": 25,
+          "ent": 4,
+          "par": 4
+        }
+      }
+    },
+    {
+      "j": 2,
+      "local": "ej",
+      "visitante": "zk",
+      "gl": 3,
+      "gv": 3,
+      "st": {
+        "l": {
+          "pos": 61,
+          "tir": 8,
+          "tpu": 6,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 1,
+          "tli": 1,
+          "pas": 161,
+          "pac": 138,
+          "cen": 0,
+          "int": 26,
+          "ent": 3,
+          "par": 4
+        },
+        "v": {
+          "pos": 39,
+          "tir": 7,
+          "tpu": 5,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 2,
+          "tli": 1,
+          "pas": 108,
+          "pac": 76,
+          "cen": 0,
+          "int": 18,
+          "ent": 14,
+          "par": 2
+        }
+      }
+    },
+    {
+      "j": 2,
+      "local": "hi",
+      "visitante": "fd",
+      "gl": 1,
+      "gv": 10,
+      "st": {
+        "l": {
+          "pos": 52,
+          "tir": 4,
+          "tpu": 3,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 1,
+          "pas": 92,
+          "pac": 57,
+          "cen": 0,
+          "int": 27,
+          "ent": 9,
+          "par": 7
+        },
+        "v": {
+          "pos": 48,
+          "tir": 23,
+          "tpu": 16,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 4,
+          "tli": 0,
+          "pas": 124,
+          "pac": 85,
+          "cen": 0,
+          "int": 31,
+          "ent": 23,
+          "par": 2
+        }
+      }
+    },
+    {
+      "j": 3,
+      "local": "dm",
+      "visitante": "md",
+      "gl": 0,
+      "gv": 7,
+      "st": {
+        "l": {
+          "pos": 43,
+          "tir": 7,
+          "tpu": 3,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 1,
+          "tli": 3,
+          "pas": 112,
+          "pac": 64,
+          "cen": 0,
+          "int": 34,
+          "ent": 4,
+          "par": 4
+        },
+        "v": {
+          "pos": 57,
+          "tir": 17,
+          "tpu": 15,
+          "fal": 3,
+          "fdj": 1,
+          "cor": 4,
+          "tli": 1,
+          "pas": 162,
+          "pac": 117,
+          "cen": 3,
+          "int": 36,
+          "ent": 10,
+          "par": 4
+        }
+      }
+    },
+    {
+      "j": 3,
+      "local": "bd",
+      "visitante": "zk",
+      "gl": 6,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 53,
+          "tir": 15,
+          "tpu": 10,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 0,
+          "pas": 116,
+          "pac": 87,
+          "cen": 0,
+          "int": 38,
+          "ent": 4,
+          "par": 6
+        },
+        "v": {
+          "pos": 47,
+          "tir": 11,
+          "tpu": 7,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 131,
+          "pac": 89,
+          "cen": 0,
+          "int": 28,
+          "ent": 4,
+          "par": 4
+        }
+      }
+    },
+    {
+      "j": 3,
+      "local": "hi",
+      "visitante": "hs",
+      "gl": 0,
+      "gv": 7,
+      "st": {
+        "l": {
+          "pos": 51,
+          "tir": 2,
+          "tpu": 2,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 1,
+          "tli": 2,
+          "pas": 104,
+          "pac": 64,
+          "cen": 0,
+          "int": 24,
+          "ent": 6,
+          "par": 9
+        },
+        "v": {
+          "pos": 49,
+          "tir": 21,
+          "tpu": 14,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 3,
+          "tli": 1,
+          "pas": 115,
+          "pac": 88,
+          "cen": 1,
+          "int": 37,
+          "ent": 11,
+          "par": 1
+        }
+      }
+    },
+    {
+      "j": 3,
+      "local": "ej",
+      "visitante": "fd",
+      "gl": 3,
+      "gv": 6,
+      "st": {
+        "l": {
+          "pos": 55,
+          "tir": 9,
+          "tpu": 6,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 2,
+          "tli": 3,
+          "pas": 168,
+          "pac": 138,
+          "cen": 0,
+          "int": 33,
+          "ent": 2,
+          "par": 3
+        },
+        "v": {
+          "pos": 45,
+          "tir": 15,
+          "tpu": 11,
+          "fal": 3,
+          "fdj": 3,
+          "cor": 0,
+          "tli": 2,
+          "pas": 124,
+          "pac": 82,
+          "cen": 0,
+          "int": 24,
+          "ent": 16,
+          "par": 3
+        }
+      }
+    },
+    {
+      "j": 4,
+      "local": "dm",
+      "visitante": "zk",
+      "gl": 2,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 18,
+          "tpu": 15,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 1,
+          "pas": 100,
+          "pac": 88,
+          "cen": 1,
+          "int": 20,
+          "ent": 2,
+          "par": 3
+        },
+        "v": {
+          "pos": 50,
+          "tir": 9,
+          "tpu": 6,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 1,
+          "pas": 100,
+          "pac": 80,
+          "cen": 2,
+          "int": 12,
+          "ent": 5,
+          "par": 8
+        }
+      }
+    },
+    {
+      "j": 4,
+      "local": "bd",
+      "visitante": "fd",
+      "gl": 8,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 59,
+          "tir": 13,
+          "tpu": 11,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 0,
+          "tli": 3,
+          "pas": 131,
+          "pac": 104,
+          "cen": 1,
+          "int": 42,
+          "ent": 3,
+          "par": 2
+        },
+        "v": {
+          "pos": 41,
+          "tir": 7,
+          "tpu": 4,
+          "fal": 5,
+          "fdj": 1,
+          "cor": 1,
+          "tli": 2,
+          "pas": 130,
+          "pac": 79,
+          "cen": 0,
+          "int": 20,
+          "ent": 11,
+          "par": 3
+        }
+      }
+    },
+    {
+      "j": 4,
+      "local": "ej",
+      "visitante": "hs",
+      "gl": 1,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 51,
+          "tir": 9,
+          "tpu": 4,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 2,
+          "tli": 0,
+          "pas": 128,
+          "pac": 100,
+          "cen": 1,
+          "int": 21,
+          "ent": 9,
+          "par": 4
+        },
+        "v": {
+          "pos": 49,
+          "tir": 13,
+          "tpu": 8,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 2,
+          "pas": 89,
+          "pac": 62,
+          "cen": 2,
+          "int": 23,
+          "ent": 9,
+          "par": 4
+        }
+      }
+    },
+    {
+      "j": 5,
+      "local": "md",
+      "visitante": "zk",
+      "gl": 8,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 55,
+          "tir": 16,
+          "tpu": 15,
+          "fal": 3,
+          "fdj": 3,
+          "cor": 1,
+          "tli": 0,
+          "pas": 159,
+          "pac": 107,
+          "cen": 5,
+          "int": 40,
+          "ent": 8,
+          "par": 2
+        },
+        "v": {
+          "pos": 45,
+          "tir": 4,
+          "tpu": 3,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 3,
+          "pas": 124,
+          "pac": 72,
+          "cen": 0,
+          "int": 27,
+          "ent": 5,
+          "par": 5
+        }
+      }
+    },
+    {
+      "j": 5,
+      "local": "hi",
+      "visitante": "rb",
+      "gl": 0,
+      "gv": 8,
+      "st": {
+        "l": {
+          "pos": 48,
+          "tir": 2,
+          "tpu": 2,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 0,
+          "tli": 2,
+          "pas": 101,
+          "pac": 75,
+          "cen": 0,
+          "int": 18,
+          "ent": 2,
+          "par": 7
+        },
+        "v": {
+          "pos": 52,
+          "tir": 20,
+          "tpu": 17,
+          "fal": 2,
+          "fdj": 1,
+          "cor": 3,
+          "tli": 1,
+          "pas": 133,
+          "pac": 112,
+          "cen": 1,
+          "int": 23,
+          "ent": 9,
+          "par": 1
+        }
+      }
+    },
+    {
+      "j": 5,
+      "local": "dm",
+      "visitante": "fd",
+      "gl": 10,
+      "gv": 4,
+      "st": {
+        "l": {
+          "pos": 54,
+          "tir": 16,
+          "tpu": 13,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 1,
+          "pas": 107,
+          "pac": 75,
+          "cen": 0,
+          "int": 38,
+          "ent": 4,
+          "par": 4
+        },
+        "v": {
+          "pos": 46,
+          "tir": 10,
+          "tpu": 7,
+          "fal": 2,
+          "fdj": 1,
+          "cor": 2,
+          "tli": 0,
+          "pas": 137,
+          "pac": 90,
+          "cen": 0,
+          "int": 30,
+          "ent": 9,
+          "par": 3
+        }
+      }
+    },
+    {
+      "j": 5,
+      "local": "ej",
+      "visitante": "ch",
+      "gl": 7,
+      "gv": 0,
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 7,
+          "tpu": 7,
+          "fal": 1,
+          "fdj": 0,
+          "cor": 5,
+          "tli": 2,
+          "pas": 120,
+          "pac": 101,
+          "cen": 2,
+          "int": 3,
+          "ent": 4,
+          "par": 2
+        },
+        "v": {
+          "pos": 50,
+          "tir": 0,
+          "tpu": 0,
+          "fal": 3,
+          "fdj": 2,
+          "cor": 1,
+          "tli": 0,
+          "pas": 56,
+          "pac": 40,
+          "cen": 0,
+          "int": 5,
+          "ent": 3,
+          "par": 5
+        }
+      }
+    },
+    {
+      "j": 5,
+      "local": "bd",
+      "visitante": "hs",
+      "gl": 5,
+      "gv": 3,
+      "st": {
+        "l": {
+          "pos": 60,
+          "tir": 20,
+          "tpu": 11,
+          "fal": 1,
+          "fdj": 0,
+          "cor": 4,
+          "tli": 1,
+          "pas": 118,
+          "pac": 100,
+          "cen": 2,
+          "int": 26,
+          "ent": 5,
+          "par": 4
+        },
+        "v": {
+          "pos": 40,
+          "tir": 8,
+          "tpu": 5,
+          "fal": 1,
+          "fdj": 0,
+          "cor": 3,
+          "tli": 1,
+          "pas": 97,
+          "pac": 62,
+          "cen": 1,
+          "int": 15,
+          "ent": 11,
+          "par": 6
+        }
+      }
+    },
+    {
+      "j": 6,
+      "local": "hi",
+      "visitante": "th",
+      "gl": 0,
+      "gv": 7,
+      "st": {
+        "l": {
+          "pos": 45,
+          "tir": 2,
+          "tpu": 1,
+          "fal": 2,
+          "fdj": 1,
+          "cor": 0,
+          "tli": 1,
+          "pas": 93,
+          "pac": 71,
+          "cen": 0,
+          "int": 13,
+          "ent": 8,
+          "par": 11
+        },
+        "v": {
+          "pos": 55,
+          "tir": 21,
+          "tpu": 19,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 2,
+          "tli": 1,
+          "pas": 77,
+          "pac": 60,
+          "cen": 1,
+          "int": 17,
+          "ent": 10,
+          "par": 1
+        }
+      }
+    },
+    {
+      "j": 6,
+      "local": "ej",
+      "visitante": "rb",
+      "gl": 3,
+      "gv": 9,
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 6,
+          "tpu": 3,
+          "fal": 2,
+          "fdj": 1,
+          "cor": 1,
+          "tli": 0,
+          "pas": 172,
+          "pac": 132,
+          "cen": 0,
+          "int": 26,
+          "ent": 8,
+          "par": 3
+        },
+        "v": {
+          "pos": 50,
+          "tir": 17,
+          "tpu": 14,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 2,
+          "pas": 169,
+          "pac": 135,
+          "cen": 2,
+          "int": 31,
+          "ent": 13,
+          "par": 1
+        }
+      }
+    },
+    {
+      "j": 7,
+      "local": "zk",
+      "visitante": "fd",
+      "gl": 9,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 52,
+          "tir": 16,
+          "tpu": 14,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 4,
+          "tli": 0,
+          "pas": 122,
+          "pac": 81,
+          "cen": 0,
+          "int": 39,
+          "ent": 2,
+          "par": 7
+        },
+        "v": {
+          "pos": 48,
+          "tir": 20,
+          "tpu": 11,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 4,
+          "tli": 1,
+          "pas": 139,
+          "pac": 96,
+          "cen": 0,
+          "int": 34,
+          "ent": 6,
+          "par": 6
+        }
+      }
+    },
+    {
+      "j": 7,
+      "local": "ej",
+      "visitante": "th",
+      "gl": 0,
+      "gv": 3,
+      "st": {
+        "l": {
+          "pos": 54,
+          "tir": 4,
+          "tpu": 3,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 0,
+          "tli": 2,
+          "pas": 144,
+          "pac": 114,
+          "cen": 0,
+          "int": 12,
+          "ent": 1,
+          "par": 8
+        },
+        "v": {
+          "pos": 46,
+          "tir": 14,
+          "tpu": 10,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 4,
+          "tli": 1,
+          "pas": 86,
+          "pac": 64,
+          "cen": 3,
+          "int": 24,
+          "ent": 9,
+          "par": 3
+        }
+      }
+    },
+    {
+      "j": 10,
+      "local": "bd",
+      "visitante": "ej",
+      "gl": 2,
+      "gv": 1,
+      "st": {
+        "l": {
+          "pos": 51,
+          "tir": 14,
+          "tpu": 10,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 87,
+          "pac": 65,
+          "cen": 1,
+          "int": 25,
+          "ent": 7,
+          "par": 3
+        },
+        "v": {
+          "pos": 49,
+          "tir": 6,
+          "tpu": 5,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 126,
+          "pac": 98,
+          "cen": 1,
+          "int": 21,
+          "ent": 6,
+          "par": 7
+        }
+      }
+    },
+    {
+      "j": 10,
+      "local": "fd",
+      "visitante": "ch",
+      "gl": 7,
+      "gv": 1,
+      "st": {
+        "l": {
+          "pos": 47,
+          "tir": 19,
+          "tpu": 12,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 134,
+          "pac": 94,
+          "cen": 0,
+          "int": 35,
+          "ent": 10,
+          "par": 0
+        },
+        "v": {
+          "pos": 53,
+          "tir": 2,
+          "tpu": 1,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 137,
+          "pac": 95,
+          "cen": 2,
+          "int": 32,
+          "ent": 3,
+          "par": 5
+        }
+      }
+    },
+    {
+      "j": 11,
+      "local": "dm",
+      "visitante": "ej",
+      "gl": 1,
+      "gv": 3,
+      "st": {
+        "l": {
+          "pos": 43,
+          "tir": 2,
+          "tpu": 2,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 0,
+          "tli": 0,
+          "pas": 56,
+          "pac": 32,
+          "cen": 0,
+          "int": 17,
+          "ent": 4,
+          "par": 2
+        },
+        "v": {
+          "pos": 57,
+          "tir": 8,
+          "tpu": 5,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 1,
+          "pas": 93,
+          "pac": 72,
+          "cen": 0,
+          "int": 20,
+          "ent": 5,
+          "par": 1
+        }
       }
     }
-  ]
+  ],
+  "mvp": {
+    "1": "md",
+    "2": "fd",
+    "5": "dm"
+  },
+  "champions": {}
 }

@@ -25,22 +25,140 @@
       "foto": "fotos/cronica-1791540520625.jpg?v=1791540523190"
     },
     {
-      "id": 1791600000000,
+      "id": 1791553801026,
       "fecha": "2026-10-09",
       "jornada": 0,
-      "titulo": "Chele aterriza en la Superliga Covirán con el Olympique de Lyon",
-      "texto": "Bombazo de mercado en la Superliga Covirán! Chele se une a la liga como nuevo entrenador del Olympique de Lyon y ya somos 11 jugadores.\n\nCon un número impar de equipos, el calendario se ha rehecho entero: ahora son 22 jornadas y en cada una de ellas habrá un equipo que descanse. Los resultados que ya estaban jugados se mantienen tal cual, la jornada 1 sigue en pie y Chele debuta con descanso mientras mira desde el banquillo cómo se las gastan los demás.\n\nBienvenido, Chele. Aquí no hay amigos, solo puntos.",
-      "foto": "fotos/cronica-1791600000000.jpg?v=1791600000001"
+      "titulo": "El ASFAR de Rabat de adelanta a los españoles en un partido curioso",
+      "texto": "Bárbaro !!!",
+      "foto": "fotos/cronica-1791553801026.jpg?v=1791553803730"
     },
     {
-      "id": 1791650000000,
-      "fecha": "2026-10-10",
+      "id": 1791558647953,
+      "fecha": "2026-10-09",
       "jornada": 0,
-      "titulo": "Le llueven Goles a Japon !!",
-      "texto": "inaugurando la SuperLeague con una derrota contra el Inter por 15 Goles, Japon, liderado por elouejdi, no es una tragaperras, sino una tragagoles !!",
-      "foto": "",
-      "video": "",
-      "embed": "videos/lluvia-de-goles.html?v=1791650000001"
+      "titulo": "Animación de Personajes de los Jugadores",
+      "texto": "En la pagina web, empezaremos la implementación de animación de personajes para cada jugador, de esta manera crearemos contenido y escenas relacionadas a cada gran evento de nuestra grandiosa SuperLeague !!",
+      "foto": "fotos/cronica-1791558647953.jpg?v=1791558650475"
+    },
+    {
+      "id": 1791559028734,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Demian el Demonio, O Doubl3 D ? como sea, la bestia esta lista para todo !!",
+      "texto": "Se aproxima la segunda jornada, y después del logro inesperado en su debut, el demonio del e-football busca asegurar una racha de victorias y acabar con todas las dudas !!",
+      "foto": "fotos/cronica-1791559028734.jpg?v=1791559031252"
+    },
+    {
+      "id": 1791559710567,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Fahd, el leopardo de Tanger, La Bestia Azul !!!",
+      "texto": "La bestia azul de tanger visita españa con la esperanza de corregir la situacion y reconciliarse con su aficion después de la primera derrota humillante en un partido muy impredecible !!",
+      "foto": "fotos/cronica-1791559710567.jpg?v=1791559712888"
+    },
+    {
+      "id": 1791560236856,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Eldelvnoche, el silencio antes de la tormenta !!",
+      "texto": "el mayor candidato a ganar el titulo, empezó la temporada con una decepción perdiendo el primer encuentro en casa ante un doubl3 D fuerte y confiado, en la siguiente jornada busca ganar y nada mas, recuperar la confianza y volver a competir",
+      "foto": "fotos/cronica-1791560236856.jpg?v=1791560240207"
+    },
+    {
+      "id": 1791561239473,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Quien para a la Máquina ? el miedo recorre la SuperLeague",
+      "texto": "Aacaba de aterrizar en la SuperLeague, pero los grandes gamers se adaptan y triunfan, se espera mucho del chele en esta competición",
+      "foto": "fotos/cronica-1791561239473.jpg?v=1791561242969"
+    },
+    {
+      "id": 1791561432350,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Taha El Mago, llega para fascinarnos a todos",
+      "texto": "No hace falta decir mucho cuanto se trata del Mago de Tanger, será campeon de esta primera temporada de la SuperLeague ?",
+      "foto": "fotos/cronica-1791561432350.jpg?v=1791561435600"
+    },
+    {
+      "id": 1791569514941,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Sorpresa del torneo ! El 3ASKARI de Rabat sorprende son el ASFAR",
+      "texto": "El ganador de la copa del rey una vez, sueña esta temporada con conquistar un nuevo titulo, esta vez, uno grande, la SuperLeague, y no piensa dejarlo fácil, va 4to por ahora, y aunque duele la ultima derrota ante el BocaJuniors, el es uno de esos que no tiran la toalla",
+      "foto": "fotos/cronica-1791569514941.jpg?v=1791569517614"
+    },
+    {
+      "id": 1791570276003,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Visca el Barça !! Reda liderando el Barça, da miedo !!",
+      "texto": "Los reyes del fútbol moderno han llegado, el Barça, sin haber jugado ningun partido por el momento, ya da miedo, cualquier adversario se pasaria la noche pensando en como preparar para enfrentar a los catalanes, Visca Reda, Visca el Barça, i Visca Catalunya !!",
+      "foto": "fotos/cronica-1791570276003.jpg?v=1791570278126"
+    },
+    {
+      "id": 1791571029314,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "Los Campeones Del mundo !! Tambien participan, liderados por Hicham...",
+      "texto": "La Roja, viene como nadie, con un Mundial en la mano en el futbol real, nada es imposible para el Matador Español, Hicham llega para conquistar, y no solo participar, Viva España !!",
+      "foto": "fotos/cronica-1791571029314.jpg?v=1791571050044"
+    },
+    {
+      "id": 1791572310983,
+      "fecha": "2026-10-09",
+      "jornada": 2,
+      "titulo": "Fin de la primera Jornada !!",
+      "texto": "Una jornada con muchisimos goles, y sorpresas !!",
+      "foto": "fotos/cronica-1791572310983.jpg?v=1791572313377"
+    },
+    {
+      "id": 1791573745609,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "El Rey Del Juego !! el que no perdona y lo gana todo",
+      "texto": "El Rey de estas competiciones, Mouad, el mayor candidato a ganar esta competicion, empezó la SuperLeague con una goleada Historica metiendole 15 Tantos al conjunto japonés, este es mi heroe, y el tuyo ?",
+      "foto": "fotos/cronica-1791573745609.jpg?v=1791573748138"
+    },
+    {
+      "id": 1791576453691,
+      "fecha": "2026-10-09",
+      "jornada": 0,
+      "titulo": "SAMURAI AZUL, UN MUNDO DE POSIBILIDADES: EL PACTO DE JAPÓN CON SAMURAI",
+      "texto": "El talento japonés se une a la élite mundial. La selección de Japón forma equipo con Samurai Blue en busca de la gloria en esta primera temporada de la SuperLeague. ¿Estás listo para el espectáculo? ¡Vamos, Japón!",
+      "foto": "fotos/cronica-1791576453691.jpg?v=1791576458144"
+    },
+    {
+      "id": 1791579299270,
+      "fecha": "2026-10-09",
+      "jornada": 3,
+      "titulo": "FINAL DE LA JORNADA 2 !! EL AZUL DE TANGER MVP",
+      "texto": "EMPIEZA LA JORNADA 3!",
+      "foto": "fotos/cronica-1791579299270.jpg?v=1791579301807"
+    },
+    {
+      "id": 1791646191579,
+      "fecha": "2026-10-10",
+      "jornada": 1,
+      "titulo": "El Inter, MVP de la Primera Jornada",
+      "texto": "El mouad golea, 15-0 y no digo mas...",
+      "foto": "fotos/cronica-1791646191579.jpg?v=1791646194539"
+    },
+    {
+      "id": 1791646579046,
+      "fecha": "2026-10-10",
+      "jornada": 2,
+      "titulo": "IRT Tanger MVP de la Segunda Jornada !!",
+      "texto": "Hercules del norte de Africa, domando al toro español !!",
+      "foto": "fotos/cronica-1791646579046.jpg?v=1791646779896"
+    },
+    {
+      "id": 1791648422180,
+      "fecha": "2026-10-10",
+      "jornada": 4,
+      "titulo": "El Gran Clásico de la SuperLeague !!",
+      "texto": "En la 4ta Jornada, se enfrentan el Arsenal y el Barça, un duelo de invictos, a por el liderazgo de la SuperLeague !!",
+      "foto": "fotos/cronica-1791648422180.jpg?v=1791648425140"
     }
   ]
 }
