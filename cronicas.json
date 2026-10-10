@@ -151,6 +151,14 @@
       "titulo": "IRT Tanger MVP de la Segunda Jornada !!",
       "texto": "Hercules del norte de Africa, domando al toro español !!",
       "foto": "fotos/cronica-1791646579046.jpg?v=1791646779896"
+    },
+    {
+      "id": 1791648422180,
+      "fecha": "2026-10-10",
+      "jornada": 4,
+      "titulo": "El Gran Clásico de la SuperLeague !!",
+      "texto": "En la 4ta Jornada, se enfrentan el Arsenal y el Barça, un duelo de invictos, a por el liderazgo de la SuperLeague !!",
+      "foto": "fotos/cronica-1791648422180.jpg?v=1791648425140"
     }
   ]
 }
