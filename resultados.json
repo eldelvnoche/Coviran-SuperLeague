@@ -1251,6 +1251,13 @@
     },
     {
       "j": 8,
+      "local": "bd",
+      "visitante": "th",
+      "gl": 4,
+      "gv": 0
+    },
+    {
+      "j": 8,
       "local": "dm",
       "visitante": "rb",
       "gl": 1,
