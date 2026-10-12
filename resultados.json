@@ -1442,6 +1442,45 @@
     },
     {
       "j": 9,
+      "local": "bd",
+      "visitante": "hi",
+      "gl": 4,
+      "gv": 2,
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 23,
+          "tpu": 13,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 83,
+          "pac": 71,
+          "cen": 0,
+          "int": 22,
+          "ent": 9,
+          "par": 2
+        },
+        "v": {
+          "pos": 50,
+          "tir": 8,
+          "tpu": 4,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 100,
+          "pac": 75,
+          "cen": 1,
+          "int": 9,
+          "ent": 11,
+          "par": 11
+        }
+      }
+    },
+    {
+      "j": 9,
       "local": "zk",
       "visitante": "ch",
       "gl": 3,
@@ -2205,6 +2244,7 @@
     "6": "rb",
     "7": "zk",
     "8": "bd",
+    "9": "rb",
     "10": "rb"
   },
   "champions": {}
