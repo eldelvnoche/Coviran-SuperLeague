@@ -1357,6 +1357,13 @@
     },
     {
       "j": 8,
+      "local": "md",
+      "visitante": "ch",
+      "gl": 3,
+      "gv": 0
+    },
+    {
+      "j": 8,
       "local": "dm",
       "visitante": "rb",
       "gl": 1,
@@ -1832,6 +1839,7 @@
     "5": "dm",
     "6": "rb",
     "7": "zk",
+    "8": "bd",
     "10": "rb"
   },
   "champions": {}
