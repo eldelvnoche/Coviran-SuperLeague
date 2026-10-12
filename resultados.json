@@ -1442,6 +1442,13 @@
     },
     {
       "j": 9,
+      "local": "zk",
+      "visitante": "ch",
+      "gl": 3,
+      "gv": 0
+    },
+    {
+      "j": 9,
       "local": "dm",
       "visitante": "th",
       "gl": 1,
