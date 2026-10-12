@@ -2116,6 +2116,45 @@
           "par": 8
         }
       }
+    },
+    {
+      "j": 21,
+      "local": "ej",
+      "visitante": "bd",
+      "gl": 1,
+      "gv": 7,
+      "st": {
+        "l": {
+          "pos": 44,
+          "tir": 7,
+          "tpu": 6,
+          "fal": 2,
+          "fdj": 2,
+          "cor": 0,
+          "tli": 1,
+          "pas": 126,
+          "pac": 98,
+          "cen": 0,
+          "int": 13,
+          "ent": 11,
+          "par": 1
+        },
+        "v": {
+          "pos": 56,
+          "tir": 12,
+          "tpu": 9,
+          "fal": 1,
+          "fdj": 1,
+          "cor": 1,
+          "tli": 2,
+          "pas": 97,
+          "pac": 79,
+          "cen": 4,
+          "int": 18,
+          "ent": 7,
+          "par": 2
+        }
+      }
     }
   ],
   "mvp": {
