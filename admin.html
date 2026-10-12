@@ -160,7 +160,7 @@ details summary{cursor:pointer;padding:4px 0}
 <label for="pes">Escudo del equipo (opcional, sustituye al que trae la web)</label>
 <input id="pes" type="file" accept="image/*">
 <img class="pv3" id="pesv" alt="" hidden>
-<p class="mute">Por ejemplo, para el Lyon: descarga su escudo (PNG con fondo transparente) y súbelo aquí.</p>
+<p class="mute">Por ejemplo: descarga el escudo de tu equipo (PNG con fondo transparente) y súbelo aquí.</p>
 <div class="row2"><button id="psave">Guardar ficha</button><button class="sec" id="pnofoto">Quitar foto</button><button class="sec" id="pnoesc">Quitar escudo</button></div>
 <p class="msg" id="pmsg" role="status"></p>
 </div>
@@ -170,7 +170,7 @@ details summary{cursor:pointer;padding:4px 0}
 <script>
 var OWNER="eldelvnoche",REPO="Coviran-SuperLeague";
 var BASE="https://api.github.com/repos/"+OWNER+"/"+REPO+"/contents/";
-var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"},hi:{p:"Hicham",t:"España"},ch:{p:"Chele",t:"Olympique de Lyon"}};
+var T={dm:{p:"Demian",t:"R. Madrid"},rb:{p:"Reda",t:"Barça"},th:{p:"Taha",t:"Arsenal"},md:{p:"Mouad",t:"Inter Milan"},hs:{p:"Husam",t:"PSG"},zk:{p:"Zaka",t:"AS FAR"},bd:{p:"Badr",t:"Boca Juniors"},ej:{p:"Elouejdi",t:"Japón"},fd:{p:"Fahd",t:"IRT"},hi:{p:"Hicham",t:"España"},ch:{p:"El Niño",t:"Real Betis"}};
 var V1=["bd-dm,hs-rb,ej-md,fd-th,hi-zk|ch",
 "rb-ch,bd-md,th-hs,ej-zk,hi-fd|dm",
 "dm-md,th-ch,bd-zk,hi-hs,ej-fd|rb",
