@@ -634,6 +634,13 @@
     },
     {
       "j": 4,
+      "local": "hi",
+      "visitante": "ch",
+      "gl": 3,
+      "gv": 0
+    },
+    {
+      "j": 4,
       "local": "bd",
       "visitante": "fd",
       "gl": 8,
