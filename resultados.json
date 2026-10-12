@@ -1069,6 +1069,13 @@
       }
     },
     {
+      "j": 6,
+      "local": "bd",
+      "visitante": "ch",
+      "gl": 3,
+      "gv": 0
+    },
+    {
       "j": 7,
       "local": "zk",
       "visitante": "fd",
