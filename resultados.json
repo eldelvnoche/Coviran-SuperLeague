@@ -3343,6 +3343,21 @@
     },
     {
       "j": 22,
+      "local": "ch",
+      "visitante": "hs",
+      "gl": 0,
+      "gv": 6,
+      "st": {
+        "l": {
+          "pos": 50
+        },
+        "v": {
+          "pos": 50
+        }
+      }
+    },
+    {
+      "j": 22,
       "local": "ej",
       "visitante": "dm",
       "gl": 2,
