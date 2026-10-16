@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-15",
+  "actualizado": "2026-10-16",
   "resultados": [
     {
       "j": 1,
@@ -3485,6 +3485,45 @@
           "int": 32,
           "ent": 1,
           "par": 4
+        }
+      }
+    },
+    {
+      "j": 22,
+      "local": "hi",
+      "visitante": "md",
+      "gl": 0,
+      "gv": 8,
+      "st": {
+        "l": {
+          "pos": 50,
+          "tir": 2,
+          "tpu": 0,
+          "fal": 1,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 0,
+          "pas": 68,
+          "pac": 53,
+          "cen": 0,
+          "int": 19,
+          "ent": 0,
+          "par": 5
+        },
+        "v": {
+          "pos": 50,
+          "tir": 14,
+          "tpu": 13,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 2,
+          "tli": 0,
+          "pas": 70,
+          "pac": 47,
+          "cen": 2,
+          "int": 14,
+          "ent": 12,
+          "par": 2
         }
       }
     }
