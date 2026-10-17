@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-16",
+  "actualizado": "2026-10-17",
   "resultados": [
     {
       "j": 1,
@@ -2461,6 +2461,45 @@
     },
     {
       "j": 15,
+      "local": "ch",
+      "visitante": "hi",
+      "gl": 1,
+      "gv": 1,
+      "st": {
+        "l": {
+          "pos": 49,
+          "tir": 1,
+          "tpu": 1,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 0,
+          "tli": 0,
+          "pas": 55,
+          "pac": 45,
+          "cen": 0,
+          "int": 5,
+          "ent": 10,
+          "par": 3
+        },
+        "v": {
+          "pos": 51,
+          "tir": 6,
+          "tpu": 4,
+          "fal": 0,
+          "fdj": 0,
+          "cor": 1,
+          "tli": 0,
+          "pas": 58,
+          "pac": 50,
+          "cen": 0,
+          "int": 8,
+          "ent": 7,
+          "par": 0
+        }
+      }
+    },
+    {
+      "j": 15,
       "local": "fd",
       "visitante": "bd",
       "gl": 2,
@@ -3542,6 +3581,7 @@
     "11": "zk",
     "12": "md",
     "13": "hs",
+    "15": "rb",
     "20": "md"
   },
   "champions": {}
