@@ -3201,6 +3201,21 @@
       }
     },
     {
+      "j": 19,
+      "local": "rb",
+      "visitante": "dm",
+      "gl": 6,
+      "gv": 0,
+      "st": {
+        "l": {
+          "pos": 50
+        },
+        "v": {
+          "pos": 50
+        }
+      }
+    },
+    {
       "j": 20,
       "local": "hs",
       "visitante": "fd",
