@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-17",
+  "actualizado": "2026-10-18",
   "resultados": [
     {
       "j": 1,
@@ -3007,6 +3007,21 @@
     },
     {
       "j": 18,
+      "local": "hs",
+      "visitante": "md",
+      "gl": 0,
+      "gv": 3,
+      "st": {
+        "l": {
+          "pos": 50
+        },
+        "v": {
+          "pos": 50
+        }
+      }
+    },
+    {
+      "j": 18,
       "local": "rb",
       "visitante": "bd",
       "gl": 6,
@@ -3714,6 +3729,7 @@
     "12": "md",
     "13": "hs",
     "15": "rb",
+    "18": "rb",
     "20": "md"
   },
   "champions": {}
