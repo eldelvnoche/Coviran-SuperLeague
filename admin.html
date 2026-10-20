@@ -24,7 +24,9 @@ button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-vis
 p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tabs{display:flex;gap:6px;margin-top:14px}
-.tabs button{flex:1;min-width:0;background:var(--panel);color:var(--mute);border-color:var(--line);font-size:15px;padding:9px 2px}
+.tabs button{flex:1;min-width:0;background:var(--panel);color:var(--mute);border-color:var(--line);font-size:13.5px;padding:9px 1px}
+.ck{display:flex;align-items:center;gap:8px;margin:6px 0;color:var(--text);font-size:16px}
+.ck input{width:auto}
 .tabs button[aria-selected="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-top:14px}
 .chips button{flex:0 0 auto;min-width:44px;background:var(--panel);color:var(--text);border-color:var(--line);font-size:17px;padding:8px 10px;position:relative}
@@ -74,6 +76,7 @@ details summary{cursor:pointer;padding:4px 0}
 <button role="tab" id="s2" aria-selected="false">Crónicas</button>
 <button role="tab" id="s4" aria-selected="false">Golazos</button>
 <button role="tab" id="s3" aria-selected="false">Jugadores</button>
+<button role="tab" id="s5" aria-selected="false">Títulos</button>
 </div>
 
 <div id="p1">
@@ -164,6 +167,48 @@ details summary{cursor:pointer;padding:4px 0}
 <p class="msg" id="pmsg" role="status"></p>
 </div>
 </div>
+
+<div id="p5" hidden>
+<div class="card">
+<p><b>🥇 Torneo Lidl nuevo</b></p>
+<label for="tdf">Fecha</label>
+<input id="tdf" type="date">
+<label for="tfo">Formato</label>
+<select id="tfo"><option value="4">Torneo de 4 jugadores</option><option value="8">Torneo de 8 jugadores</option></select>
+<label for="tca">Campeón</label>
+<select id="tca"></select>
+<label for="tsu">Subcampeón</label>
+<select id="tsu"></select>
+<label for="ts1">Semifinalista 1 (opcional)</label>
+<select id="ts1"></select>
+<label for="ts2">Semifinalista 2 (opcional)</label>
+<select id="ts2"></select>
+<label>Excampeones que jugaron (al menos uno para que el torneo sea oficial)</label>
+<div id="tex"></div>
+<label for="tno">Nota (opcional)</label>
+<input id="tno" maxlength="120">
+<div class="row2"><button id="tsave">Publicar torneo</button></div>
+<p class="msg" id="tmsg" role="status"></p>
+</div>
+<div class="card"><p><b>Torneos Lidl publicados</b></p><div id="tlist"></div></div>
+<div class="card">
+<p><b>Títulos Lidl anteriores a la web</b></p>
+<p class="mute">Torneos que se jugaron antes de tener esta sección. Solo se guardan los títulos de cada uno.</p>
+<div id="tbase"></div>
+<div class="row2"><button id="tbsave">Guardar títulos anteriores</button></div>
+<p class="msg" id="tbmsg" role="status"></p>
+</div>
+<div class="card">
+<p><b>🏁 Cerrar temporada</b></p>
+<p class="mute">Guarda en el historial la clasificación final y la Mercadona Champions League de la temporada actual. Hazlo solo cuando todo esté jugado. Después puedes empezar la siguiente.</p>
+<label for="tsn">Número de temporada</label>
+<input id="tsn" type="number" min="1" max="99" inputmode="numeric">
+<div id="tsprev" class="mute"></div>
+<div class="row2"><button id="tssave">Guardar temporada en el historial</button></div>
+<p class="msg" id="tsmsg" role="status"></p>
+<div id="tslist"></div>
+</div>
+</div>
 </section>
 </main>
 <script>
@@ -208,8 +253,8 @@ if(x.s===409||x.s===422)return"El archivo ha cambiado desde que lo cargaste. Rec
 if(x.s===401||x.s===403||x.s===404)return"El token no tiene permiso para escribir en el repositorio.";
 return"No se pudo publicar (error "+x.s+")."}
 function view(logged){$("lg").hidden=logged;$("ad").hidden=!logged}
-function panel(n){[1,2,3,4].forEach(function(i){$("p"+i).hidden=n!==i;$("s"+i).setAttribute("aria-selected",n===i)})}
-[1,2,3,4].forEach(function(i){$("s"+i).addEventListener("click",function(){panel(i)})});
+function panel(n){[1,2,3,4,5].forEach(function(i){$("p"+i).hidden=n!==i;$("s"+i).setAttribute("aria-selected",n===i)});if(n===5)prevTs()}
+[1,2,3,4,5].forEach(function(i){$("s"+i).addEventListener("click",function(){panel(i)})});
 
 /* Resultados */
 var sha="",R={},SS={},MV={},UC={},cur=0,dirty=false;
@@ -462,6 +507,70 @@ if(!window.confirm("¿Quitar la foto de este jugador?"))return;
 say("pmsg","Guardando...");
 saveG($("pj").value,{foto:""},"Foto quitada.").catch(function(){say("pmsg","No se pudo guardar.",true)})});
 
+/* Títulos */
+var DEFT={lidl:{base:{bd:10,th:7,hs:5,md:4,zk:2},torneos:[]},temporadas:[]},TIT=normT(null);
+function normT(d){d=d&&typeof d==="object"?d:{};var b=d.lidl&&d.lidl.base&&typeof d.lidl.base==="object"?d.lidl.base:{bd:10,th:7,hs:5,md:4,zk:2};
+return{lidl:{base:b,torneos:Array.isArray(d.lidl&&d.lidl.torneos)?d.lidl.torneos:[]},temporadas:Array.isArray(d.temporadas)?d.temporadas:[]}}
+function tOpts(first){return '<option value="">'+first+'</option>'+Object.keys(T).map(function(i){return '<option value="'+i+'">'+T[i].p+' - '+T[i].t+'</option>'}).join("")}
+function exIds(){var s={};Object.keys(TIT.lidl.base).forEach(function(i){if(+TIT.lidl.base[i]>0)s[i]=1});TIT.lidl.torneos.forEach(function(x){if(x.campeon)s[x.campeon]=1});return Object.keys(s).filter(function(i){return T[i]})}
+function fillTSel(){
+$("tca").innerHTML=tOpts("Elegir");$("tsu").innerHTML=tOpts("Elegir");$("ts1").innerHTML=tOpts("Ninguno");$("ts2").innerHTML=tOpts("Ninguno");
+$("tex").innerHTML=exIds().map(function(i){return '<label class="ck"><input type="checkbox" value="'+i+'">'+T[i].p+' - '+T[i].t+'</label>'}).join("")||'<p class="mute">Aún no hay excampeones.</p>';
+if(!$("tdf").value)$("tdf").value=today()}
+function renderTit(){
+var tor=TIT.lidl.torneos.slice().sort(function(a,b){return(+b.id||0)-(+a.id||0)});
+$("tlist").innerHTML=tor.map(function(x){return '<div class="li"><span>'+esc(T[x.campeon]?T[x.campeon].p:"?")+' campeón<small>'+esc(fmtd(x.fecha))+(x.formato?", torneo de "+(+x.formato):"")+'</small></span><button class="del" data-td="'+(+x.id)+'">Borrar</button></div>'}).join("")||'<p class="mute">Aún no hay torneos publicados.</p>';
+$("tbase").innerHTML=Object.keys(T).map(function(i){return '<div class="li"><span>'+T[i].p+'<small>'+T[i].t+'</small></span><input type="number" min="0" max="999" inputmode="numeric" data-b="'+i+'" value="'+(+TIT.lidl.base[i]||0)+'" style="width:80px;text-align:center" aria-label="Títulos Lidl anteriores de '+T[i].p+'"></div>'}).join("");
+var mx=0;TIT.temporadas.forEach(function(x){mx=Math.max(mx,+x.n||0)});
+if(!$("tsn").value)$("tsn").value=String(mx+1);
+$("tslist").innerHTML=TIT.temporadas.slice().sort(function(a,b){return(+b.n||0)-(+a.n||0)}).map(function(x){var o=(x.liga&&x.liga.orden)||[];return '<div class="li"><span>Temporada '+esc(x.n)+'<small>Campeón: '+esc(T[o[0]]?T[o[0]].p+" ("+T[o[0]].t+")":"?")+(x.champions&&T[x.champions.campeon]?", Champions: "+esc(T[x.champions.campeon].p):"")+'</small></span><button class="del" data-ts="'+(+x.n)+'">Borrar</button></div>'}).join("")}
+function loadT(){return getF("titulos.json",null).then(function(x){TIT=normT(x.data);$("tdf").value="";$("tsn").value="";fillTSel();renderTit()})}
+function saveT(d,msgId,okMsg,commit){
+return getF("titulos.json",null).then(function(x){var cur=normT(x.data);var nd=d(cur);
+return putF("titulos.json",b64(JSON.stringify(nd,null,2)+"\n"),x.sha,commit).then(function(r){
+if(r.ok){TIT=nd;renderTit();say(msgId,okMsg);return true}say(msgId,why(r),true);return false})})}
+$("tsave").addEventListener("click",function(){
+var ca=$("tca").value,su=$("tsu").value,s1=$("ts1").value,s2=$("ts2").value,fo=+$("tfo").value,fe=$("tdf").value||today();
+var ex=Array.prototype.map.call($("tex").querySelectorAll("input:checked"),function(i){return i.value});
+if(!ca||!su){say("tmsg","Elige campeón y subcampeón.",true);return}
+var ids=[ca,su,s1,s2].filter(Boolean),seen={},dup=false;ids.forEach(function(i){if(seen[i])dup=true;seen[i]=1});
+if(dup){say("tmsg","Un jugador no puede salir dos veces en el mismo torneo.",true);return}
+if(!ex.length&&!window.confirm("No has marcado ningún excampeón: según las reglas, el torneo no sería oficial. ¿Publicarlo igualmente?"))return;
+var b=$("tsave");b.disabled=true;say("tmsg","Publicando...");
+saveT(function(d){d.lidl.torneos.push({id:Date.now(),fecha:fe,formato:fo,campeon:ca,subcampeon:su,semis:[s1,s2].filter(Boolean),excampeones:ex,nota:$("tno").value.trim()});return d},"tmsg","Publicado. La web lo mostrará en 1 o 2 minutos.","Torneo Lidl")
+.then(function(ok){b.disabled=false;if(ok){$("tno").value="";fillTSel()}}).catch(function(){b.disabled=false;say("tmsg","No se pudo publicar. Comprueba la conexión.",true)})});
+$("tlist").addEventListener("click",function(e){
+var id=e.target.getAttribute("data-td");if(id===null)return;
+if(!window.confirm("¿Borrar este torneo?"))return;
+say("tmsg","Borrando...");
+saveT(function(d){d.lidl.torneos=d.lidl.torneos.filter(function(x){return String(x.id)!==id});return d},"tmsg","Torneo borrado.","Borrar torneo Lidl").then(function(){fillTSel()}).catch(function(){say("tmsg","No se pudo borrar.",true)})});
+$("tbsave").addEventListener("click",function(){
+var base={};Array.prototype.forEach.call($("tbase").querySelectorAll("input[data-b]"),function(i){var v=Math.max(0,parseInt(i.value,10)||0);if(v)base[i.getAttribute("data-b")]=v});
+var b=$("tbsave");b.disabled=true;say("tbmsg","Guardando...");
+saveT(function(d){d.lidl.base=base;return d},"tbmsg","Guardado. La web lo mostrará en 1 o 2 minutos.","Títulos Lidl anteriores").then(function(){b.disabled=false;fillTSel()}).catch(function(){b.disabled=false;say("tbmsg","No se pudo guardar.",true)})});
+function champOf(){
+var f=UC.final,ch=uwin(f);if(!ch)return null;
+function lo(t){var w=uwin(t);return w?(w===t.a?t.b:t.a):null}
+return{campeon:ch,sub:ch===f.a?f.b:f.a,semis:[lo(UC.sf1),lo(UC.sf2)].filter(Boolean),acceso:[lo(UC.po1),lo(UC.po2)].filter(Boolean)}}
+function prevTs(){
+var np=Object.keys(R).length,tot=J.reduce(function(s,r){return s+r.ms.length},0);
+if(!np){$("tsprev").innerHTML='<p>Todavía no hay resultados cargados.</p>';return}
+var o=standings(),c=champOf();
+$("tsprev").innerHTML='<p>Partidos con resultado: <b>'+np+' de '+tot+'</b>.</p><p>Clasificación final: '+o.slice(0,3).map(function(i,k){return(k+1)+"º "+T[i].p+" ("+T[i].t+")"}).join(", ")+'.</p><p>Mercadona Champions League: '+(c?'campeón <b>'+T[c.campeon].p+' ('+T[c.campeon].t+')</b>.':'sin campeón registrado todavía.')+'</p>'}
+$("tssave").addEventListener("click",function(){
+var np=Object.keys(R).length,tot=J.reduce(function(s,r){return s+r.ms.length},0),n=parseInt($("tsn").value,10)||0;
+if(!np){say("tsmsg","No hay resultados que guardar.",true);return}
+if(n<1){say("tsmsg","Escribe el número de temporada.",true);return}
+if(dirty&&!window.confirm("Tienes cambios de resultados sin publicar y no se incluirán. ¿Guardar la temporada igualmente?"))return;
+if(np<tot&&!window.confirm("La liga no está terminada ("+np+" de "+tot+" partidos). ¿Guardar igualmente?"))return;
+if(!champOf()&&!window.confirm("La Mercadona Champions League no tiene campeón. ¿Guardar la temporada sin ella?"))return;
+var ord=standings(),ch=champOf(),b=$("tssave");b.disabled=true;say("tsmsg","Guardando...");
+saveT(function(d){d.temporadas=d.temporadas.filter(function(x){return+x.n!==n});d.temporadas.push({n:n,fecha:today(),partidos:np,liga:{orden:ord},champions:ch});return d},"tsmsg","Temporada guardada en el historial. La web lo mostrará en 1 o 2 minutos.","Cerrar temporada "+n).then(function(){b.disabled=false;$("tsn").value="";renderTit()}).catch(function(){b.disabled=false;say("tsmsg","No se pudo guardar.",true)})});
+$("tslist").addEventListener("click",function(e){
+var n=e.target.getAttribute("data-ts");if(n===null)return;
+if(!window.confirm("¿Borrar la temporada "+n+" del historial?"))return;
+saveT(function(d){d.temporadas=d.temporadas.filter(function(x){return String(x.n)!==n});return d},"tsmsg","Temporada borrada.","Borrar temporada "+n).then(function(){$("tsn").value="";renderTit()}).catch(function(){say("tsmsg","No se pudo borrar.",true)})});
+
 /* Acceso */
 function enter(){
 view(true);panel(1);say("msg","Cargando...");
@@ -470,7 +579,8 @@ if(!r.ok){var e=new Error("auth");throw e}
 loadR().catch(function(){say("msg","No se pudo cargar. Comprueba la conexión y pulsa Recargar.",true)});
 loadP().catch(function(){say("cmsg","No se pudieron cargar las crónicas.",true)});
 loadG().catch(function(){say("pmsg","No se pudieron cargar las fichas.",true)});
-loadGL().catch(function(){say("gmsg","No se pudieron cargar los golazos.",true)})
+loadGL().catch(function(){say("gmsg","No se pudieron cargar los golazos.",true)});
+loadT().catch(function(){say("tmsg","No se pudieron cargar los títulos.",true)})
 }).catch(function(e){
 if(e.message==="auth"){try{localStorage.removeItem("sl-token")}catch(x){}tok="";view(false);$("le").textContent="El token no vale o no tiene acceso al repositorio. Revisa que sea el correcto y que tenga permiso de Contents: Read and write."}
 else{say("msg","No se pudo conectar. Comprueba la conexión.",true)}})}
