@@ -1,13 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Superliga Covirán">
 <defs>
-<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c8f6ff"/><stop offset=".5" stop-color="#38e1ff"/><stop offset="1" stop-color="#8a5cff"/></linearGradient>
-<linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#161d49"/><stop offset="1" stop-color="#070a1a"/></linearGradient>
-<radialGradient id="r" cx=".5" cy=".38" r=".7"><stop offset="0" stop-color="#38e1ff" stop-opacity=".28"/><stop offset="1" stop-color="#38e1ff" stop-opacity="0"/></radialGradient>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff4a63"/><stop offset=".55" stop-color="#e5173f"/><stop offset="1" stop-color="#7a0017"/></linearGradient>
+<linearGradient id="f" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1c1c22"/><stop offset="1" stop-color="#08080b"/></linearGradient>
+<clipPath id="c"><polygon points="128,14 226,71 226,185 128,242 30,185 30,71"/></clipPath>
 </defs>
-<polygon points="128,14 226,71 226,185 128,242 30,185 30,71" fill="url(#f)" stroke="url(#g)" stroke-width="8" stroke-linejoin="round"/>
-<polygon points="128,14 226,71 226,185 128,242 30,185 30,71" fill="url(#r)"/>
-<polygon points="128,36 207,82 207,174 128,220 49,174 49,82" fill="none" stroke="url(#g)" stroke-width="1.6" opacity=".45" stroke-linejoin="round"/>
-<circle cx="128" cy="128" r="54" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="round" stroke-dasharray="248 92" transform="rotate(42 128 128)"/>
-<circle cx="184" cy="128" r="10" fill="url(#g)"/>
-<path d="M128 100 L134 122 L156 128 L134 134 L128 156 L122 134 L100 128 L122 122 Z" fill="#f4fdff"/>
+<polygon points="128,14 226,71 226,185 128,242 30,185 30,71" fill="url(#f)"/>
+<g clip-path="url(#c)">
+<polygon points="150,0 205,0 100,256 45,256" fill="url(#g)" opacity=".22"/>
+<polygon points="206,0 226,0 121,256 101,256" fill="url(#g)" opacity=".5"/>
+</g>
+<polygon points="128,14 226,71 226,185 128,242 30,185 30,71" fill="none" stroke="url(#g)" stroke-width="8" stroke-linejoin="miter"/>
+<polygon points="128,36 207,82 207,174 128,220 49,174 49,82" fill="none" stroke="#fff" stroke-width="1.4" opacity=".18"/>
+<circle cx="128" cy="128" r="54" fill="none" stroke="url(#g)" stroke-width="15" stroke-linecap="butt" stroke-dasharray="248 92" transform="rotate(42 128 128)"/>
+<rect x="174" y="118" width="20" height="20" fill="#fff" transform="rotate(45 184 128)"/>
+<path d="M128 98 L136 120 L158 128 L136 136 L128 158 L120 136 L98 128 L120 120 Z" fill="#fff"/>
 </svg>
