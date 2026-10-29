@@ -28,6 +28,7 @@ p{margin:8px 0}.mute{color:var(--mute);font-size:15px}
 .ck{display:flex;align-items:center;gap:8px;margin:6px 0;color:var(--text);font-size:16px}
 .ck input{width:auto}
 .tabs button[aria-selected="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
+@media (max-width:560px){.tabs{flex-wrap:wrap}.tabs button{flex:1 1 30%}}
 .chips{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;margin-top:14px}
 .chips button{flex:0 0 auto;min-width:44px;background:var(--panel);color:var(--text);border-color:var(--line);font-size:17px;padding:8px 10px;position:relative}
 .chips button[aria-pressed="true"]{background:var(--gold);color:var(--on);border-color:var(--gold)}
@@ -77,6 +78,7 @@ details summary{cursor:pointer;padding:4px 0}
 <button role="tab" id="s4" aria-selected="false">Golazos</button>
 <button role="tab" id="s3" aria-selected="false">Jugadores</button>
 <button role="tab" id="s5" aria-selected="false">Títulos</button>
+<button role="tab" id="s6" aria-selected="false">Inscripciones</button>
 </div>
 
 <div id="p1">
@@ -200,13 +202,48 @@ details summary{cursor:pointer;padding:4px 0}
 </div>
 <div class="card">
 <p><b>🏁 Cerrar temporada</b></p>
-<p class="mute">Guarda en el historial la clasificación final y la Mercadona Champions League de la temporada actual. Hazlo solo cuando todo esté jugado. Después puedes empezar la siguiente.</p>
+<p class="mute">Guarda en el historial la clasificación final y la Mercadona Champions League de la temporada actual. También guarda una copia completa (resultados, estadísticas, crónicas y golazos) para que se pueda volver a ver entera desde la web. Hazlo solo cuando todo esté jugado. Después puedes empezar la siguiente.</p>
 <label for="tsn">Número de temporada</label>
 <input id="tsn" type="number" min="1" max="99" inputmode="numeric">
 <div id="tsprev" class="mute"></div>
 <div class="row2"><button id="tssave">Guardar temporada en el historial</button></div>
 <p class="msg" id="tsmsg" role="status"></p>
 <div id="tslist"></div>
+</div>
+<div class="card">
+<p><b>🆕 Empezar temporada nueva</b></p>
+<p class="mute">Deja a cero los resultados, el MVP, la Champions, las crónicas, los golazos y el Premio Condis para arrancar la siguiente temporada. Solo se puede hacer después de cerrar la temporada actual (así queda guardada en el archivo). Las fichas de los jugadores, las fotos y los títulos no se tocan.</p>
+<div class="row2"><button class="del" id="nsgo">Empezar temporada nueva</button></div>
+<p class="msg" id="nsmsg" role="status"></p>
+</div>
+</div>
+
+<div id="p6" hidden>
+<div class="card" id="dbl">
+<p><b>Base de datos</b></p>
+<p class="mute">Entra con el correo y la contraseña del usuario que creaste en Supabase. La sesión se borra al cerrar el navegador.</p>
+<p class="msg bad" id="dbcfg" hidden>Falta conectar la base de datos: rellena «supabase» en config.json (mira las instrucciones de supabase.sql).</p>
+<label for="dbe">Correo</label>
+<input id="dbe" type="email" autocomplete="username">
+<label for="dbp">Contraseña</label>
+<input id="dbp" type="password" autocomplete="current-password">
+<div class="row2"><button id="dbgo">Entrar</button></div>
+<p class="msg" id="dbmsg" role="status"></p>
+</div>
+<div id="dbin" hidden>
+<div class="card">
+<p><b>Inscripciones</b> <span class="mute" id="icount"></span></p>
+<label for="ifil">Mostrar</label>
+<select id="ifil"><option value="">Todas</option><option value="pendiente">Pendientes</option><option value="aceptado">Aceptadas</option><option value="rechazado">Rechazadas</option></select>
+<div id="ilist"></div>
+<div class="row2"><button class="sec" id="irel">Recargar</button><button class="sec" id="icsv">Descargar CSV</button><button class="sec" id="dbout">Salir de la base de datos</button></div>
+<p class="msg" id="imsg" role="status"></p>
+</div>
+<div class="card">
+<p><b>👀 Visitas</b> <span class="mute" id="vtot"></span></p>
+<p class="mute">Una visita por navegador y día. Últimos 30 días:</p>
+<div id="vlist"></div>
+</div>
 </div>
 </div>
 </section>
@@ -253,8 +290,8 @@ if(x.s===409||x.s===422)return"El archivo ha cambiado desde que lo cargaste. Rec
 if(x.s===401||x.s===403||x.s===404)return"El token no tiene permiso para escribir en el repositorio.";
 return"No se pudo publicar (error "+x.s+")."}
 function view(logged){$("lg").hidden=logged;$("ad").hidden=!logged}
-function panel(n){[1,2,3,4,5].forEach(function(i){$("p"+i).hidden=n!==i;$("s"+i).setAttribute("aria-selected",n===i)});if(n===5)prevTs()}
-[1,2,3,4,5].forEach(function(i){$("s"+i).addEventListener("click",function(){panel(i)})});
+function panel(n){[1,2,3,4,5,6].forEach(function(i){$("p"+i).hidden=n!==i;$("s"+i).setAttribute("aria-selected",n===i)});if(n===5)prevTs();if(n===6)dbStart()}
+[1,2,3,4,5,6].forEach(function(i){$("s"+i).addEventListener("click",function(){panel(i)})});
 
 /* Resultados */
 var sha="",R={},SS={},MV={},UC={},cur=0,dirty=false;
@@ -564,8 +601,71 @@ if(n<1){say("tsmsg","Escribe el número de temporada.",true);return}
 if(dirty&&!window.confirm("Tienes cambios de resultados sin publicar y no se incluirán. ¿Guardar la temporada igualmente?"))return;
 if(np<tot&&!window.confirm("La liga no está terminada ("+np+" de "+tot+" partidos). ¿Guardar igualmente?"))return;
 if(!champOf()&&!window.confirm("La Mercadona Champions League no tiene campeón. ¿Guardar la temporada sin ella?"))return;
-var ord=standings(),ch=champOf(),b=$("tssave");b.disabled=true;say("tsmsg","Guardando...");
-saveT(function(d){d.temporadas=d.temporadas.filter(function(x){return+x.n!==n});d.temporadas.push({n:n,fecha:today(),partidos:np,liga:{orden:ord},champions:ch});return d},"tsmsg","Temporada guardada en el historial. La web lo mostrará en 1 o 2 minutos.","Cerrar temporada "+n).then(function(){b.disabled=false;$("tsn").value="";renderTit()}).catch(function(){b.disabled=false;say("tsmsg","No se pudo guardar.",true)})});
+var ord=standings(),ch=champOf(),b=$("tssave"),arch="temporadas/t"+n+".json";b.disabled=true;say("tsmsg","Guardando el archivo de la temporada...");
+guardarArchivo(n,arch).then(function(){say("tsmsg","Guardando en el historial...");
+return saveT(function(d){d.temporadas=d.temporadas.filter(function(x){return+x.n!==n});d.temporadas.push({n:n,fecha:today(),partidos:np,liga:{orden:ord},champions:ch,archivo:arch});return d},"tsmsg","Temporada guardada en el historial y en el archivo. La web lo mostrará en 1 o 2 minutos.","Cerrar temporada "+n)})
+.then(function(){b.disabled=false;$("tsn").value="";renderTit()}).catch(function(e){b.disabled=false;say("tsmsg",e&&e.message&&e.message!=="auth"?e.message:"No se pudo guardar.",true)})});
+/* copia completa de la temporada (lo publicado en el repositorio) para verla entera desde la web */
+function guardarArchivo(n,path){
+return Promise.all([getF("resultados.json",{resultados:[]}),getF("cronicas.json",{cronicas:[]}),getF("goles.json",{goles:[]}),getF("condis.json",{ganador:null,nominados:[]}),getF(path,null)]).then(function(x){
+var d={n:n,fecha:today(),equipos:T,calendario:V1,resultados:x[0].data,cronicas:(x[1].data&&x[1].data.cronicas)||[],goles:(x[2].data&&x[2].data.goles)||[],condis:x[3].data};
+return putF(path,b64(JSON.stringify(d,null,2)+"\n"),x[4].sha,"Archivo de la temporada "+n).then(function(r){if(!r.ok)throw new Error(why(r))})})}
+$("nsgo").addEventListener("click",function(){
+var np=Object.keys(R).length,last=TIT.temporadas.slice().sort(function(a,c){return(+c.n||0)-(+a.n||0)})[0];
+if(!np){say("nsmsg","La temporada actual ya está vacía.",true);return}
+if(!(last&&last.archivo&&+last.partidos===np)){say("nsmsg","Antes cierra la temporada actual con «Guardar temporada en el historial» (arriba).",true);return}
+if(dirty){say("nsmsg","Tienes resultados sin publicar. Publícalos o recarga antes.",true);return}
+var nx=+last.n+1;
+if(!window.confirm("Se quitarán de la web los resultados, crónicas y golazos de la temporada "+last.n+" (quedan guardados en el archivo). ¿Empezar la temporada "+nx+"?"))return;
+var b=$("nsgo"),F=[["resultados.json",{actualizado:today(),resultados:[],mvp:{},champions:{}}],["cronicas.json",{cronicas:[]}],["goles.json",{goles:[]}],["condis.json",{ganador:null,nominados:[]}]];
+b.disabled=true;say("nsmsg","Preparando la temporada "+nx+"...");
+F.reduce(function(p,f){return p.then(function(){return getF(f[0],null).then(function(x){
+return putF(f[0],b64(JSON.stringify(f[1],null,2)+"\n"),x.sha,"Empezar temporada "+nx+": "+f[0]).then(function(r){if(!r.ok)throw new Error(why(r))})})})},Promise.resolve())
+.then(function(){b.disabled=false;say("nsmsg","¡Temporada "+nx+" lista! La web lo mostrará en 1 o 2 minutos.");loadR().catch(function(){});loadP().catch(function(){});loadGL().catch(function(){})})
+.catch(function(e){b.disabled=false;say("nsmsg",(e&&e.message)||"No se pudo completar. Recarga y revisa.",true)})});
+
+/* Inscripciones y visitas (base de datos en Supabase) */
+var CFG=null,dbt="",INS=[];try{dbt=sessionStorage.getItem("sl-db")||""}catch(e){}
+function dbCfg(){var s=CFG&&CFG.supabase||{};return/^https:\/\/\S+$/.test(s.url||"")&&String(s.anonKey||"").length>20?s:null}
+function dbReq(path,method,body){var s=dbCfg(),h={"apikey":s.anonKey,"Content-Type":"application/json","Authorization":"Bearer "+dbt};if(method==="PATCH"||method==="DELETE")h.Prefer="return=minimal";
+return fetch(s.url.replace(/\/+$/,"")+path,{method:method||"GET",headers:h,body:body?JSON.stringify(body):undefined,cache:"no-store"}).then(function(r){
+if(r.status===401){dbLogout();throw new Error("La sesión ha caducado: vuelve a entrar.")}
+if(!r.ok)throw new Error("La base de datos ha dado error "+r.status+".");return r.status===204?null:r.json()})}
+function dbStart(){
+(CFG?Promise.resolve():fetch("config.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){CFG=d||{}})).then(function(){
+var ok=!!dbCfg();$("dbcfg").hidden=ok;$("dbgo").disabled=!ok;
+if(ok&&dbt){$("dbl").hidden=true;$("dbin").hidden=false;loadIns()}else{$("dbl").hidden=false;$("dbin").hidden=true}}).catch(function(){$("dbcfg").hidden=false;$("dbgo").disabled=true})}
+$("dbgo").addEventListener("click",function(){var s=dbCfg();if(!s)return;var e=$("dbe").value.trim(),p=$("dbp").value;
+if(!e||!p){say("dbmsg","Escribe el correo y la contraseña.",true);return}
+var b=$("dbgo");b.disabled=true;say("dbmsg","Entrando...");
+fetch(s.url.replace(/\/+$/,"")+"/auth/v1/token?grant_type=password",{method:"POST",headers:{"apikey":s.anonKey,"Content-Type":"application/json"},body:JSON.stringify({email:e,password:p})})
+.then(function(r){return r.json().catch(function(){return{}}).then(function(d){if(!r.ok||!d.access_token)throw new Error("Correo o contraseña incorrectos.");return d})})
+.then(function(d){dbt=d.access_token;try{sessionStorage.setItem("sl-db",dbt)}catch(x){}$("dbp").value="";say("dbmsg","");b.disabled=false;dbStart()})
+.catch(function(er){b.disabled=false;say("dbmsg",er.message||"No se pudo entrar.",true)})});
+function dbLogout(){dbt="";try{sessionStorage.removeItem("sl-db")}catch(e){}$("dbl").hidden=false;$("dbin").hidden=true}
+$("dbout").addEventListener("click",dbLogout);
+function fmtts(t){var d=new Date(t);return isNaN(d)?"":d.toLocaleString("es-ES",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})}
+var EST={pendiente:"⏳ Pendiente",aceptado:"✅ Aceptado",rechazado:"❌ Rechazado"};
+function renderIns(){var f=$("ifil").value,L=INS.filter(function(x){return!f||x.estado===f}),np=INS.filter(function(x){return x.estado==="pendiente"}).length;
+$("icount").textContent="("+INS.length+" en total, "+np+" pendiente"+(np===1?"":"s")+")";
+$("ilist").innerHTML=L.map(function(x){return '<div class="li" style="display:block"><span><b>'+esc(x.nombre)+'</b> · '+esc(x.usuario)+'<small>'+esc(fmtts(x.creado))+(x.equipo?' · Quiere llevar: '+esc(x.equipo):'')+'</small><small>📱 '+esc(x.contacto)+'</small>'+(x.mensaje?'<small>💬 '+esc(x.mensaje)+'</small>':'')+'</span>'+
+'<div class="row2" style="margin-top:8px"><select data-ie="'+(+x.id)+'" aria-label="Estado de '+esc(x.nombre)+'">'+Object.keys(EST).map(function(q){return '<option value="'+q+'"'+(x.estado===q?" selected":"")+'>'+EST[q]+'</option>'}).join("")+'</select><button class="del" data-idel="'+(+x.id)+'">Borrar</button></div></div>'}).join("")||'<p class="mute">No hay inscripciones'+(f?' con ese estado':'')+'.</p>'}
+function loadIns(){say("imsg","Cargando...");
+return Promise.all([dbReq("/rest/v1/inscripciones?select=*&order=creado.desc"),dbReq("/rest/v1/visitas?select=dia,n&order=dia.desc&limit=30"),dbReq("/rest/v1/rpc/total_visitas","POST",{})])
+.then(function(r){INS=r[0]||[];renderIns();
+var V=r[1]||[],mx=V.reduce(function(m,x){return Math.max(m,x.n)},1);$("vtot").textContent="("+(+r[2]||0).toLocaleString("es-ES")+" en total)";
+$("vlist").innerHTML=V.map(function(x){return '<div class="li"><span>'+esc(fmtd(x.dia))+'</span><span style="flex:1;margin:0 10px;height:8px;background:rgba(229,23,63,.2)"><i style="display:block;height:100%;width:'+(x.n/mx*100)+'%;background:#e5173f"></i></span><b>'+(+x.n)+'</b></div>'}).join("")||'<p class="mute">Aún no hay visitas.</p>';say("imsg","")})
+.catch(function(e){say("imsg",e.message,true)})}
+$("irel").addEventListener("click",function(){loadIns()});
+$("ifil").addEventListener("change",renderIns);
+$("ilist").addEventListener("change",function(e){var id=e.target.getAttribute("data-ie");if(!id)return;var v=e.target.value;say("imsg","Guardando...");
+dbReq("/rest/v1/inscripciones?id=eq."+(+id),"PATCH",{estado:v}).then(function(){INS.forEach(function(x){if(+x.id===+id)x.estado=v});renderIns();say("imsg","Guardado.")}).catch(function(er){say("imsg",er.message,true)})});
+$("ilist").addEventListener("click",function(e){var id=e.target.getAttribute("data-idel");if(!id)return;if(!window.confirm("¿Borrar esta inscripción?"))return;
+dbReq("/rest/v1/inscripciones?id=eq."+(+id),"DELETE").then(function(){INS=INS.filter(function(x){return+x.id!==+id});renderIns();say("imsg","Borrada.")}).catch(function(er){say("imsg",er.message,true)})});
+$("icsv").addEventListener("click",function(){var cols=["creado","nombre","usuario","equipo","contacto","mensaje","estado"];
+function q(v){v=v==null?"":String(v);if(/^[=+\-@]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"'}
+var csv="﻿"+cols.join(";")+"\n"+INS.map(function(x){return cols.map(function(c){return q(x[c])}).join(";")}).join("\n");
+var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv;charset=utf-8"}));a.download="inscripciones.csv";document.body.appendChild(a);a.click();a.remove()});
 $("tslist").addEventListener("click",function(e){
 var n=e.target.getAttribute("data-ts");if(n===null)return;
 if(!window.confirm("¿Borrar la temporada "+n+" del historial?"))return;

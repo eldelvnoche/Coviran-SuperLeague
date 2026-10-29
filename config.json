@@ -4,5 +4,18 @@
     "repoId": "",
     "category": "Comentarios",
     "categoryId": ""
+  },
+  "supabase": {
+    "url": "",
+    "anonKey": ""
+  },
+  "inscripciones": {
+    "abiertas": true,
+    "titulo": "la Temporada 2"
+  },
+  "donaciones": {
+    "url": "",
+    "titulo": "Invita a un café ☕",
+    "texto": "La web, los premios y los torneos los montamos entre colegas. Si te mola la liga, cualquier ayuda suma."
   }
 }

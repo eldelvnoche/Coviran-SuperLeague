@@ -455,14 +455,88 @@ nav button[aria-selected="true"]{color:#fff}
 .tsl>div{display:flex;align-items:center;gap:8px;font-weight:600;min-width:0}
 .tsl>div>i{font-style:normal;color:var(--mute);font-size:12px;letter-spacing:.08em;text-transform:uppercase;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;width:106px;flex:none}
 .ts.live{border-left:3px solid var(--acc);background:linear-gradient(90deg,rgba(229,23,63,.1),transparent 70%)}
+
+/* ===== v6: modo claro, evolución, comparador, archivo de temporadas, inscripciones y donaciones ===== */
+html[data-tema=claro]{color-scheme:light;--bg:#f3f3f6;--panel:#ffffff;--panel2:#ececf1;--line:#d8d8e0;--text:#131318;--mute:#5d5d6b;--acc:#d3123a;--hot:#d3123a;--h1:linear-gradient(180deg,#131318,#2b2b33 55%,#55555f);--trophy:#9a6b00;--trophy-g:linear-gradient(135deg,#d9a520,#9a6b00);--win:#0b8f5f;--loss:#d24a0a;--glow:rgba(229,23,63,.2);--tint:rgba(0,0,0,.025);--tint2:rgba(229,23,63,.08);--po:#c27c00;--shadow:#cfcfd8;--glass:rgba(255,255,255,.92)}
+html[data-tema=claro] body{background:var(--bg)}
+html[data-tema=claro] body::before{background:radial-gradient(800px 420px at 100% 0%,rgba(229,23,63,.09),transparent 65%),var(--bg)!important}
+html[data-tema=claro] header h1{background:linear-gradient(180deg,#ffffff,#e6e6ec 55%,#a9a9b5);-webkit-background-clip:text;background-clip:text}
+html[data-tema=claro] .pc .big,html[data-tema=claro] .rc>b,html[data-tema=claro] .sb .sc,html[data-tema=claro] .mh .sc,html[data-tema=claro] .it .v,html[data-tema=claro] .rg .v,html[data-tema=claro] .pr .pn2{color:var(--text)}
+html[data-tema=claro] .pc.p1 .big{color:var(--trophy)}
+html[data-tema=claro] .card{box-shadow:0 14px 34px -24px rgba(0,0,0,.35)}
+html[data-tema=claro] .lg,html[data-tema=claro] .bdg{border-color:var(--line)}
+html[data-tema=claro] nav{background:rgba(255,255,255,.94)}
+html[data-tema=claro] nav button[aria-selected="true"]{color:var(--acc)}
+html[data-tema=claro] .ins .x{background:rgba(0,0,0,.08);color:var(--text)}
+html[data-tema=claro] .band{background:repeating-linear-gradient(-58deg,var(--acc) 0 9px,#fff 9px 18px)}
+.tema{position:absolute;top:10px;right:10px;z-index:3;display:flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid rgba(255,255,255,.28);border-radius:3px;background:rgba(0,0,0,.4);color:#fff;cursor:pointer;font:700 14px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.tema svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tsw{max-width:640px;margin:10px auto 0;display:flex;align-items:center;gap:8px;color:#dcdce2;font:700 14px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em}
+.tsw[hidden]{display:none}
+.tsw select,.cmpsel select{font:700 16px "Barlow Condensed",sans-serif;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:6px 8px;min-width:0}
+.archb{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;margin:0 0 16px;padding:12px 14px;border:1px solid var(--trophy);border-left:4px solid var(--trophy);background:var(--panel);border-radius:3px}
+.archb b{font-family:"Barlow Condensed",sans-serif;font-size:20px;text-transform:uppercase}
+.archb .cta{font-size:15px;padding:8px 14px}
+body.arch #aviso,body.arch #next,body.arch #ins,body.arch .s2,body.arch #don{display:none}
+/* evolución */
+.evc{padding:10px 8px 6px}
+.evo{display:block;width:100%;height:auto}
+.evo .eg{stroke:var(--line);stroke-width:1}
+.evo .ey,.evo .ex{fill:var(--mute);font:600 11px "Barlow Condensed",sans-serif;text-anchor:end}
+.evo .ex{text-anchor:middle}
+.evo .eo{fill:none;stroke:var(--mute);stroke-opacity:.22;stroke-width:1.5}
+.evo .es{fill:none;stroke-width:3;stroke-linejoin:round;stroke-linecap:round}
+.evch button{display:flex;align-items:center;gap:6px}
+.evch button[aria-pressed="true"]{background:var(--panel2);color:var(--text);border-width:2px}
+/* comparador */
+.cmpc{padding:12px}
+.cmpsel{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:8px;align-items:center}
+.cmpsel span{font:800 18px "Barlow Condensed",sans-serif;color:var(--mute);text-transform:uppercase}
+.cmph{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;text-align:center;padding:14px 0 6px}
+.cmph .tm{display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;background:none;border:0;padding:0;color:inherit}
+.cmph .bal{font:800 40px/1 "Barlow Condensed",sans-serif;color:var(--acc)}
+.cmph .bal small{display:block;font-size:12px;color:var(--mute);letter-spacing:.06em;text-transform:uppercase;font-weight:700;margin-top:4px}
+.cmpc .fbox{margin-top:10px}
+/* inscripción y donaciones */
+.s2b{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;position:relative}
+.don{position:relative;margin-top:16px;padding:16px;border:1px solid var(--trophy);border-left:4px solid var(--trophy);border-radius:3px;background:radial-gradient(300px 140px at 100% 0%,rgba(227,179,65,.16),transparent 70%),var(--panel)}
+.don .k{font:700 14px "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--trophy)}
+.don b{display:block;font:800 28px/1 "Barlow Condensed",sans-serif;text-transform:uppercase;margin-top:2px}
+.don p{margin:8px 0 0;color:var(--mute)}
+.don .lnk{border-color:var(--trophy);color:var(--trophy)}
+.fti{margin:4px 0 6px;font:800 30px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}
+.frm{display:grid;gap:12px;margin-top:14px}
+.frm label{display:grid;gap:5px;font-weight:600;font-size:15px}
+.frm input,.frm textarea{font:inherit;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:10px 12px;width:100%}
+.frm textarea{min-height:90px;resize:vertical}
+.frm input:focus,.frm textarea:focus{outline:2px solid var(--acc);outline-offset:1px}
+.frm .ck{display:flex;grid-template-columns:none;align-items:flex-start;gap:10px;font-weight:500;font-size:14px;color:var(--mute)}
+.frm .ck input{width:20px;height:20px;flex:none;margin:1px 0 0;accent-color:var(--acc)}
+.frm .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.fmsg{margin:0;font-weight:600}.fmsg.bad{color:var(--loss)}.fmsg.ok{color:var(--win)}
+.ftl{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:10px;font:700 14px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.08em}
+.ftl a,.ftl button{color:var(--acc);background:none;border:0;padding:0;cursor:pointer;font:inherit;text-transform:inherit;letter-spacing:inherit;text-decoration:none}
+.ftl span{color:var(--mute)}
 </style>
+<script>
+/* Tema: auto (el del sistema), claro u oscuro. Va aquí para que no parpadee al cargar */
+(function(){var m=null;try{m=localStorage.getItem("sl-tema")}catch(e){}
+window.TEMA=m==="claro"||m==="oscuro"?m:"auto";
+window.aplicarTema=function(){var t=TEMA==="auto"?(window.matchMedia&&matchMedia("(prefers-color-scheme: light)").matches?"claro":"oscuro"):TEMA;
+document.documentElement.setAttribute("data-tema",t);var mt=document.querySelector('meta[name="theme-color"]');if(mt)mt.content=t==="claro"?"#f3f3f6":"#07070a"};
+aplicarTema();
+try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",function(){if(TEMA==="auto")aplicarTema()})}catch(e){}})();
+</script>
 </head>
 <body>
 <div class="band"></div>
 <header><div><img class="logo" src="logo.svg" alt="Logo Superliga Covirán"><div><h1>Superliga<br>Covirán</h1><br><p>Sabadell-Tanger de eFootball</p></div></div>
-<div class="prog" id="prog" hidden><span id="progt"></span><span class="bar"><i id="progb" style="width:0"></i></span></div></header>
+<div class="prog" id="prog" hidden><span id="progt"></span><span class="bar"><i id="progb" style="width:0"></i></span></div>
+<div class="tsw" id="tsw" hidden><label for="tsel">Ver</label><select id="tsel"></select></div>
+<button class="tema" id="tema" type="button"></button></header>
 <main>
 <p class="err" id="err" role="alert" hidden></p>
+<div id="archb"></div>
 
 <section id="v1">
 <div id="aviso"></div>
@@ -481,7 +555,9 @@ nav button[aria-selected="true"]{color:#fff}
 <b>Se viene una sorpresa</b>
 <p>La segunda temporada llega con algo nuevo que todavía no podemos contar. Lo que sí sabemos: habrá premios para los tres primeros.</p>
 <div class="prz"><span class="m2">2º<small>Premio</small></span><span class="m1">1º<small>Premio</small></span><span class="m3">3º<small>Premio</small></span></div>
+<div class="s2b"><button class="cta" type="button" data-ins>Quiero participar</button></div>
 </div>
+<div id="don"></div>
 <div id="ins"></div>
 </section>
 
@@ -496,6 +572,12 @@ nav button[aria-selected="true"]{color:#fff}
 <section id="v3" hidden>
 <h2 class="vt">Estadísticas<b>de la liga</b></h2>
 <div class="rec" id="rec"></div>
+<h2 class="sec-h">Evolución <small>puesto en cada jornada</small></h2>
+<div class="chips sm evch" id="evch"></div>
+<div class="card soft evc" id="evo"></div>
+<p class="note">Elige hasta 4 equipos para seguir su línea. Toca un punto para ver el puesto.</p>
+<h2 class="sec-h" id="cmph">Comparador <small>cara a cara</small></h2>
+<div class="card soft cmpc" id="cmp"></div>
 <h2 class="sec-h">Rankings</h2>
 <div class="chips sm" id="mch"></div>
 <div class="card soft" id="rk"></div>
@@ -517,7 +599,8 @@ nav button[aria-selected="true"]{color:#fff}
 <h2 class="vt">Títulos<b>y ranking</b></h2>
 <div class="chips sm" id="tch"></div>
 <div id="tv"></div></section>
-<div class="band bt"></div><p class="ft">Superliga Covirán · Temporada 1</p>
+<div class="band bt"></div><p class="ft" id="ft">Superliga Covirán · Temporada 1</p>
+<div class="ftl" id="ftl"><button type="button" data-ins>Apúntate</button></div>
 </main>
 
 <dialog class="sh" id="sh" aria-label="Detalle"><div class="shbar"><button id="shback" hidden>‹ Volver</button><span></span><button id="shx" aria-label="Cerrar">Cerrar ✕</button></div><div class="shb" id="shb"></div></dialog>
@@ -567,7 +650,7 @@ function n0(x){x=+x;return isFinite(x)&&x>=0?x:0}
 function fx(v,d){return(+v).toFixed(d).replace(".",",")}
 function lsGet(n){try{return localStorage.getItem(n)}catch(e){return null}}
 function lsSet(n,v){try{localStorage.setItem(n,v)}catch(e){}}
-function crest(id){var e=(PL[id]||{}).escudo;return okFoto(e)?e:IMG[id]}
+function crest(id){var e=(PL[id]||{}).escudo;return okFoto(e)?e:IMG[id]||"logo.svg"}
 function logo(id,c){return '<img class="lg'+(c?" "+c:"")+'" alt="" aria-hidden="true" src="'+crest(id)+'" onerror="this.onerror=null;this.src=IMG.'+id+'">'}
 function nmp(id){return '<span class="nm">'+T[id].t+'</span><span class="tt">'+T[id].p+'</span>'}
 
@@ -578,9 +661,10 @@ function persp(x,id){var me=x.h===id,gf=me?x.v[0]:x.v[1],gc=me?x.v[1]:x.v[0];ret
 function doneJ(j){return J[j].ms.every(function(m){return R[k(j,m[0],m[1])]})}
 function lastDone(){var n=0;for(var j=0;j<J.length;j++){if(doneJ(j))n=j+1;else break}return n}
 function nPlayed(){return Object.keys(R).length}
-function table(){
+/* maxJ (opcional): clasificación contando solo hasta esa jornada (0 = la primera) */
+function table(maxJ){
 var S={};Object.keys(T).forEach(function(i){S[i]={id:i,pj:0,pg:0,pe:0,pp:0,gf:0,gc:0,f:[]}});
-allM().forEach(function(x){var v=x.v;if(!v)return;
+allM().forEach(function(x){var v=x.v;if(!v||(maxJ!=null&&x.j>maxJ))return;
 var H=S[x.h],A=S[x.a];H.pj++;A.pj++;H.gf+=v[0];H.gc+=v[1];A.gf+=v[1];A.gc+=v[0];
 if(v[0]>v[1]){H.pg++;A.pp++;H.f.push("w");A.f.push("l")}else if(v[0]<v[1]){A.pg++;H.pp++;H.f.push("l");A.f.push("w")}else{H.pe++;A.pe++;H.f.push("d");A.f.push("d")}});
 var L=Object.keys(S).map(function(i){var r=S[i];r.dg=r.gf-r.gc;r.pts=r.pg*3+r.pe;r.best=bestW(r.f);r.now=nowS(r.f);return r});
@@ -805,7 +889,7 @@ return '<article class="gl" id="g-'+(+g.id)+'"><div class="mt">'+esc(meta)+'</di
 var stack=[],curSheet=null;
 function openSheet(s,push){
 var d=$("sh");if(push&&curSheet&&d.open)stack.push(curSheet);else if(!push)stack=[];
-curSheet=s;$("shb").innerHTML=s.type==="t"?ficha(s.id):matchSheet(s.id);
+curSheet=s;$("shb").innerHTML=sheetHtml(s);
 $("shback").hidden=!stack.length;
 if(!d.open){if(d.showModal)d.showModal();else d.setAttribute("open","")}
 d.scrollTop=0}
@@ -814,6 +898,14 @@ $("shx").addEventListener("click",closeSheet);
 $("shback").addEventListener("click",function(){var s=stack.pop();if(s){curSheet=null;openSheet(s,true);stack.pop();$("shback").hidden=!stack.length}});
 $("sh").addEventListener("click",function(e){if(e.target===this)closeSheet()});
 document.addEventListener("click",function(e){
+var x2=e.target.closest?e.target.closest("[data-ins],[data-cmp],[data-arch],[data-ev],#archx,#tema"):null;
+if(x2){
+if(x2.hasAttribute("data-ins")){openSheet({type:"i"},false);return}
+if(x2.hasAttribute("data-cmp")){closeSheet();cmpA=x2.getAttribute("data-cmp");if(cmpB===cmpA)cmpB=null;tab(3);renderCmp(table());var ch=$("cmph");if(ch.scrollIntoView)ch.scrollIntoView({block:"start"});return}
+if(x2.hasAttribute("data-arch")){verTemporada(+x2.getAttribute("data-arch"));return}
+if(x2.hasAttribute("data-ev")){toggleEvo(x2.getAttribute("data-ev"));return}
+if(x2.id==="archx"){volverActual();return}
+if(x2.id==="tema"){TEMA={auto:"claro",claro:"oscuro",oscuro:"auto"}[TEMA]||"auto";lsSet("sl-tema",TEMA);aplicarTema();renderTema();return}}
 var t=e.target.closest?e.target.closest("[data-t],[data-m]"):null;if(!t)return;
 var inSheet=$("sh").contains(t);
 if(t.hasAttribute("data-t")&&T[t.getAttribute("data-t")])openSheet({type:"t",id:t.getAttribute("data-t")},inSheet);
@@ -826,6 +918,8 @@ var ms=allM().filter(function(x){return x.h===id||x.a===id});
 var pl=ms.filter(function(x){return x.v}),nx=ms.filter(function(x){return!x.v})[0];
 var h='<div class="fh">'+logo(id,"xl")+'<div class="pi"><span class="pnm">'+T[id].t+'</span><span class="tt" style="font-size:15px">'+esc(T[id].p)+(d.apodo?' · «'+esc(d.apodo)+'»':'')+'</span></div><span class="rk">'+(pos+1)+'º</span></div>';
 h+='<div class="fbox"><div class="sg s7"><div class="st"><b>'+r.pts+'</b><span>Pts</span></div><div class="st"><b>'+r.pj+'</b><span>PJ</span></div><div class="st"><b>'+r.pg+'</b><span>G</span></div><div class="st"><b>'+r.pe+'</b><span>E</span></div><div class="st"><b>'+r.pp+'</b><span>P</span></div><div class="st"><b>'+r.gf+'</b><span>GF</span></div><div class="st"><b>'+r.gc+'</b><span>GC</span></div></div></div>';
+var E=evo();if(E.n>1)h+='<div class="fbox"><h4>Evolución en la tabla</h4>'+evoSvg(E,[id],true)+'</div>';
+h+='<p style="margin:10px 0 0"><button class="lnk" data-cmp="'+id+'" style="margin:0">Comparar con otro equipo</button></p>';
 h+=palBox(id);h+='<div class="fbox"><h4>Racha</h4><div class="fm" style="justify-content:flex-start">'+dots(r.f)+'</div><p style="margin:8px 0 0">'+nowTxt(r.now)+(r.best?' · Mejor racha: '+r.best+' victoria'+(r.best>1?'s':'')+' seguida'+(r.best>1?'s':''):'')+'</p>'+
 (B.length||mv||condisDe(id)?'<div>'+B.map(function(b){return '<span class="bdg">'+b.e+' '+b.t+'</span>'}).join("")+(mv?'<span class="bdg">⭐ MVP ×'+mv+'</span>':'')+(condisDe(id)?'<span class="bdg cdt">🏆 Premio Condis</span>':'')+'</div>':'')+'</div>';
 if(nx){var o=nx.h===id?nx.a:nx.h;h+='<div class="fbox"><h4>Próximo partido</h4><div class="o" style="display:flex;align-items:center;gap:10px">'+logo(o,"sm")+'<span><span class="nm" style="font-size:18px">'+(nx.h===id?'vs ':'en casa de ')+T[o].t+'</span><span class="tt">Jornada '+(nx.j+1)+' · '+T[o].p+'</span></span></div></div>'}
@@ -926,7 +1020,8 @@ h+='<div class="ts live"><div class="tsh"><b>Temporada '+(maxN+1)+'</b><span>'+(
 h+=S.map(function(x){var o=x.liga.orden,c=x.champions;
 return '<div class="ts"><div class="tsh"><b>Temporada '+esc(x.n)+'</b><span>'+(x.fecha?esc(fmt(x.fecha)):"")+'</span></div><div class="tsl">'+
 '<div><i>🏆 Campeón</i>'+tmn(o[0],"sm")+'</div><div><i>2º</i>'+tmn(o[1])+'</div>'+(o[2]?'<div><i>3º</i>'+tmn(o[2])+'</div>':'')+
-(c&&c.campeon?'<div><i>⭐ Champions</i>'+tmn(c.campeon,"sm")+'</div>'+(c.sub?'<div><i>Finalista</i>'+tmn(c.sub)+'</div>':''):'')+'</div></div>'}).join("");
+(c&&c.campeon?'<div><i>⭐ Champions</i>'+tmn(c.campeon,"sm")+'</div>'+(c.sub?'<div><i>Finalista</i>'+tmn(c.sub)+'</div>':''):'')+'</div>'+
+(archOk(x)?'<button class="lnk" data-arch="'+(+x.n)+'">Ver temporada completa</button>':'')+'</div>'}).join("");
 if(!S.length)h+='<div class="empty">Todavía no hay temporadas terminadas. Aquí quedará el campeón de cada Superliga Covirán y de cada Mercadona Champions League.</div>';
 return h+'</div>'}
 function renderTitulos(L){
@@ -934,14 +1029,149 @@ $("tch").innerHTML=TSUB.map(function(t,i){return '<button data-ts="'+i+'" aria-p
 $("tv").innerHTML=[tvRank,tvPal,tvLidl,tvTem][tsub](L)}
 $("tch").addEventListener("click",function(e){var i=e.target.getAttribute("data-ts");if(i===null)return;tsub=+i;renderTitulos(table())});
 
+/* ---------- evolución: puesto de cada equipo jornada a jornada ---------- */
+var EVC=["var(--acc)","#3d8bff","var(--trophy)","var(--win)"],evoSel=null,EVO=null;
+function evo(){if(EVO)return EVO;var n=0;allM().forEach(function(x){if(x.v&&x.j+1>n)n=x.j+1});
+var P={};Object.keys(T).forEach(function(i){P[i]=[]});
+for(var j=0;j<n;j++)table(j).forEach(function(r,i){P[r.id].push(i+1)});
+return EVO={n:n,P:P}}
+function evoSvg(E,sel,small){
+var ids=Object.keys(T),nT=ids.length,W=400,H=small?190:290,l=24,r=small?12:44,t=10,b=22,iw=W-l-r,ih=H-t-b,g='';
+function X(j){return l+(E.n>1?j/(E.n-1)*iw:iw/2)}
+function Y(p){return t+(nT>1?(p-1)/(nT-1)*ih:ih/2)}
+function path(id){return E.P[id].map(function(p,j){return(j?"L":"M")+X(j).toFixed(1)+" "+Y(p).toFixed(1)}).join("")}
+for(var p=1;p<=nT;p++){g+='<line class="eg" x1="'+l+'" x2="'+(W-r)+'" y1="'+Y(p).toFixed(1)+'" y2="'+Y(p).toFixed(1)+'"/>';if(!small||p===1||p===nT)g+='<text class="ey" x="'+(l-5)+'" y="'+(Y(p)+4).toFixed(1)+'">'+p+'º</text>'}
+for(var j=0;j<E.n;j++)if(E.n<=12||j%2===0)g+='<text class="ex" x="'+X(j).toFixed(1)+'" y="'+(H-6)+'">'+(j+1)+'</text>';
+if(!small)ids.forEach(function(id){if(sel.indexOf(id)<0)g+='<path class="eo" d="'+path(id)+'"/>'});
+sel.forEach(function(id,i){if(!E.P[id])return;var c=EVC[i%EVC.length],pts=E.P[id];
+g+='<path class="es" style="stroke:'+c+'" d="'+path(id)+'"/>';
+pts.forEach(function(p,j){var tx=T[id].t+' · jornada '+(j+1)+': '+p+'º';g+='<circle cx="'+X(j).toFixed(1)+'" cy="'+Y(p).toFixed(1)+'" r="'+(small?2.5:3.2)+'" style="fill:'+c+';stroke:transparent;stroke-width:10" data-pt="'+esc(tx)+'"><title>'+esc(tx)+'</title></circle>'});
+if(!small&&pts.length)g+='<image href="'+esc(crest(id))+'" x="'+(X(E.n-1)+7).toFixed(1)+'" y="'+(Y(pts[pts.length-1])-8.5).toFixed(1)+'" width="28" height="17" preserveAspectRatio="xMidYMid slice"/>'});
+return '<svg class="evo" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Evolución del puesto en la tabla por jornada">'+g+'</svg>'}
+/* sin elección del usuario se siguen los 3 primeros de la tabla */
+function evoCur(L){return(evoSel||L.slice(0,3).map(function(r){return r.id})).filter(function(i){return T[i]})}
+function renderEvo(L){L=L||table();var E=evo(),sel=evoCur(L);
+$("evch").innerHTML=L.map(function(r){var i=sel.indexOf(r.id),c=i>=0?EVC[i%EVC.length]:"";return '<button type="button" data-ev="'+r.id+'" aria-pressed="'+(i>=0)+'"'+(c?' style="border-color:'+c+'"':'')+'>'+logo(r.id,"xs")+T[r.id].t+'</button>'}).join("");
+$("evo").innerHTML=E.n>1?evoSvg(E,sel,false)+'<p class="note" id="evoi" style="margin:4px 6px;min-height:1.3em"></p>':'<div class="empty">La gráfica aparece cuando haya al menos dos jornadas con resultados.</div>'}
+function toggleEvo(id){evoSel=evoCur(table());var i=evoSel.indexOf(id);if(i>=0)evoSel.splice(i,1);else{evoSel.push(id);if(evoSel.length>4)evoSel.shift()}renderEvo()}
+$("evo").addEventListener("click",function(e){var c=e.target.closest?e.target.closest("[data-pt]"):null;if(c&&$("evoi"))$("evoi").textContent=c.getAttribute("data-pt")});
+
+/* ---------- comparador cara a cara ---------- */
+var cmpA=null,cmpB=null;
+function renderCmp(L){
+var ids=Object.keys(T);if(ids.length<2){$("cmp").innerHTML="";return}
+/* sin elección del usuario: 1º contra 2º de la tabla actual */
+var a=T[cmpA]?cmpA:L[0].id,b=T[cmpB]&&cmpB!==a?cmpB:(L[0].id===a?L[1].id:L[0].id),A=agg(),P=pal(),pos={},row={};L.forEach(function(r,i){pos[r.id]=i+1;row[r.id]=r});
+var ra=row[a],rb=row[b],aa=A[a],ab=A[b];
+var legs=allM().filter(function(x){return(x.h===a&&x.a===b)||(x.h===b&&x.a===a)}),jug=legs.filter(function(x){return x.v});
+var wa=0,wb=0,de=0;jug.forEach(function(x){var p=persp(x,a);if(p.r==="w")wa++;else if(p.r==="l")wb++;else de++});
+function av(s,q){return s.n?s.s[q]/s.n:null}
+function pp(s){return s.s.pas?s.s.pac/s.s.pas*100:null}
+/* [nombre, valor 1, valor 2, decimales, 0 más es mejor | 1 menos es mejor | 2 neutro, unidad] */
+var M=[["Posición",pos[a],pos[b],0,1,"º"],["Puntos",ra.pts,rb.pts],["Victorias",ra.pg,rb.pg],["Empates",ra.pe,rb.pe,0,2],["Derrotas",ra.pp,rb.pp,0,1],["Goles a favor",ra.gf,rb.gf],["Goles en contra",ra.gc,rb.gc,0,1],["Puntos por partido",ra.pj?ra.pts/ra.pj:null,rb.pj?rb.pts/rb.pj:null,2],["Mejor racha",ra.best,rb.best],["MVP de jornada",mvpCount(a),mvpCount(b)]];
+var S=[["Posesión media",av(aa,"pos"),av(ab,"pos"),0,0,"%"],["Tiros por partido",av(aa,"tir"),av(ab,"tir"),1],["Tiros a puerta",av(aa,"tpu"),av(ab,"tpu"),1],["Precisión de pase",pp(aa),pp(ab),0,0,"%"],["Paradas por partido",av(aa,"par"),av(ab,"par"),1],["Intercepciones",av(aa,"int"),av(ab,"int"),1],["Entradas",av(aa,"ent"),av(ab,"ent"),1]];
+var Tt=[["Superliga",P[a].liga,P[b].liga],["Champions",P[a].ucl,P[b].ucl],["Torneos Lidl",P[a].lidl,P[b].lidl]];
+function w(v,o,m){if(v==null)return 0;if(m===1){var mn=Math.min(v,o==null?v:o);return v===0?100:Math.max(6,mn/v*100)}var mx=Math.max(v,o||0);return mx?v/mx*100:0}
+function bars(rows){return rows.filter(function(q){return q[1]!=null||q[2]!=null}).map(function(q){
+var l=q[1],v=q[2],d=q[3]||0,m=q[4]||0,u=q[5]||"",tie=m===2||l==null||v==null||l===v,bl=!tie&&(m===1?l<v:l>v),bv=!tie&&!bl;
+function f(x){return x==null?"–":fx(x,d)+u}
+return '<div class="ms"><div class="l3"><b class="'+(bl?"hi":"")+'">'+f(l)+'</b><span>'+q[0]+'</span><b class="'+(bv?"hi":"")+'">'+f(v)+'</b></div><div class="sbar"><div><i class="'+(bl?"on":"")+'" style="width:'+w(l,v,m)+'%"></i></div><div><i class="'+(bv?"on":"")+'" style="width:'+w(v,l,m)+'%"></i></div></div></div>'}).join("")}
+function o(sel){return ids.map(function(i){return '<option value="'+i+'"'+(i===sel?" selected":"")+'>'+esc(T[i].t)+' · '+esc(T[i].p)+'</option>'}).join("")}
+var h='<div class="cmpsel"><select id="cmpa" aria-label="Primer equipo">'+o(a)+'</select><span>vs</span><select id="cmpb" aria-label="Segundo equipo">'+o(b)+'</select></div>';
+h+='<div class="cmph"><button class="tm" data-t="'+a+'">'+logo(a)+nmp(a)+'</button><span class="bal">'+wa+'-'+wb+'<small>'+(jug.length?'Victorias'+(de?' · '+de+' empate'+(de>1?'s':''):''):'Aún no se han enfrentado')+'</small></span><button class="tm" data-t="'+b+'">'+logo(b)+nmp(b)+'</button></div>';
+h+='<div class="fbox"><h4>Partidos entre ellos</h4>'+legs.map(function(x){
+if(!x.v)return '<div class="hl"><span class="j">J'+(x.j+1)+'</span><span class="o"><span>'+T[x.h].t+' – '+T[x.a].t+'</span></span><span class="s">–</span><span></span></div>';
+var p=persp(x,a);return '<button class="hl" data-m="'+x.key+'"><span class="j">J'+(x.j+1)+'</span><span class="o">'+logo(x.h,"xs")+'<span>'+T[x.h].t+' – '+T[x.a].t+'</span></span><span class="s">'+x.v[0]+'-'+x.v[1]+'</span><span class="wl '+p.r+'">'+{w:"V",d:"E",l:"D"}[p.r]+'</span></button>'}).join("")+
+'<p class="note" style="margin:6px 0 0">V, E y D desde el punto de vista de '+T[a].t+'.</p></div>';
+h+='<div class="fbox"><h4>Temporada</h4>'+bars(M)+'</div>';
+if(aa.n||ab.n)h+='<div class="fbox"><h4>Promedios eFootball</h4>'+bars(S)+'</div>';
+h+='<div class="fbox"><h4>Títulos</h4>'+bars(Tt)+'</div>';
+var E=evo();if(E.n>1)h+='<div class="fbox"><h4>Evolución</h4>'+evoSvg(E,[a,b],true)+'<p class="note" style="margin:4px 0 0"><span style="color:'+EVC[0]+'">■</span> '+T[a].t+' &nbsp; <span style="color:'+EVC[1]+'">■</span> '+T[b].t+'</p></div>';
+$("cmp").innerHTML=h}
+$("cmp").addEventListener("change",function(e){if(e.target.id!=="cmpa"&&e.target.id!=="cmpb")return;cmpA=$("cmpa").value;cmpB=$("cmpb").value;renderCmp(table())});
+
+/* ---------- archivo de temporadas: ver una temporada pasada entera ---------- */
+var T0=T,V0=V1,ARCH=null,CUR={res:null,po:null,go:null,cd:null};
+function setCal(eq,cal){T=eq&&typeof eq==="object"&&Object.keys(eq).length>1?eq:T0;var v=Array.isArray(cal)&&cal.length?cal:V0;
+J=[];v.forEach(function(s){J.push(parse(s,false))});v.forEach(function(s){J.push(parse(s,true))});
+NMATCH=J.reduce(function(s,r){return s+r.ms.length},0);cur=0;EVO=null}
+function useRes(d){d=d||{};fecha=d.actualizado||"";R={};ST={};
+(d.resultados||[]).forEach(function(x){if(!T[x.local]||!T[x.visitante])return;var key=k(x.j-1,x.local,x.visitante);R[key]=[n0(x.gl),n0(x.gv)];if(x.st&&x.st.l&&x.st.v)ST[key]=x.st});
+MVP=d.mvp&&typeof d.mvp==="object"?d.mvp:{};UCL=d.champions&&typeof d.champions==="object"?d.champions:{};EVO=null}
+function archOk(x){return!!x&&typeof x.archivo==="string"&&/^temporadas\/[A-Za-z0-9_-]+\.json$/.test(x.archivo)}
+function verTemporada(n){var s=sTem().filter(function(x){return+x.n===n&&archOk(x)})[0];if(!s)return;closeSheet();
+getJ(s.archivo).then(function(d){ARCH={n:n};setCal(d.equipos,d.calendario);useRes(d.resultados);
+PO=Array.isArray(d.cronicas)?d.cronicas:[];GO=Array.isArray(d.goles)?d.goles:[];CD=d.condis&&typeof d.condis==="object"?d.condis:{ganador:null,nominados:[]};
+evoSel=null;cmpA=cmpB=null;document.body.classList.add("arch");$("err").hidden=true;renderAll();tab(1)})
+.catch(function(){var e=$("err");e.hidden=false;e.textContent="No se ha podido abrir el archivo de la temporada "+n+"."})}
+function volverActual(){ARCH=null;setCal(null,null);useRes(CUR.res);PO=CUR.po||[];GO=CUR.go||[];CD=CUR.cd||{ganador:null,nominados:[]};
+evoSel=null;cmpA=cmpB=null;document.body.classList.remove("arch");$("err").hidden=true;renderAll();tab(1)}
+function curN(){var mx=0;sTem().forEach(function(x){mx=Math.max(mx,+x.n||0)});return curClosed(table())?mx:mx+1}
+$("tsel").addEventListener("change",function(){var v=this.value;if(v)verTemporada(+v);else volverActual()});
+
+/* ---------- configuración, base de datos (Supabase), inscripciones y donaciones ---------- */
+var CFG={},VIS=null;
+function dbOk(){var s=CFG.supabase||{};return okUrl(s.url)&&typeof s.anonKey==="string"&&s.anonKey.length>20}
+function db(path,body,minimal){var s=CFG.supabase,h={"apikey":s.anonKey,"Content-Type":"application/json"};
+if(/^eyJ/.test(s.anonKey))h.Authorization="Bearer "+s.anonKey;if(minimal)h.Prefer="return=minimal";
+return fetch(s.url.replace(/\/+$/,"")+path,{method:"POST",headers:h,body:JSON.stringify(body||{})}).then(function(r){if(!r.ok)throw new Error(r.status);return r.status===204?null:r.json()})}
+/* cuenta una visita por navegador y día; el resto de veces solo lee el total */
+function contarVisita(){if(!dbOk())return;var d=new Date(),hoy=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),nueva=lsGet("sl-vis")!==hoy;
+db(nueva?"/rest/v1/rpc/sumar_visita":"/rest/v1/rpc/total_visitas").then(function(n){if(nueva)lsSet("sl-vis",hoy);VIS=+n||0;renderFootLinks()}).catch(function(){})}
+function donUrl(){var u=CFG.donaciones&&CFG.donaciones.url;return okUrl(u)?u:""}
+function renderDon(){var u=donUrl(),d=CFG.donaciones||{};
+$("don").innerHTML=u?'<div class="don"><span class="k">Apoya la liga</span><b>'+esc(d.titulo||"Invita a un café ☕")+'</b><p>'+esc(d.texto||"La web, los premios y los torneos los montamos entre colegas. Si te mola la liga, cualquier ayuda suma.")+'</p><a class="lnk" href="'+esc(u)+'" target="_blank" rel="noopener">Donar ↗</a></div>':''}
+function renderFootLinks(){var u=donUrl();
+$("ftl").innerHTML='<button type="button" data-ins>Apúntate</button>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">Donar</a>':'')+(VIS!=null?'<span>👀 '+VIS.toLocaleString("es-ES")+' visitas</span>':'')}
+function formIns(){var c=CFG.inscripciones||{};
+if(c.abiertas===false)return '<h3 class="fti">Inscripciones cerradas</h3><p class="tt">Ahora mismo no buscamos jugadores. Vuelve a mirar cuando acabe la temporada.</p>';
+return '<div class="mj">Inscripciones abiertas</div><h3 class="fti">Apúntate a '+esc(c.titulo||"la próxima temporada")+'</h3><p class="tt">Rellena el formulario y los organizadores te escriben para confirmar tu plaza.</p>'+
+'<form id="insf" class="frm" novalidate>'+
+'<label>Nombre<input name="nombre" maxlength="60" required autocomplete="name"></label>'+
+'<label>Usuario de eFootball<input name="usuario" maxlength="40" required autocomplete="off"></label>'+
+'<label>Equipo que te gustaría llevar (opcional)<input name="equipo" maxlength="40"></label>'+
+'<label>Contacto: WhatsApp, Instagram o correo<input name="contacto" maxlength="80" required></label>'+
+'<label>¿Algo más? (opcional)<textarea name="mensaje" maxlength="400"></textarea></label>'+
+'<input class="hp" name="web" tabindex="-1" autocomplete="off" aria-hidden="true">'+
+'<label class="ck"><input type="checkbox" name="ok" required><span>Acepto que los organizadores guarden estos datos solo para gestionar la liga y contactarme.</span></label>'+
+'<button class="cta" type="submit">Enviar inscripción</button><p class="fmsg" id="insm" role="status"></p></form>'}
+document.addEventListener("submit",function(e){if(e.target.id!=="insf")return;e.preventDefault();
+var f=e.target,m=$("insm");function v(n){return(f.elements[n].value||"").trim()}
+function say(t,c){m.textContent=t;m.className="fmsg "+(c||"")}
+if(v("web")){say("¡Hecho! Tu inscripción ha llegado.","ok");f.reset();return}
+if(v("nombre").length<2||v("usuario").length<2||v("contacto").length<3){say("Rellena nombre, usuario y contacto.","bad");return}
+if(!f.elements.ok.checked){say("Marca la casilla para poder guardar tus datos.","bad");return}
+if(!dbOk()){say("Las inscripciones aún no están conectadas. Avisa a los organizadores por el grupo.","bad");return}
+var b=f.querySelector("button[type=submit]");b.disabled=true;say("Enviando…");
+db("/rest/v1/inscripciones",{nombre:v("nombre"),usuario:v("usuario"),equipo:v("equipo")||null,contacto:v("contacto"),mensaje:v("mensaje")||null},true)
+.then(function(){f.reset();say("¡Hecho! Tu inscripción ha llegado. Te escribiremos pronto.","ok")})
+.catch(function(){say("No se ha podido enviar. Inténtalo otra vez en un rato.","bad")}).then(function(){b.disabled=false})});
+function sheetHtml(s){return s.type==="t"?ficha(s.id):s.type==="i"?formIns():matchSheet(s.id)}
+
+/* ---------- tema, banda de archivo y pie ---------- */
+var TEMI={auto:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>',
+claro:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+oscuro:'<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>'};
+var TEMN={auto:"automático",claro:"claro",oscuro:"oscuro"};
+function renderTema(){var b=$("tema"),nx={auto:"claro",claro:"oscuro",oscuro:"auto"}[TEMA];
+b.innerHTML=TEMI[TEMA]+'<span>'+{auto:"Auto",claro:"Claro",oscuro:"Oscuro"}[TEMA]+'</span>';
+b.setAttribute("aria-label","Tema "+TEMN[TEMA]+". Pulsa para cambiar a "+TEMN[nx]);b.title=b.getAttribute("aria-label")}
+function renderExtras(){var S=sTem().filter(archOk);
+$("archb").innerHTML=ARCH?'<div class="archb" role="status"><span>📚 Estás viendo el archivo de la <b>Temporada '+ARCH.n+'</b></span><button class="cta" id="archx" type="button">Volver a la actual</button></div>':'';
+$("tsw").hidden=!S.length;
+if(S.length)$("tsel").innerHTML='<option value="">Temporada actual</option>'+S.slice().reverse().map(function(x){return '<option value="'+(+x.n)+'"'+(ARCH&&ARCH.n===+x.n?" selected":"")+'>Temporada '+esc(x.n)+'</option>'}).join("");
+$("ft").textContent="Superliga Covirán · "+(ARCH?"Temporada "+ARCH.n+" (archivo)":"Temporada "+curN());
+renderDon();renderTema();renderFootLinks()}
+
 /* ---------- navegación y carga ---------- */
 function renderAll(){
 for(var q=0;q<J.length;q++){if(!doneJ(q)){cur=q;break}}
-var L=table();
+EVO=null;var L=table();
 $("upd").textContent=fecha?"Actualizado el "+fmt(fecha)+".":"";
 renderProg();renderAviso(L);renderNext();renderTable(L);renderUCL(L);renderInstall();
 renderChips();renderJ();renderStats(L);renderPlayers(L);renderPosts();renderGoals();renderTitulos(L);
-if(curSheet&&$("sh").open)$("shb").innerHTML=curSheet.type==="t"?ficha(curSheet.id):matchSheet(curSheet.id)}
+renderEvo();renderCmp(L);renderExtras();
+if(curSheet&&curSheet.type!=="i"&&$("sh").open)$("shb").innerHTML=sheetHtml(curSheet)}
 var NAMES=["tabla","jornadas","stats","jugadores","cronicas","golazos","titulos"],NT=NAMES.length,OLD={calendario:2,resultados:2};
 function tab(n,keep){
 for(var i=1;i<=NT;i++){$("v"+i).hidden=n!==i;$("t"+i).setAttribute("aria-selected",n===i)}
@@ -952,17 +1182,15 @@ var hs=(location.hash||"").slice(1),h0=NAMES.indexOf(hs);
 if(h0>0)tab(h0+1,true);else if(OLD[hs])tab(OLD[hs],true);
 renderAll();
 function getJ(u){return fetch(u+"?v="+Date.now(),{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json()})}
-getJ("resultados.json").then(function(d){
-fecha=d.actualizado||"";R={};ST={};
-(d.resultados||[]).forEach(function(x){if(!T[x.local]||!T[x.visitante])return;var key=k(x.j-1,x.local,x.visitante);R[key]=[n0(x.gl),n0(x.gv)];if(x.st&&x.st.l&&x.st.v)ST[key]=x.st});
-MVP=d.mvp&&typeof d.mvp==="object"?d.mvp:{};UCL=d.champions&&typeof d.champions==="object"?d.champions:{};
-renderAll()}).catch(function(){
+/* los datos de la temporada actual se guardan en CUR para poder volver desde el archivo */
+getJ("resultados.json").then(function(d){CUR.res=d;if(ARCH)return;useRes(d);renderAll()}).catch(function(){
 var e=$("err");e.hidden=false;e.textContent="No se han podido cargar los resultados. Recarga la página en un momento."});
 getJ("jugadores.json").then(function(d){PL=d||{};renderAll()}).catch(function(){});
-getJ("cronicas.json").then(function(d){PO=(d&&d.cronicas)||[];renderPosts()}).catch(function(){});
-getJ("goles.json").then(function(d){GO=(d&&d.goles)||[];renderAll()}).catch(function(){});
+getJ("cronicas.json").then(function(d){CUR.po=(d&&d.cronicas)||[];if(!ARCH){PO=CUR.po;renderPosts()}}).catch(function(){});
+getJ("goles.json").then(function(d){CUR.go=(d&&d.goles)||[];if(!ARCH){GO=CUR.go;renderAll()}}).catch(function(){});
 getJ("titulos.json").then(function(d){if(d&&typeof d==="object"){TI=d;renderAll()}}).catch(function(){});
-getJ("condis.json").then(function(d){if(d&&typeof d==="object"){CD=d;renderAll()}}).catch(function(){});
+getJ("condis.json").then(function(d){if(d&&typeof d==="object"){CUR.cd=d;if(!ARCH){CD=d;renderAll()}}}).catch(function(){});
+getJ("config.json").then(function(d){CFG=d&&typeof d==="object"?d:{};renderExtras();contarVisita()}).catch(function(){});
 if("serviceWorker" in navigator&&location.protocol==="https:"){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){})})}
 </script>
 </body>
