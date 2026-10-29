@@ -6,8 +6,8 @@
     "categoryId": ""
   },
   "supabase": {
-    "url": "",
-    "anonKey": ""
+    "url": "https://xxmdmjtdrodlcvcwwsxp.supabase.co",
+    "anonKey": "sb_publishable_lj2vdrS41UTM5gjH3BSBSA_8ffuP9n2"
   },
   "inscripciones": {
     "abiertas": true,

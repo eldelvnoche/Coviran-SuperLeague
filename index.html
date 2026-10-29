@@ -1114,7 +1114,7 @@ var CFG={},VIS=null;
 function dbOk(){var s=CFG.supabase||{};return okUrl(s.url)&&typeof s.anonKey==="string"&&s.anonKey.length>20}
 function db(path,body,minimal){var s=CFG.supabase,h={"apikey":s.anonKey,"Content-Type":"application/json"};
 if(/^eyJ/.test(s.anonKey))h.Authorization="Bearer "+s.anonKey;if(minimal)h.Prefer="return=minimal";
-return fetch(s.url.replace(/\/+$/,"")+path,{method:"POST",headers:h,body:JSON.stringify(body||{})}).then(function(r){if(!r.ok)throw new Error(r.status);return r.status===204?null:r.json()})}
+return fetch(s.url.replace(/\/+$/,"")+path,{method:"POST",headers:h,body:JSON.stringify(body||{})}).then(function(r){if(!r.ok)throw new Error(r.status);return r.text().then(function(t){return t?JSON.parse(t):null})})}
 /* cuenta una visita por navegador y día; el resto de veces solo lee el total */
 function contarVisita(){if(!dbOk())return;var d=new Date(),hoy=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),nueva=lsGet("sl-vis")!==hoy;
 db(nueva?"/rest/v1/rpc/sumar_visita":"/rest/v1/rpc/total_visitas").then(function(n){if(nueva)lsSet("sl-vis",hoy);VIS=+n||0;renderFootLinks()}).catch(function(){})}
@@ -1122,7 +1122,7 @@ function donUrl(){var u=CFG.donaciones&&CFG.donaciones.url;return okUrl(u)?u:""}
 function renderDon(){var u=donUrl(),d=CFG.donaciones||{};
 $("don").innerHTML=u?'<div class="don"><span class="k">Apoya la liga</span><b>'+esc(d.titulo||"Invita a un café ☕")+'</b><p>'+esc(d.texto||"La web, los premios y los torneos los montamos entre colegas. Si te mola la liga, cualquier ayuda suma.")+'</p><a class="lnk" href="'+esc(u)+'" target="_blank" rel="noopener">Donar ↗</a></div>':''}
 function renderFootLinks(){var u=donUrl();
-$("ftl").innerHTML='<button type="button" data-ins>Apúntate</button>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">Donar</a>':'')+(VIS!=null?'<span>👀 '+VIS.toLocaleString("es-ES")+' visitas</span>':'')}
+$("ftl").innerHTML='<button type="button" data-ins>Apúntate</button>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">Donar</a>':'')+(VIS!=null?'<span>👀 '+VIS.toLocaleString("es-ES")+(VIS===1?' visita':' visitas')+'</span>':'')}
 function formIns(){var c=CFG.inscripciones||{};
 if(c.abiertas===false)return '<h3 class="fti">Inscripciones cerradas</h3><p class="tt">Ahora mismo no buscamos jugadores. Vuelve a mirar cuando acabe la temporada.</p>';
 return '<div class="mj">Inscripciones abiertas</div><h3 class="fti">Apúntate a '+esc(c.titulo||"la próxima temporada")+'</h3><p class="tt">Rellena el formulario y los organizadores te escriben para confirmar tu plaza.</p>'+
