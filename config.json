@@ -17,5 +17,8 @@
     "url": "",
     "titulo": "Invita a un café ☕",
     "texto": "La web, los premios y los torneos los montamos entre colegas. Si te mola la liga, cualquier ayuda suma."
+  },
+  "push": {
+    "vapidPublic": "BDB9CzuY7L3OgTc2oOwfTBKs0JYiVlx9WRcf87Bd0Ndpc1GzQ_Rt59W0Z_gAuoS9GEqJV6ne4-ku7VBkyFqXGCY"
   }
 }
