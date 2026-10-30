@@ -179,3 +179,85 @@ create policy "subir foto en mi carpeta" on storage.objects for insert to authen
 drop policy if exists "borrar mi foto o admin" on storage.objects;
 create policy "borrar mi foto o admin" on storage.objects for delete to authenticated
   using (bucket_id = 'fotos-liga' and ((storage.foldername(name))[1] = mi_jugador() or es_admin()));
+
+
+-- =====================================================================
+-- AVISOS · notificaciones push (ejecutar DESPUÉS de la parte FASE 3)
+-- =====================================================================
+
+-- Dispositivos que han activado los avisos. Nadie puede leerla ni escribirla directamente (sin políticas):
+-- solo se usa a través de las funciones de abajo y de la función de envío (que usa la clave de servicio).
+create table if not exists suscripciones (
+  id bigint generated always as identity primary key,
+  creado timestamptz not null default now(),
+  endpoint text unique not null check (endpoint ~ '^https://' and char_length(endpoint) <= 700),
+  p256dh text not null check (char_length(p256dh) between 60 and 120),
+  auth text not null check (char_length(auth) between 10 and 40),
+  jugador text references jugadores (id) on delete set null,
+  prefs jsonb not null default '{"resultados":true,"cronicas":true,"comentarios":true}'
+);
+alter table suscripciones enable row level security;
+
+create or replace function suscribir(p_endpoint text, p_p256dh text, p_auth text, p_prefs jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+begin
+  if (select count(*) from suscripciones) > 3000 then
+    raise exception 'Demasiados dispositivos registrados.';
+  end if;
+  insert into suscripciones (endpoint, p256dh, auth, jugador, prefs)
+  values (p_endpoint, p_p256dh, p_auth, mi_jugador(), coalesce(p_prefs, '{"resultados":true,"cronicas":true,"comentarios":true}'::jsonb))
+  on conflict (endpoint) do update
+    set p256dh = excluded.p256dh, auth = excluded.auth,
+        jugador = coalesce(excluded.jugador, suscripciones.jugador), prefs = excluded.prefs;
+end;
+$$;
+create or replace function desuscribir(p_endpoint text) returns void
+language sql security definer set search_path = public as $$
+  delete from suscripciones where endpoint = p_endpoint;
+$$;
+grant execute on function suscribir(text, text, text, jsonb) to anon, authenticated;
+grant execute on function desuscribir(text) to anon, authenticated;
+
+-- Aviso automático cuando un jugador publica o comenta: la base de datos llama a la función "enviar-push".
+create extension if not exists pg_net;
+create table if not exists ajustes (clave text primary key, valor text not null);
+alter table ajustes enable row level security;
+
+create or replace function avisar(p jsonb) returns void
+language plpgsql security definer set search_path = public as $$
+declare u text; s text;
+begin
+  select valor into u from ajustes where clave = 'push_url';
+  select valor into s from ajustes where clave = 'push_secret';
+  if u is null or s is null then return; end if;
+  perform net.http_post(url := u, body := p, headers := jsonb_build_object('Content-Type', 'application/json', 'x-push-secret', s));
+exception when others then
+  null; -- un fallo al avisar nunca debe impedir publicar
+end;
+$$;
+
+create or replace function avisar_publicacion() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  perform avisar(jsonb_build_object('tipo', 'cronica', 'autor', new.autor, 'titulo', new.titulo));
+  return new;
+end;
+$$;
+drop trigger if exists avisa_publicacion on publicaciones;
+create trigger avisa_publicacion after insert on publicaciones for each row execute function avisar_publicacion();
+
+create or replace function avisar_comentario() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare dueno text;
+begin
+  if new.ref like 'p:%' then
+    select autor into dueno from publicaciones where id = substring(new.ref from 3)::bigint;
+    if dueno is not null and dueno <> new.autor then
+      perform avisar(jsonb_build_object('tipo', 'comentario', 'autor', new.autor, 'destino', dueno, 'texto', left(new.texto, 120)));
+    end if;
+  end if;
+  return new;
+end;
+$$;
+drop trigger if exists avisa_comentario on comentarios;
+create trigger avisa_comentario after insert on comentarios for each row execute function avisar_comentario();

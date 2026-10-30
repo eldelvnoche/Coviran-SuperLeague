@@ -482,6 +482,7 @@ html[data-tema=claro] .rr .v{color:var(--text)}
 .cmact .cta{margin-left:auto;padding:8px 18px;font-size:16px}
 .fbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px dashed var(--line);border-radius:var(--r-sm);color:var(--text);font-weight:600;font-size:14px;cursor:pointer}
 .fbtn:hover{border-color:var(--acc)}
+@media (max-width:480px){#avisos span{display:none}.tools{gap:6px}}
 /* pie */
 .ft{padding:16px 0 0;text-align:center;color:var(--mute);font:500 13px var(--f-d);letter-spacing:.14em;text-transform:uppercase}
 .ftl{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:10px;font:700 14px var(--f-d);text-transform:uppercase;letter-spacing:.08em}

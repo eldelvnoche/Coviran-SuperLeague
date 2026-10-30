@@ -1,0 +1,25 @@
+name: Avisos a los jugadores
+on:
+  push:
+    branches: [main]
+    paths: [resultados.json, cronicas.json, goles.json]
+permissions:
+  contents: read
+concurrency:
+  group: avisos
+  cancel-in-progress: false
+jobs:
+  avisar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Enviar avisos
+        env:
+          PUSH_URL: ${{ secrets.PUSH_URL }}
+          PUSH_SECRET: ${{ secrets.PUSH_SECRET }}
+        run: node scripts/avisos.mjs

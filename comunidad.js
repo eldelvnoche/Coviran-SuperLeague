@@ -122,7 +122,7 @@ document.addEventListener("change",function(e){var i=e.target;if(i.type!=="file"
 document.addEventListener("submit",function(e){var f=e.target;
 if(f.id==="loginf"){e.preventDefault();if(ENVIANDO)return;var u=f.elements.u.value,p=f.elements.p.value;if(!u||!p){di("lm","Escribe usuario y contraseña.","bad");return}
 ENVIANDO=true;di("lm","Entrando…");
-entrar(u,p).then(function(){cuenta();pintar();if(!S.pc){openSheet({type:"a"},false)}else closeSheet()}).catch(function(er){di("lm",er.message,"bad")}).then(fin)}
+entrar(u,p).then(function(){cuenta();pintar();if(window.Avisos)Avisos.sync();if(!S.pc){openSheet({type:"a"},false)}else closeSheet()}).catch(function(er){di("lm",er.message,"bad")}).then(fin)}
 else if(f.id==="passf"){e.preventDefault();if(ENVIANDO)return;var n=f.elements.n.value;
 if(n.length<8){di("pm","Mínimo 8 caracteres.","bad");return}if(n!==f.elements.n2.value){di("pm","Las dos contraseñas no coinciden.","bad");return}
 ENVIANDO=true;di("pm","Guardando…");
@@ -141,9 +141,12 @@ vigente().then(function(){return subir(fl)}).then(function(foto){return api("POS
 window.Com={
 init:function(){if(!on()){cuenta();return}leer();cuenta();cargar().then(function(){cuenta();pintar()});if(S&&S.exp-Date.now()<90000)refrescar().then(cuenta)},
 sheet:hoja,
+rpc:function(n,b){return vigente().then(function(){return api("POST","/rest/v1/rpc/"+n,b)})},
 preparar:preparar,
 render:pintar,
 activo:function(){return on()}};
+/* arranca cuando la configuración ya está cargada (sin depender del orden en que lleguen los archivos) */
+if(window.CFGOK)Com.init();else document.addEventListener("sl:config",function(){Com.init()},{once:true});
 window.renderPosts=function(){if(window.Com&&on()&&(LISTO||S)&&!ARCH)pintar();else pintarBase()};
 /* respaldo sin conexión: solo las crónicas del admin */
 function pintarBase(){var el=$("comp");if(el)el.innerHTML="";var L=cronicas().filter(function(x){return x.k==="c"});
