@@ -225,7 +225,7 @@ html[data-tema=claro] .main.art::before{opacity:.16}
 .br{display:grid;gap:8px;padding:10px 14px 16px}
 .bl{margin:8px 2px -2px;color:#b4b4bf;font:700 13px var(--f-d);letter-spacing:.12em;text-transform:uppercase}
 .bm,.dq button{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-sm)}
-.bm{display:grid;grid-template-columns:1fr 56px 1fr;align-items:center;gap:6px;padding:8px 10px;color:#f3f3f5}
+.bm{display:grid;grid-template-columns:1fr 76px 1fr;align-items:center;gap:6px;padding:8px 10px;color:#f3f3f5}
 .bm .t{display:flex;align-items:center;gap:7px;min-width:0;font:700 17px/1.05 var(--f-d)}
 .bm .t.a{flex-direction:row-reverse;text-align:right}
 .bm .t em,.dq em{display:block;font-style:normal;font-weight:600;font-size:13px;color:#b4b4bf}
@@ -388,14 +388,6 @@ html[data-tema=claro] #pl .pj.art .sg{background:rgba(255,255,255,.8)}
 .cdn button b{display:block;font:800 19px/1.05 var(--f-d)}
 .cdn button em{font-style:normal;color:var(--mute);font-size:13px}
 /* títulos y ranking */
-.rg{display:grid;grid-template-columns:24px 40px minmax(0,1fr) auto;gap:8px;align-items:center;width:100%;padding:10px 12px;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;text-align:left;transition:background-color .2s}
-.rg:hover{background:var(--tint2)}.rg:last-child{border-bottom:0}.rg:nth-child(even){background:var(--tint)}
-.rg:first-child{background:linear-gradient(90deg,rgba(229,23,63,.16),transparent 70%)}
-.rg:first-child .ps{color:var(--hot)}
-.rg .v{color:#fff;text-align:right;font:800 30px/1 var(--f-d)}
-.rg .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rgb{display:block;height:5px;margin:6px 0 5px;background:var(--line)}.rgb i{display:block;height:100%;background:var(--gg)}
-.rgs{display:block;color:var(--mute);font-size:12.5px;line-height:1.25}.rgs b{color:var(--text)}
 .tinfo{margin-top:14px;padding:12px 14px;border-left:3px solid var(--acc);font-size:14px;line-height:1.4}
 .tinfo>b{display:block;font:800 19px var(--f-d);text-transform:uppercase;letter-spacing:.04em}
 .tinfo p{margin:6px 0 0;color:var(--mute)}.tinfo p b{color:var(--text)}
@@ -434,6 +426,37 @@ html[data-tema=claro] #pl .pj.art .sg{background:rgba(255,255,255,.8)}
 .frm .ck input{flex:none;width:20px;height:20px;margin:1px 0 0;accent-color:var(--acc)}
 .frm .hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
 .fmsg{margin:0;font-weight:600}.fmsg.bad{color:var(--loss)}.fmsg.ok{color:var(--win)}
+/* ranking general (Coviran Rating) */
+.rkh{margin:0 0 14px;padding:16px;border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:var(--r);background:var(--glass)}
+.rkh span{color:var(--hot);font:700 13px var(--f-d);letter-spacing:.14em;text-transform:uppercase}
+.rkh b{display:block;font:800 34px/1 var(--f-d);text-transform:uppercase}
+.rkh p{margin:6px 0 0;color:var(--mute);font-size:14px}
+.rr{display:grid;grid-template-columns:26px 40px minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;padding:12px;border:0;border-bottom:1px solid var(--line);background:none;color:inherit;text-align:left;transition:background-color .2s}
+.rr:hover{background:var(--tint2)}.rr:last-child{border-bottom:0}
+.rr.top1{background:linear-gradient(90deg,rgba(227,179,65,.16),transparent 70%)}
+.rr.top1 .ps{color:var(--trophy)}
+.rr.top2 .ps,.rr.top3 .ps{color:var(--text)}
+.rr .v{color:#fff;text-align:right;font:800 34px/1 var(--f-d);letter-spacing:-.01em}
+.rr .v small{margin-left:3px;color:var(--mute);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+html[data-tema=claro] .rr .v{color:var(--text)}
+.rrm{min-width:0;display:block}
+.rrm .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stk{display:flex;height:6px;margin:8px 0 6px;overflow:hidden;border-radius:1px;background:var(--line)}
+.stk i{display:block;height:100%}
+.sg-liga{background:#e5173f}.sg-ucl{background:#a07bff}.sg-lidl{background:#e3b341}.sg-ami{background:#38bdf8}
+.rrd{display:flex;flex-wrap:wrap;gap:2px 12px;color:var(--mute);font:700 13px var(--f-d);letter-spacing:.04em}
+.rrd span{display:inline-flex;align-items:center;gap:5px}.rrd i{width:8px;height:8px;border-radius:1px}
+.tier{font:800 12px var(--f-d);letter-spacing:.12em;text-transform:uppercase}
+.t-leyenda{color:var(--trophy)}.t-elite{color:#cdbcff}.t-pro{color:var(--hot)}.t-titular{color:var(--text)}.t-promesa{color:var(--mute)}
+.rkw{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.rkw div{padding:12px 10px;border:1px solid var(--line);border-top:3px solid var(--c);border-radius:var(--r);background:var(--glass);text-align:center}
+.rkw b{display:block;font:800 32px/1 var(--f-d)}
+.rkw span{display:block;margin-top:4px;color:var(--mute);font-size:12px;line-height:1.2}
+@media (max-width:480px){.rkw{grid-template-columns:1fr 1fr}.rr{gap:8px}.rr .v{font-size:28px}}
+/* Champions ida y vuelta */
+.bm{grid-template-columns:1fr 76px 1fr}
+.bm .det{grid-column:1/-1;margin-top:2px;color:#b4b4bf;font:700 12px var(--f-d);letter-spacing:.1em;text-transform:uppercase;text-align:center}
+.ucm .sb em{margin-top:2px;font-size:14px;letter-spacing:.04em}
 /* pie */
 .ft{padding:16px 0 0;text-align:center;color:var(--mute);font:500 13px var(--f-d);letter-spacing:.14em;text-transform:uppercase}
 .ftl{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:10px;font:700 14px var(--f-d);text-transform:uppercase;letter-spacing:.08em}

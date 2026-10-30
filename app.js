@@ -125,16 +125,24 @@ var STARS='<svg class="stars" viewBox="0 0 64 64" aria-hidden="true"><g fill="no
 function uclWin(t){if(!t||!t.g||t.a==null||t.b==null)return null;if(t.g[0]>t.g[1])return t.a;if(t.g[1]>t.g[0])return t.b;return t.pen===t.a||t.pen===t.b?t.pen:null}
 /* ---------- Mercadona Champions League ----------
    Cada eliminatoria se guarda en resultados.json > champions: {a, b, g:[goles a, goles b], pen, fecha, st} */
+function legG(x){return Array.isArray(x)&&x.length===2?[n0(x[0]),n0(x[1])]:null}
+function okSt(x){return x&&x.l&&x.v?x:null}
+/* cada cruce es de ida y vuelta: goles siempre en orden a-b; la ida se juega en casa de "a" y la vuelta en casa de "b". g = global */
+function uTie(key,a,b){var t=UCL[key]||{},i=legG(t.i),v=legG(t.v);
+return{key:key,a:T[t.a]?t.a:a,b:T[t.b]?t.b:b,i:i,v:v,g:i&&v?[i[0]+v[0],i[1]+v[1]]:null,pen:t.pen,fi:t.fi,fv:t.fv,si:okSt(t.si),sv:okSt(t.sv)}}
+function nLegs(t){return(t.i?1:0)+(t.v?1:0)}
 var UCR=[["final","Final"],["sf1","Semifinal 1"],["sf2","Semifinal 2"],["po1","Eliminatoria de acceso · 3º contra 6º"],["po2","Eliminatoria de acceso · 4º contra 5º"]];
 function uclTies(L){
 var any=L.some(function(r){return r.pj>0}),q=L.slice(0,6).map(function(r){return r.id});
-function tie(key,a,b){var t=UCL[key]||{};return{key:key,a:T[t.a]?t.a:a,b:T[t.b]?t.b:b,g:Array.isArray(t.g)&&t.g.length===2?[n0(t.g[0]),n0(t.g[1])]:null,pen:t.pen,fecha:t.fecha,st:t.st&&t.st.l&&t.st.v?t.st:null}}
+var tie=uTie;
 var X={};X.po1=tie("po1",any?q[2]:null,any?q[5]:null);X.po2=tie("po2",any?q[3]:null,any?q[4]:null);
 X.sf1=tie("sf1",any?q[0]:null,uclWin(X.po2));X.sf2=tie("sf2",any?q[1]:null,uclWin(X.po1));
 X.final=tie("final",uclWin(X.sf1),uclWin(X.sf2));X.champ=uclWin(X.final);X.any=any;X.q=q;
-X.played=UCR.filter(function(r){return X[r[0]].g}).length;return X}
+X.played=UCR.filter(function(r){return X[r[0]].g}).length;
+X.legs=UCR.reduce(function(n,r){return n+nLegs(X[r[0]])},0);return X}
 /* el siguiente cruce que falta por jugar, en orden de rondas */
 function uclNext(X){var o=["po1","po2","sf1","sf2","final"];for(var i=0;i<o.length;i++){var t=X[o[i]];if(!t.g)return t}return null}
+function uclNextLeg(t){return t.i?"vuelta":"ida"}
 function uclLbl(k){for(var i=0;i<UCR.length;i++)if(UCR[i][0]===k)return UCR[i][1];return""}
 function renderUCL(L){
 var X=uclTies(L),done=nPlayed()>=NMATCH,p1=X.po1,p2=X.po2,s1=X.sf1,s2=X.sf2,f=X.final,champ=X.champ,any=X.any,q=X.q;
@@ -142,9 +150,11 @@ function side(id,seed,cls){if(!id||!T[id])return '<span class="t '+cls+'"><span 
 var em=seed&&seed.length<=3?seed+" · "+T[id].p:T[id].p;
 return '<button class="t '+cls+'" data-t="'+id+'" style="background:none;border:0;padding:0;color:inherit;cursor:pointer">'+logo(id)+'<span>'+T[id].t+'<em>'+em+'</em></span></button>'}
 function row(t,s1l,s2l){var w=uclWin(t);
-var g=t.g?'<button class="g" data-u="'+t.key+'" style="background:none;border:0;color:inherit;cursor:pointer">'+t.g[0]+'-'+t.g[1]+(t.g[0]===t.g[1]&&w?'<small>pen. '+T[w].t+'</small>':'')+'</button>':'<span class="g" style="color:var(--ucl-t);font-size:18px">VS</span>';
-return '<div class="bm">'+side(t.a,s1l,"h"+(w&&w!==t.a?" lose":""))+g+side(t.b,s2l,"a"+(w&&w!==t.b?" lose":""))+'</div>'}
-var sub="Los dos primeros de la liga pasan directos a semifinales. Del 3º al 6º juegan una eliminatoria de acceso para completar las semifinales."+(done?"":" Cruces provisionales según la tabla actual.");
+var g=t.g?'<button class="g" data-u="'+t.key+'" style="background:none;border:0;color:inherit;cursor:pointer">'+t.g[0]+'-'+t.g[1]+'<small>'+(t.g[0]===t.g[1]&&w?'pen. '+esc(T[w].t):'global')+'</small></button>':
+t.i?'<button class="g" data-u="'+t.key+'" style="background:none;border:0;color:inherit;cursor:pointer">'+t.i[0]+'-'+t.i[1]+'<small>ida</small></button>':'<span class="g" style="color:#b4b4bf;font-size:18px">VS</span>';
+var det=t.i?'<span class="det">Ida '+t.i[0]+'-'+t.i[1]+(t.v?' · Vuelta '+t.v[0]+'-'+t.v[1]:' · vuelta pendiente')+'</span>':'';
+return '<div class="bm">'+side(t.a,s1l,"h"+(w&&w!==t.a?" lose":""))+g+side(t.b,s2l,"a"+(w&&w!==t.b?" lose":""))+det+'</div>'}
+var sub="Todos los cruces se juegan a ida y vuelta y gana el que suma más goles en el global. Los dos primeros de la liga pasan directos a semifinales; del 3º al 6º juegan una eliminatoria de acceso."+(done?"":" Cruces provisionales según la tabla actual.");
 var dq=any?'<div class="bl">Clasificados directos</div><div class="dq">'+[q[0],q[1]].map(function(id,i){return '<button data-t="'+id+'">'+logo(id)+'<span>'+T[id].t+'<em>'+(i+1)+'º · '+T[id].p+'</em></span></button>'}).join("")+'</div>':'';
 $("ucl").innerHTML='<div class="ucl"><div class="uh">'+STARS+'<span>Cuadro del torneo</span><b>Mercadona<br>Champions League</b><p>'+sub+'</p></div><div class="br">'+dq+
 '<div class="bl">Eliminatoria de acceso · 3º contra 6º</div>'+row(p1,"3º","6º")+
@@ -160,26 +170,30 @@ function renderUclTab(X){
 var h='';
 if(X.champ){var c=X.champ,lose=X.final.a===c?X.final.b:X.final.a;
 h+='<button class="champ1 ucc art" data-t="'+c+'"'+artA(c)+'><span class="k">⭐ Campeón de la Mercadona Champions League</span>'+logo(c)+'<b>'+esc(T[c].p)+'</b><span class="tm2">'+T[c].t+'</span><span class="rec">Final: '+T[X.final.a].t+' '+X.final.g[0]+'-'+X.final.g[1]+' '+T[X.final.b].t+(X.final.g[0]===X.final.g[1]?' (pen.)':'')+'</span></button>'}
-var pl=UCR.filter(function(r){return X[r[0]].g});
-h+='<h2 class="sec-h">Resultados <small>'+(pl.length?pl.length+' de 5 cruces':'aún sin jugar')+'</small></h2>';
-if(pl.length){h+='<div class="card">'+pl.map(function(r){var t=X[r[0]],w=uclWin(t),cl=w?(w===t.a?" w1":" w2"):"";
-return '<button class="mc ucm'+cl+'" data-u="'+t.key+'"><span class="ucr">'+r[1]+(t.fecha?' · '+esc(fmt(t.fecha)):'')+'</span><span class="tm h">'+logo(t.a)+nmp(t.a)+'</span><span class="sb"><span class="sc"><b>'+t.g[0]+'</b><i>:</i><b>'+t.g[1]+'</b></span>'+(t.g[0]===t.g[1]&&w?'<small>Pen.: '+T[w].t+'</small>':(t.st?'<small>Ver stats</small>':''))+'</span><span class="tm a">'+logo(t.b)+nmp(t.b)+'</span></button>'}).join("")+'</div>'}
-else{var nx=uclNext(X);h+='<div class="card soft"><div class="empty">Todavía no se ha jugado ningún cruce.'+(nx&&T[nx.a]&&T[nx.b]?' Abre el torneo <b>'+T[nx.a].t+' – '+T[nx.b].t+'</b> ('+uclLbl(nx.key).toLowerCase()+').':'')+'</div></div>'}
-var nx2=uclNext(X);if(pl.length&&nx2&&T[nx2.a]&&T[nx2.b])h+='<p class="hint">Próximo cruce: <b>'+T[nx2.a].t+' – '+T[nx2.b].t+'</b> ('+uclLbl(nx2.key).toLowerCase()+').</p>';
+var pl=UCR.filter(function(r){return nLegs(X[r[0]])>0});
+h+='<h2 class="sec-h">Resultados <small>'+(X.legs?X.legs+' de 10 partidos':'aún sin jugar')+'</small></h2>';
+if(pl.length){h+='<div class="card">'+pl.map(function(r){var t=X[r[0]],w=uclWin(t),cl=w?(w===t.a?" w1":" w2"):"",G=t.g||t.i;
+return '<button class="mc ucm'+cl+'" data-u="'+t.key+'"><span class="ucr">'+r[1]+(t.g?' · ida y vuelta':' · solo la ida')+'</span><span class="tm h">'+logo(t.a)+nmp(t.a)+'</span><span class="sb"><span class="sc"><b>'+G[0]+'</b><i>:</i><b>'+G[1]+'</b></span><small>'+(t.g?(t.g[0]===t.g[1]&&w?'Pen.: '+esc(T[w].t):'Global'):'Ida')+'</small>'+(t.g?'<em class="tt">'+t.i[0]+'-'+t.i[1]+' · '+t.v[0]+'-'+t.v[1]+'</em>':'')+'</span><span class="tm a">'+logo(t.b)+nmp(t.b)+'</span></button>'}).join("")+'</div>'}
+else{var nx=uclNext(X);h+='<div class="card soft"><div class="empty">Todavía no se ha jugado ningún cruce.'+(nx&&T[nx.a]&&T[nx.b]?' Abre el torneo <b>'+T[nx.a].t+' – '+T[nx.b].t+'</b> ('+uclLbl(nx.key).toLowerCase()+', partido de ida).':'')+'</div></div>'}
+var nx2=uclNext(X);if(pl.length&&nx2&&T[nx2.a]&&T[nx2.b])h+='<p class="hint">Próximo partido: <b>'+T[nx2.a].t+' – '+T[nx2.b].t+'</b> ('+uclLbl(nx2.key).toLowerCase()+', '+uclNextLeg(nx2)+').</p>';
 $("uclr").innerHTML=h}
 /* resumen en la portada con enlace a la pestaña */
 function renderUclTeaser(X){
 var el=$("uclt");if(!X.any){el.innerHTML="";return}
-var nx=uclNext(X),tx=X.champ?'Campeón: <b>'+T[X.champ].t+'</b> ('+T[X.champ].p+')':nx&&T[nx.a]&&T[nx.b]?'Próximo cruce: <b>'+T[nx.a].t+' – '+T[nx.b].t+'</b><br><span class="tt">'+uclLbl(nx.key)+'</span>':'Cruces por decidir';
-el.innerHTML='<div class="uclt"><div class="uh">'+STARS+'<span>Torneo de final de temporada</span><b>Mercadona Champions League</b><p>'+tx+'</p><p class="tt">'+X.played+' de 5 cruces jugados</p></div><button class="cta" type="button" data-go="8">Ver la Champions</button></div>'}
+var nx=uclNext(X),tx=X.champ?'Campeón: <b>'+T[X.champ].t+'</b> ('+T[X.champ].p+')':nx&&T[nx.a]&&T[nx.b]?'Próximo partido: <b>'+T[nx.a].t+' – '+T[nx.b].t+'</b><br><span class="tt">'+uclLbl(nx.key)+' · '+uclNextLeg(nx)+'</span>':'Cruces por decidir';
+el.innerHTML='<div class="uclt"><div class="uh">'+STARS+'<span>Torneo de final de temporada</span><b>Mercadona Champions League</b><p>'+tx+'</p><p class="tt">'+X.legs+' de 10 partidos jugados</p></div><button class="cta" type="button" data-go="8">Ver la Champions</button></div>'}
 /* ficha de un cruce de la Champions */
+function stBars(st){return '<div class="fbox">'+SK.map(function(q){var l=n0(st.l[q[0]]),v=n0(st.v[q[0]]),mx=Math.max(l,v)||1,u=q[0]==="pos"?"%":"";
+return '<div class="ms"><div class="l3"><b class="'+(l>v?"hi":"")+'">'+l+u+'</b><span>'+q[1]+'</span><b class="'+(v>l?"hi":"")+'">'+v+u+'</b></div><div class="sbar"><div><i class="'+(l>=v&&l?"on":"")+'" style="width:'+(l/mx*100)+'%"></i></div><div><i class="'+(v>=l&&v?"on":"")+'" style="width:'+(v/mx*100)+'%"></i></div></div></div>'}).join("")+'</div>'}
 function ucSheet(key){
-var X=uclTies(table()),t=X[key];if(!t||!t.g||!T[t.a]||!T[t.b])return '<p class="empty">Cruce no encontrado.</p>';
-var w=uclWin(t),h='<div class="mj">⭐ Mercadona Champions League · '+uclLbl(key)+(t.fecha?' · '+esc(fmt(t.fecha)):'')+'</div><div class="mh"><button class="tm" data-t="'+t.a+'">'+logo(t.a)+nmp(t.a)+'</button><span class="sc">'+t.g[0]+'<i>-</i>'+t.g[1]+'</span><button class="tm" data-t="'+t.b+'">'+logo(t.b)+nmp(t.b)+'</button></div>';
-if(w)h+='<p class="note" style="text-align:center;margin-top:0">'+(t.g[0]===t.g[1]?'Empate y penaltis: pasa ':'Pasa ')+'<b>'+T[w].t+'</b>'+(key==="final"?' y es el campeón':'')+'.</p>';
-if(t.st){h+='<div class="fbox">'+SK.map(function(q){var l=n0(t.st.l[q[0]]),v=n0(t.st.v[q[0]]),mx=Math.max(l,v)||1,u=q[0]==="pos"?"%":"";
-return '<div class="ms"><div class="l3"><b class="'+(l>v?"hi":"")+'">'+l+u+'</b><span>'+q[1]+'</span><b class="'+(v>l?"hi":"")+'">'+v+u+'</b></div><div class="sbar"><div><i class="'+(l>=v&&l?"on":"")+'" style="width:'+(l/mx*100)+'%"></i></div><div><i class="'+(v>=l&&v?"on":"")+'" style="width:'+(v/mx*100)+'%"></i></div></div></div>'}).join("")+'</div><p class="note">Datos de la pantalla final de eFootball.</p>'}
-else h+='<div class="fbox"><p style="margin:0" class="tt">Este cruce no tiene las estadísticas de eFootball apuntadas.</p></div>';
+var X=uclTies(table()),t=X[key];if(!t||!nLegs(t)||!T[t.a]||!T[t.b])return '<p class="empty">Cruce no encontrado.</p>';
+var w=uclWin(t),G=t.g||t.i;
+var h='<div class="mj">⭐ Mercadona Champions League · '+uclLbl(key)+'</div><div class="mh"><button class="tm" data-t="'+t.a+'">'+logo(t.a)+nmp(t.a)+'</button><span class="sc">'+G[0]+'<i>-</i>'+G[1]+'</span><button class="tm" data-t="'+t.b+'">'+logo(t.b)+nmp(t.b)+'</button></div>';
+h+='<p class="note" style="text-align:center;margin-top:0">'+(t.g?'Resultado global.':'Solo se ha jugado la ida; falta la vuelta.')+'</p>';
+if(w)h+='<p class="note" style="text-align:center;margin-top:0">'+(t.g[0]===t.g[1]?'Empate global y penaltis: pasa ':'Pasa ')+'<b>'+T[w].t+'</b>'+(key==="final"?' y es el campeón':'')+'.</p>';
+[["Ida",t.i,t.fi,t.si,t.a],["Vuelta",t.v,t.fv,t.sv,t.b]].forEach(function(L){if(!L[1])return;
+h+='<h2 class="sec-h" style="margin-top:18px">'+L[0]+' <small>'+(L[2]?esc(fmt(L[2]))+' · ':'')+'en casa de '+esc(T[L[4]].t)+'</small></h2><div class="mh" style="padding-bottom:4px"><span class="tt">'+esc(T[t.a].t)+'</span><span class="sc" style="font-size:38px">'+L[1][0]+'<i>-</i>'+L[1][1]+'</span><span class="tt">'+esc(T[t.b].t)+'</span></div>';
+h+=L[3]?stBars(L[3])+'<p class="note">Datos de la pantalla final de eFootball.</p>':'<div class="fbox"><p style="margin:0" class="tt">Este partido no tiene las estadísticas de eFootball apuntadas.</p></div>'});
 return h}
 /* campeón de la liga cuando se han jugado todos los partidos */
 function renderChamp(L){
@@ -388,27 +402,38 @@ return P}
 function curTit(){var L=table();if(nPlayed()<NMATCH||curClosed(L))return null;return{n:curN(),liga:L[0].id,sub:L[1]&&L[1].id,ucl:uclRes(L)}}
 function curClosed(L){var S=sTem(),l=S[S.length-1];if(!l||!nPlayed())return false;return+l.partidos===nPlayed()&&l.liga.orden.join()===L.map(function(r){return r.id}).join()}
 function uclRes(L){
-var any=L.some(function(r){return r.pj>0}),q=L.slice(0,6).map(function(r){return r.id});
-function tie(key,a,b){var t=UCL[key]||{};return{a:T[t.a]?t.a:a,b:T[t.b]?t.b:b,g:Array.isArray(t.g)&&t.g.length===2?[n0(t.g[0]),n0(t.g[1])]:null,pen:t.pen}}
+var any=L.some(function(r){return r.pj>0}),q=L.slice(0,6).map(function(r){return r.id}),tie=uTie;
 var p1=tie("po1",any?q[2]:null,any?q[5]:null),p2=tie("po2",any?q[3]:null,any?q[4]:null);
 var s1=tie("sf1",any?q[0]:null,uclWin(p2)),s2=tie("sf2",any?q[1]:null,uclWin(p1));
 var f=tie("final",uclWin(s1),uclWin(s2)),c=uclWin(f);
 if(!c)return null;
 function lose(t){var w=uclWin(t);return w?(w===t.a?t.b:t.a):null}
 return{campeon:c,sub:lose(f),semis:[lose(s1),lose(s2)].filter(Boolean),acceso:[lose(p1),lose(p2)].filter(Boolean)}}
+/* ---------- Coviran Rating: ranking general de 0 a 1000 ----------
+   Cada competición da una nota de 0 a 100 y pesa un porcentaje de la nota final. */
+var RW=[["liga","Superliga Covirán",50,"#e5173f"],["ucl","Mercadona Champions League",30,"#a07bff"],["lidl","Torneo Lidl",15,"#e3b341"],["ami","Amistosos",5,"#38bdf8"]];
+var TIERS=[[800,"Leyenda"],[650,"Élite"],[500,"Pro"],[350,"Titular"],[0,"Promesa"]];
+function tier(sc){for(var i=0;i<TIERS.length;i++)if(sc>=TIERS[i][0])return TIERS[i][1];return"Promesa"}
+/* amistosos: nota de 0 a 100 (la rellena el sistema de amistosos). Sin partidos jugados la nota es neutra (50) y no mueve a nadie */
+function amiNotas(){return window.AMI_NOTAS&&typeof window.AMI_NOTAS==="object"?window.AMI_NOTAS:{}}
 function rank(L){
 var ids=Object.keys(T),cl=curClosed(L);
-var seasons=sTem().map(function(x){return x.liga.orden});
-if(!cl&&nPlayed()>0)seasons.push(L.map(function(r){return r.id}));
-var lg={};ids.forEach(function(i){var sum=0,n=0;seasons.forEach(function(o){var p=o.indexOf(i);if(p>=0){sum+=(o.length-1-p)/(o.length-1)*100;n++}});lg[i]=n?sum/n:0});
+/* liga: posición final de cada temporada (100 el campeón, 0 el último). La temporada en curso pesa lo que lleva jugado */
+var seasons=sTem().map(function(x){return{o:x.liga.orden,w:1}});
+if(!cl&&nPlayed()>0)seasons.push({o:L.map(function(r){return r.id}),w:Math.min(1,nPlayed()/NMATCH)});
+var lg={};ids.forEach(function(i){var sum=0,n=0;seasons.forEach(function(z){var p=z.o.indexOf(i);if(p>=0){sum+=(z.o.length-1-p)/(z.o.length-1)*100*z.w;n+=z.w}});lg[i]=n?sum/n:0});
+/* champions: campeón 100, finalista 70, semifinalista 45, ronda de acceso 20 */
 var uc=sTem().filter(function(x){return x.champions&&x.champions.campeon}).map(function(x){return x.champions});
 var cu=cl?null:uclRes(L);if(cu)uc.push(cu);
 var ul={};ids.forEach(function(i){var sum=0;uc.forEach(function(c){sum+=c.campeon===i?100:c.sub===i?70:(c.semis||[]).indexOf(i)>=0?45:(c.acceso||[]).indexOf(i)>=0?20:0});ul[i]=uc.length?sum/uc.length:0});
+/* lidl: puntos por torneo respecto al que más suma */
 var lp={},b=lBase();ids.forEach(function(i){lp[i]=b[i]*100});
 lTor().forEach(function(x){lp[x.campeon]+=100;if(lp[x.subcampeon]!=null)lp[x.subcampeon]+=60;(x.semis||[]).forEach(function(z){if(lp[z]!=null)lp[z]+=30})});
-var mx=Math.max.apply(null,ids.map(function(i){return lp[i]}))||1;
-var rows=ids.map(function(i){var li=lp[i]/mx*100;return{id:i,liga:lg[i],ucl:ul[i],lidl:li,tot:lg[i]*.4+ul[i]*.4+li*.2}});
-rows.sort(function(a,c){return c.tot-a.tot||c.lidl-a.lidl||T[a.id].t.localeCompare(T[c.id].t)});
+var mx=Math.max.apply(null,ids.map(function(i){return lp[i]}))||1,am=amiNotas();
+var rows=ids.map(function(i){var n={liga:lg[i],ucl:ul[i],lidl:lp[i]/mx*100,ami:am[i]!=null?am[i]:50};
+var tot=0;RW.forEach(function(w){tot+=n[w[0]]*w[2]/100});
+return{id:i,liga:n.liga,ucl:n.ucl,lidl:n.lidl,ami:n.ami,tot:tot,score:Math.round(tot*10),tier:tier(Math.round(tot*10))}});
+rows.sort(function(a,c){return c.score-a.score||c.liga-a.liga||c.lidl-a.lidl||T[a.id].t.localeCompare(T[c.id].t)});
 return{rows:rows,seasons:seasons.length,uclN:uc.length}}
 function tmn(id,c){return T[id]?logo(id,c||"xs")+'<span>'+T[id].t+'</span>':'<span>–</span>'}
 function palBox(id){
@@ -423,11 +448,17 @@ return '<div class="fbox"><h4>Palmarés</h4>'+row("🏆","Superliga Covirán",P.
 var TSUB=["Ranking","Palmarés","Torneo Lidl","Temporadas"];
 function tvRank(L){
 var r=rank(L);
-var h='<div class="card soft">'+r.rows.map(function(x,i){return '<button class="rg" data-t="'+x.id+'"><span class="ps">'+(i+1)+'</span>'+logo(x.id,"sm")+'<span><span class="nm">'+T[x.id].t+'</span><span class="tt">'+esc(T[x.id].p)+'</span><span class="rgb"><i style="width:'+Math.max(2,x.tot)+'%"></i></span><span class="rgs">Liga <b>'+fx(x.liga,0)+'</b> · Champions <b>'+fx(x.ucl,0)+'</b> · Lidl <b>'+fx(x.lidl,0)+'</b></span></span><span class="v">'+fx(x.tot,1)+'</span></button>'}).join("")+'</div>';
-h+='<div class="tinfo"><b>Cómo se calcula</b><p><b>Superliga Covirán (40%)</b>: según la posición en la liga, de 100 puntos el 1º a 0 el último. Es la media de todas las temporadas, incluida la actual con la clasificación de ahora.</p>'+
-'<p><b>Mercadona Champions League (40%)</b>: campeón 100, finalista 70, semifinalista 45, eliminado en la ronda de acceso 20 y sin clasificar 0. Es la media de las ediciones jugadas.'+(r.uclN?'':' Todavía no se ha jugado ninguna, así que esta parte vale 0 para todos.')+'</p>'+
-'<p><b>Torneo Lidl (20%)</b>: campeón 100, finalista 60 y semifinalista 30 por torneo, comparado con el jugador que más suma (él se lleva los 100).</p>'+
-'<p>La nota final va de 0 a 100 y se actualiza sola con cada resultado.</p></div>';
+var h='<div class="rkh"><span>Coviran Rating</span><b>Ranking general</b><p>Nota de 0 a 1000 que mezcla todas las competiciones. Se actualiza sola con cada resultado.</p></div>';
+h+='<div class="card soft rrl">'+r.rows.map(function(x,i){
+var seg=RW.map(function(w){return '<i class="sg-'+w[0]+'" style="width:'+(x[w[0]]*w[2]/1000*100)+'%" title="'+w[1]+': '+fx(x[w[0]],0)+' / 100"></i>'}).join("");
+return '<button class="rr'+(i<3?' top'+(i+1):'')+'" data-t="'+x.id+'"><span class="ps">'+(i+1)+'</span>'+logo(x.id,"sm")+'<span class="rrm"><span class="nm">'+T[x.id].t+'</span><span class="tt">'+esc(T[x.id].p)+' · <b class="tier t-'+x.tier.toLowerCase().replace("é","e")+'">'+x.tier+'</b></span><span class="stk" aria-hidden="true">'+seg+'</span><span class="rrd">'+RW.map(function(w){return '<span><i style="background:'+w[3]+'"></i>'+fx(x[w[0]],0)+'</span>'}).join("")+'</span></span><span class="v">'+x.score+'<small>pts</small></span></button>'}).join("")+'</div>';
+h+='<div class="rkw">'+RW.map(function(w){return '<div style="--c:'+w[3]+'"><b>'+w[2]+'%</b><span>'+w[1]+'</span></div>'}).join("")+'</div>';
+h+='<div class="tinfo"><b>Cómo se calcula</b>'+
+'<p><b>Superliga Covirán (50%)</b>: posición final en cada liga, de 100 el campeón a 0 el último. La temporada en curso cuenta en proporción a lo que se lleva jugado.</p>'+
+'<p><b>Mercadona Champions League (30%)</b>: campeón 100, finalista 70, semifinalista 45 y ronda de acceso 20, promediado por edición.'+(r.uclN?'':' Todavía no se ha jugado ninguna: vale 0 para todos.')+'</p>'+
+'<p><b>Torneo Lidl (15%)</b>: campeón 100, finalista 60 y semifinalista 30 por torneo, comparado con quien más suma.</p>'+
+'<p><b>Amistosos (5%)</b>: nota tipo Elo con poco peso. Mientras no haya amistosos jugados todos tienen 50 y no cambia nada.</p>'+
+'<p><b>Rangos</b>: Leyenda desde 800, Élite 650, Pro 500, Titular 350 y Promesa por debajo.</p></div>';
 return h}
 function tvPal(){
 var P=pal(),ids=Object.keys(T).sort(function(a,b){var x=P[a],y=P[b];return(y.liga+y.ucl+y.lidl)-(x.liga+x.ucl+x.lidl)||y.lidl-x.lidl||T[a].t.localeCompare(T[b].t)});
