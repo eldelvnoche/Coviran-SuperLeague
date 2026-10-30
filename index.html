@@ -49,7 +49,7 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <header><div><img class="logo" src="logo.svg" width="104" height="104" alt="Logo de la Superliga Covirán" fetchpriority="high"><div><h1>Superliga<br>Covirán</h1><span class="sub">Sabadell-Tanger de eFootball</span></div></div>
 <div class="prog" id="prog" hidden><span id="progt"></span><span class="bar"><i id="progb" style="width:0"></i></span></div>
 <div class="tsw" id="tsw" hidden><label for="tsel">Ver</label><select id="tsel"></select></div>
-<button class="tema" id="tema" type="button"></button></header>
+<div class="tools"><button class="tema" id="cuenta" type="button" hidden></button><button class="tema" id="tema" type="button"></button></div></header>
 <main id="contenido" tabindex="-1">
 <p class="err" id="err" role="alert" hidden></p>
 <div id="archb"></div>
@@ -108,7 +108,7 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <h2 class="vt">Jugadores<b>de la liga</b></h2><div class="card" id="pl"></div></section>
 
 <section id="v5" role="tabpanel" aria-labelledby="t5" tabindex="-1" hidden>
-<h2 class="vt">Crónicas<b>de la liga</b></h2><div class="card" id="po"></div></section>
+<h2 class="vt">Crónicas<b>de la liga</b></h2><div id="comp"></div><div class="card" id="po"></div></section>
 
 <section id="v6" role="tabpanel" aria-labelledby="t6" tabindex="-1" hidden>
 <h2 class="vt">Goles<b>bonitos</b></h2><div id="condis"></div><div class="card" id="go"></div></section>
@@ -138,5 +138,6 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <button role="tab" id="t8" aria-controls="v8" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8-4.3-4.1 5.9-.8z"/></svg>Champions</button>
 </div></nav>
 <script src="app.js" defer></script>
+<script src="comunidad.js" defer></script>
 </body>
 </html>

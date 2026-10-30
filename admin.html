@@ -252,6 +252,13 @@ details summary{cursor:pointer;padding:4px 0}
 <p class="msg" id="imsg" role="status"></p>
 </div>
 <div class="card">
+<p><b>🛡️ Moderación</b> <span class="mute" id="mcount"></span></p>
+<p class="mute">Lo último que han publicado y comentado los jugadores. Ocultar lo quita de la web pero lo conserva; Borrar lo elimina del todo.</p>
+<div id="mlist"></div>
+<div class="row2"><button class="sec" id="mrel">Recargar</button></div>
+<p class="msg" id="mmsg" role="status"></p>
+</div>
+<div class="card">
 <p><b>👀 Visitas</b> <span class="mute" id="vtot"></span></p>
 <p class="mute">Una visita por navegador y día. Últimos 30 días:</p>
 <div id="vlist"></div>
@@ -676,7 +683,7 @@ if(!r.ok)throw new Error("La base de datos ha dado error "+r.status+".");return 
 function dbStart(){
 (CFG?Promise.resolve():fetch("config.json?v="+Date.now(),{cache:"no-store"}).then(function(r){return r.json()}).then(function(d){CFG=d||{}})).then(function(){
 var ok=!!dbCfg();$("dbcfg").hidden=ok;$("dbgo").disabled=!ok;
-if(ok&&dbt){$("dbl").hidden=true;$("dbin").hidden=false;loadIns()}else{$("dbl").hidden=false;$("dbin").hidden=true}}).catch(function(){$("dbcfg").hidden=false;$("dbgo").disabled=true})}
+if(ok&&dbt){$("dbl").hidden=true;$("dbin").hidden=false;loadIns();loadMod()}else{$("dbl").hidden=false;$("dbin").hidden=true}}).catch(function(){$("dbcfg").hidden=false;$("dbgo").disabled=true})}
 $("dbgo").addEventListener("click",function(){var s=dbCfg();if(!s)return;var e=$("dbe").value.trim(),p=$("dbp").value;
 if(!e||!p){say("dbmsg","Escribe el correo y la contraseña.",true);return}
 var b=$("dbgo");b.disabled=true;say("dbmsg","Entrando...");
@@ -699,6 +706,20 @@ var V=r[1]||[],mx=V.reduce(function(m,x){return Math.max(m,x.n)},1);$("vtot").te
 $("vlist").innerHTML=V.map(function(x){return '<div class="li"><span>'+esc(fmtd(x.dia))+'</span><span style="flex:1;margin:0 10px;height:8px;background:rgba(229,23,63,.2)"><i style="display:block;height:100%;width:'+(x.n/mx*100)+'%;background:#e5173f"></i></span><b>'+(+x.n)+'</b></div>'}).join("")||'<p class="mute">Aún no hay visitas.</p>';say("imsg","")})
 .catch(function(e){say("imsg",e.message,true)})}
 $("irel").addEventListener("click",function(){loadIns()});
+/* moderación de la comunidad */
+var MOD=[];
+function loadMod(){say("mmsg","Cargando...");
+return Promise.all([dbReq("/rest/v1/publicaciones?select=id,creado,autor,titulo,texto,oculto&order=creado.desc&limit=40"),dbReq("/rest/v1/comentarios?select=id,creado,autor,ref,texto,oculto&order=creado.desc&limit=60")])
+.then(function(r){MOD=(r[0]||[]).map(function(x){x.k="publicaciones";return x}).concat((r[1]||[]).map(function(x){x.k="comentarios";return x}));
+MOD.sort(function(a,b){return String(b.creado).localeCompare(String(a.creado))});
+$("mcount").textContent="("+MOD.length+")";say("mmsg","");
+$("mlist").innerHTML=MOD.map(function(x){var nm=T[x.autor]?T[x.autor].p:x.autor;
+return '<div class="li" style="display:block;opacity:'+(x.oculto?.5:1)+'"><span><b>'+(x.k==="publicaciones"?"Crónica":"Comentario")+'</b> · '+esc(nm)+' · '+esc(String(x.creado).slice(0,16).replace("T"," "))+(x.oculto?" · OCULTO":"")+'<small>'+esc(x.titulo?x.titulo+" — ":"")+esc(String(x.texto).slice(0,140))+'</small></span><span class="row2"><button class="sec" data-mo="'+x.k+'|'+(+x.id)+'|'+(x.oculto?"0":"1")+'">'+(x.oculto?"Mostrar":"Ocultar")+'</button><button class="sec" data-mb="'+x.k+'|'+(+x.id)+'">Borrar</button></span></div>'}).join("")||'<p class="mute">Todavía no hay nada de la comunidad.</p>'})
+.catch(function(e){say("mmsg",e.message+" (¿has ejecutado la parte FASE 3 de supabase.sql?)",true)})}
+$("mrel").addEventListener("click",loadMod);
+$("mlist").addEventListener("click",function(e){var o=e.target.getAttribute("data-mo"),d=e.target.getAttribute("data-mb");
+if(o){var p=o.split("|");dbReq("/rest/v1/"+p[0]+"?id=eq."+(+p[1]),"PATCH",{oculto:p[2]==="1"}).then(loadMod).catch(function(er){say("mmsg",er.message,true)})}
+else if(d){if(!window.confirm("¿Borrar esto del todo?"))return;var q=d.split("|");dbReq("/rest/v1/"+q[0]+"?id=eq."+(+q[1]),"DELETE").then(loadMod).catch(function(er){say("mmsg",er.message,true)})}});
 $("ifil").addEventListener("change",renderIns);
 $("ilist").addEventListener("change",function(e){var id=e.target.getAttribute("data-ie");if(!id)return;var v=e.target.value;say("imsg","Guardando...");
 dbReq("/rest/v1/inscripciones?id=eq."+(+id),"PATCH",{estado:v}).then(function(){INS.forEach(function(x){if(+x.id===+id)x.estado=v});renderIns();say("imsg","Guardado.")}).catch(function(er){say("imsg",er.message,true)})});
