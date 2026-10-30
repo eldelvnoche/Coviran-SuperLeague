@@ -652,6 +652,37 @@ dialog.sh{background:#0d1016;border-radius:var(--r) var(--r) 0 0}
 html[data-tema=claro] dialog.sh{background:#f6f7fa}
 @media (min-width:700px){dialog.sh{border-radius:var(--r)}}
 .shbar{background:inherit}
+
+/* ===== v9: campeón de la temporada y pestaña de la Mercadona Champions League ===== */
+.champ1{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:4px;width:100%;min-height:440px;margin:0 0 18px;padding:22px 18px 18px;text-align:left;color:#fff;cursor:pointer;border:1px solid var(--trophy);border-radius:var(--r);background:#0d1016;box-shadow:0 0 0 1px rgba(227,179,65,.25),0 30px 60px -30px rgba(227,179,65,.55)}
+.champ1.art::before{opacity:1;background-position:center 14%}
+.champ1.art::after{background:linear-gradient(180deg,rgba(9,9,12,0) 35%,rgba(9,9,12,.6) 58%,rgba(9,9,12,.96) 86%),radial-gradient(420px 220px at 50% 0%,rgba(227,179,65,.18),transparent 70%)}
+.champ1 .k{align-self:stretch;margin-bottom:10px;padding:6px 10px;background:linear-gradient(135deg,#f6dc8b,#e3b341 55%,#b3801c);color:#1d1400;font:800 14px "Barlow Condensed",sans-serif;letter-spacing:.1em;text-transform:uppercase;border-radius:4px;text-align:center;box-shadow:0 8px 20px -8px rgba(227,179,65,.8)}
+.champ1 .lg{width:58px!important;height:52px!important}
+.champ1 b{font:800 54px/.9 "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:-.01em;text-shadow:0 4px 20px rgba(0,0,0,.7)}
+.champ1 .tm2{font:700 18px "Barlow Condensed",sans-serif;text-transform:uppercase;letter-spacing:.06em;color:var(--trophy)}
+.champ1 .rec{font-size:14px;color:#d6d9e2}
+.champ1.ucc{border-color:#a07bff;box-shadow:0 0 0 1px rgba(160,123,255,.3),0 30px 60px -30px rgba(160,123,255,.6)}
+.champ1.ucc .k{background:linear-gradient(135deg,#cdbcff,#8a63ff);color:#14082e}
+.champ1.ucc .tm2{color:#cdbcff}
+@media (prefers-reduced-motion:no-preference){.champ1 .k{background-size:200% 100%;animation:oro 4s ease-in-out infinite}@keyframes oro{50%{filter:brightness(1.15)}}}
+html[data-tema=claro] .champ1{color:#fff}
+/* resumen de la Champions en la portada */
+.uclt{margin-top:22px;padding:16px;border:1px solid var(--line);border-top:2px solid var(--acc);border-radius:var(--r);background:radial-gradient(420px 200px at 85% 0%,rgba(229,23,63,.25),transparent 70%),linear-gradient(160deg,#141821,#0a0c11);color:#f3f3f5;box-shadow:var(--sh2);display:grid;gap:12px}
+.uclt .uh{position:relative;padding-right:60px}
+.uclt .stars{position:absolute;right:0;top:0;width:54px;height:54px}
+.uclt .uh span{font:700 13px "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#b4b4bf}
+.uclt .uh b{display:block;font:800 30px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}
+.uclt p{margin:8px 0 0;color:#cfcfd6}.uclt p b{color:#fff}.uclt .tt{color:#9ba2b4}
+.uclt .cta{justify-self:start}
+/* resultados de la Champions */
+.ucm{grid-template-rows:auto auto;row-gap:8px;cursor:pointer;color:inherit;font:inherit}
+.ucm .ucr{grid-column:1/-1;font:700 12px "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#cdbcff;text-align:left}
+html[data-tema=claro] .ucm .ucr{color:#6a4dff}
+#v8 .ucl{margin-top:0}
+/* 8 pestañas en la barra inferior */
+@media (max-width:480px){nav button{font-size:10.5px;letter-spacing:-.01em}nav svg{width:21px;height:21px}}
+@media (max-width:380px){nav button{font-size:9.5px}nav svg{width:20px;height:20px}}
 </style>
 <script>
 /* Tema: auto (el del sistema), claro u oscuro. Va aquí para que no parpadee al cargar */
@@ -676,6 +707,7 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <section id="v1">
 <div id="aviso"></div>
 <div id="next"></div>
+<div id="champ"></div>
 <h2 class="vt">Clasificación<b>de la liga</b></h2>
 <div class="pod" id="pod" hidden></div>
 <div class="card">
@@ -683,7 +715,7 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <div id="tb"></div></div>
 <div class="leg"><span><i style="background:var(--ucl)"></i>Directos a Mercadona Champions League (1º y 2º)</span><span><i style="background:var(--po)"></i>Eliminatoria de acceso (3º al 6º)</span></div>
 <p class="hint">Toca un equipo para ver su ficha completa. <span id="upd"></span></p>
-<div id="ucl"></div>
+<div id="uclt"></div>
 <div class="s2">
 <span class="q" aria-hidden="true">?</span>
 <span class="k">Próximamente · Temporada 2</span>
@@ -734,6 +766,11 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <h2 class="vt">Títulos<b>y ranking</b></h2>
 <div class="chips sm" id="tch"></div>
 <div id="tv"></div></section>
+<section id="v8" hidden>
+<h2 class="vt">Mercadona<b>Champions League</b></h2>
+<div id="uclr"></div>
+<h2 class="sec-h">Cuadro <small>toca un resultado para ver el partido</small></h2>
+<div id="ucl"></div></section>
 <div class="band bt"></div><p class="ft" id="ft">Superliga Covirán · Temporada 1</p>
 <div class="ftl" id="ftl"><button type="button" data-ins>Apúntate</button></div>
 </main>
@@ -748,6 +785,7 @@ try{matchMedia("(prefers-color-scheme: light)").addEventListener("change",functi
 <button role="tab" id="t5" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6z"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>Crónicas</button>
 <button role="tab" id="t6" aria-selected="false"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8l3 2-1 4h-4l-1-4z"/></svg>Golazos</button>
 <button role="tab" id="t7" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5c0 3 1 4.5 3 5M16 6h3c0 3-1 4.5-3 5M12 13v4M9 20h6M10 17h4"/></svg>Títulos</button>
+<button role="tab" id="t8" aria-selected="false"><svg viewBox="0 0 24 24"><path d="M12 3l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.4 6.8 19.1l1-5.8-4.3-4.1 5.9-.8z"/></svg>Champions</button>
 </div></nav>
 
 <script>
@@ -822,7 +860,7 @@ function sc(x){return T[x.h].t+" "+x.v[0]+"-"+x.v[1]+" "+T[x.a].t}
 function badges(L,A){
 var B=[],P=L.filter(function(r){return r.pj>0});if(!P.length)return B;
 function top(arr,f,low){var best=null,ids=[];arr.forEach(function(r){var v=f(r);if(v==null||!isFinite(v))return;if(best===null||(low?v<best:v>best)){best=v;ids=[r.id]}else if(v===best)ids.push(r.id)});return{v:best,ids:ids}}
-B.push({e:"👑",t:"Líder",d:"Primero en la clasificación",ids:[L[0].id]});
+B.push(nPlayed()>=NMATCH?{e:"🏆",t:"Campeón",d:"Ganador de la liga",ids:[L[0].id]}:{e:"👑",t:"Líder",d:"Primero en la clasificación",ids:[L[0].id]});
 var t=top(P,function(r){return r.gf/r.pj});B.push({e:"⚽",t:"Mejor ataque",d:fx(t.v,1)+" goles por partido",ids:t.ids});
 t=top(P,function(r){return r.gc/r.pj},true);B.push({e:"🧱",t:"Mejor defensa",d:fx(t.v,1)+" goles encajados por partido",ids:t.ids});
 var big=null;allM().forEach(function(x){if(!x.v)return;var m=Math.abs(x.v[0]-x.v[1]);if(m>0&&(!big||m>big.m))big={m:m,x:x}});
@@ -874,29 +912,69 @@ var ic=(r.now.t==="w"&&r.now.n>=3?"🔥":"")+(mvpCount(r.id)?"⭐":"");
 return '<div class="row'+(i<2?" q":i<6?" qp":"")+'"><button class="main art" data-t="'+r.id+'"'+artA(r.id)+' aria-label="Ficha de '+T[r.id].t+'"><span class="ps">'+(i+1)+'</span><span class="tc">'+logo(r.id)+'<span class="tn"><span class="nm">'+T[r.id].t+(ic?'<span class="ic">'+ic+'</span>':'')+'</span><span class="tt">'+T[r.id].p+'</span></span></span><span class="n">'+r.pj+'</span><span class="n">'+r.pg+'</span><span class="n '+c+'">'+dgt(r)+'</span><span class="n pt">'+r.pts+'</span></button></div>'}).join("");}
 var STARS='<svg class="stars" viewBox="0 0 64 64" aria-hidden="true"><g fill="none" stroke="#b4b4bf" stroke-width="2"><circle cx="32" cy="32" r="26"/><circle cx="32" cy="32" r="18" stroke-dasharray="3 4"/></g><g fill="#ffe29a"><path d="M32 18l2.4 5 5.4.6-4 3.7 1.1 5.3-4.9-2.7-4.9 2.7 1.1-5.3-4-3.7 5.4-.6z"/><path d="M18 36l1.4 2.9 3.2.4-2.4 2.2.7 3.1-2.9-1.6-2.9 1.6.7-3.1-2.4-2.2 3.2-.4z"/><path d="M46 36l1.4 2.9 3.2.4-2.4 2.2.7 3.1-2.9-1.6-2.9 1.6.7-3.1-2.4-2.2 3.2-.4z"/></g></svg>';
 function uclWin(t){if(!t||!t.g||t.a==null||t.b==null)return null;if(t.g[0]>t.g[1])return t.a;if(t.g[1]>t.g[0])return t.b;return t.pen===t.a||t.pen===t.b?t.pen:null}
+/* ---------- Mercadona Champions League ----------
+   Cada eliminatoria se guarda en resultados.json > champions: {a, b, g:[goles a, goles b], pen, fecha, st} */
+var UCR=[["final","Final"],["sf1","Semifinal 1"],["sf2","Semifinal 2"],["po1","Eliminatoria de acceso · 3º contra 6º"],["po2","Eliminatoria de acceso · 4º contra 5º"]];
+function uclTies(L){
+var any=L.some(function(r){return r.pj>0}),q=L.slice(0,6).map(function(r){return r.id});
+function tie(key,a,b){var t=UCL[key]||{};return{key:key,a:T[t.a]?t.a:a,b:T[t.b]?t.b:b,g:Array.isArray(t.g)&&t.g.length===2?[n0(t.g[0]),n0(t.g[1])]:null,pen:t.pen,fecha:t.fecha,st:t.st&&t.st.l&&t.st.v?t.st:null}}
+var X={};X.po1=tie("po1",any?q[2]:null,any?q[5]:null);X.po2=tie("po2",any?q[3]:null,any?q[4]:null);
+X.sf1=tie("sf1",any?q[0]:null,uclWin(X.po2));X.sf2=tie("sf2",any?q[1]:null,uclWin(X.po1));
+X.final=tie("final",uclWin(X.sf1),uclWin(X.sf2));X.champ=uclWin(X.final);X.any=any;X.q=q;
+X.played=UCR.filter(function(r){return X[r[0]].g}).length;return X}
+/* el siguiente cruce que falta por jugar, en orden de rondas */
+function uclNext(X){var o=["po1","po2","sf1","sf2","final"];for(var i=0;i<o.length;i++){var t=X[o[i]];if(!t.g)return t}return null}
+function uclLbl(k){for(var i=0;i<UCR.length;i++)if(UCR[i][0]===k)return UCR[i][1];return""}
 function renderUCL(L){
-var done=nPlayed()>=NMATCH,any=L.some(function(r){return r.pj>0});
-var q=L.slice(0,6).map(function(r){return r.id});
-function tie(key,a,b){var t=UCL[key]||{};var A=T[t.a]?t.a:a,Bb=T[t.b]?t.b:b;return{a:A,b:Bb,g:Array.isArray(t.g)&&t.g.length===2?[n0(t.g[0]),n0(t.g[1])]:null,pen:t.pen}}
-var p1=tie("po1",any?q[2]:null,any?q[5]:null),p2=tie("po2",any?q[3]:null,any?q[4]:null);
-var s1=tie("sf1",any?q[0]:null,uclWin(p2)),s2=tie("sf2",any?q[1]:null,uclWin(p1));
-var f=tie("final",uclWin(s1),uclWin(s2)),champ=uclWin(f);
+var X=uclTies(L),done=nPlayed()>=NMATCH,p1=X.po1,p2=X.po2,s1=X.sf1,s2=X.sf2,f=X.final,champ=X.champ,any=X.any,q=X.q;
 function side(id,seed,cls){if(!id||!T[id])return '<span class="t '+cls+'"><span class="tbd">?</span><span>Por decidir<em>'+(seed||"")+'</em></span></span>';
 var em=seed&&seed.length<=3?seed+" · "+T[id].p:T[id].p;
 return '<button class="t '+cls+'" data-t="'+id+'" style="background:none;border:0;padding:0;color:inherit;cursor:pointer">'+logo(id)+'<span>'+T[id].t+'<em>'+em+'</em></span></button>'}
 function row(t,s1l,s2l){var w=uclWin(t);
-var g=t.g?'<span class="g">'+t.g[0]+'-'+t.g[1]+(t.g[0]===t.g[1]&&w?'<small>pen. '+T[w].t+'</small>':'')+'</span>':'<span class="g" style="color:var(--ucl-t);font-size:18px">VS</span>';
+var g=t.g?'<button class="g" data-u="'+t.key+'" style="background:none;border:0;color:inherit;cursor:pointer">'+t.g[0]+'-'+t.g[1]+(t.g[0]===t.g[1]&&w?'<small>pen. '+T[w].t+'</small>':'')+'</button>':'<span class="g" style="color:var(--ucl-t);font-size:18px">VS</span>';
 return '<div class="bm">'+side(t.a,s1l,"h"+(w&&w!==t.a?" lose":""))+g+side(t.b,s2l,"a"+(w&&w!==t.b?" lose":""))+'</div>'}
 var sub="Los dos primeros de la liga pasan directos a semifinales. Del 3º al 6º juegan una eliminatoria de acceso para completar las semifinales."+(done?"":" Cruces provisionales según la tabla actual.");
 var dq=any?'<div class="bl">Clasificados directos</div><div class="dq">'+[q[0],q[1]].map(function(id,i){return '<button data-t="'+id+'">'+logo(id)+'<span>'+T[id].t+'<em>'+(i+1)+'º · '+T[id].p+'</em></span></button>'}).join("")+'</div>':'';
-$("ucl").innerHTML='<div class="ucl"><div class="uh">'+STARS+'<span>Torneo de final de temporada</span><b>Mercadona<br>Champions League</b><p>'+sub+'</p></div><div class="br">'+dq+
+$("ucl").innerHTML='<div class="ucl"><div class="uh">'+STARS+'<span>Cuadro del torneo</span><b>Mercadona<br>Champions League</b><p>'+sub+'</p></div><div class="br">'+dq+
 '<div class="bl">Eliminatoria de acceso · 3º contra 6º</div>'+row(p1,"3º","6º")+
 '<div class="bl">Eliminatoria de acceso · 4º contra 5º</div>'+row(p2,"4º","5º")+
 '<div class="bl">Semifinal 1 · 1º contra ganador 4º-5º</div>'+row(s1,"1º","Ganador 4º-5º")+
 '<div class="bl">Semifinal 2 · 2º contra ganador 3º-6º</div>'+row(s2,"2º","Ganador 3º-6º")+
 '<div class="bl">Final</div>'+row(f,"Ganador SF1","Ganador SF2")+
 (champ?'<div class="champ">'+logo(champ,"sm")+'<span>Campeón: '+T[champ].t+' ('+T[champ].p+')</span></div>':'')+
-'</div></div>'}
+'</div></div>';
+renderUclTab(X);renderUclTeaser(X)}
+/* pestaña Champions: campeón, resultados y cuadro */
+function renderUclTab(X){
+var h='';
+if(X.champ){var c=X.champ,lose=X.final.a===c?X.final.b:X.final.a;
+h+='<button class="champ1 ucc art" data-t="'+c+'"'+artA(c)+'><span class="k">⭐ Campeón de la Mercadona Champions League</span>'+logo(c)+'<b>'+esc(T[c].p)+'</b><span class="tm2">'+T[c].t+'</span><span class="rec">Final: '+T[X.final.a].t+' '+X.final.g[0]+'-'+X.final.g[1]+' '+T[X.final.b].t+(X.final.g[0]===X.final.g[1]?' (pen.)':'')+'</span></button>'}
+var pl=UCR.filter(function(r){return X[r[0]].g});
+h+='<h2 class="sec-h">Resultados <small>'+(pl.length?pl.length+' de 5 cruces':'aún sin jugar')+'</small></h2>';
+if(pl.length){h+='<div class="card">'+pl.map(function(r){var t=X[r[0]],w=uclWin(t),cl=w?(w===t.a?" w1":" w2"):"";
+return '<button class="mc ucm'+cl+'" data-u="'+t.key+'"><span class="ucr">'+r[1]+(t.fecha?' · '+esc(fmt(t.fecha)):'')+'</span><span class="tm h">'+logo(t.a)+nmp(t.a)+'</span><span class="sb"><span class="sc"><b>'+t.g[0]+'</b><i>:</i><b>'+t.g[1]+'</b></span>'+(t.g[0]===t.g[1]&&w?'<small>Pen.: '+T[w].t+'</small>':(t.st?'<small>Ver stats</small>':''))+'</span><span class="tm a">'+logo(t.b)+nmp(t.b)+'</span></button>'}).join("")+'</div>'}
+else{var nx=uclNext(X);h+='<div class="card soft"><div class="empty">Todavía no se ha jugado ningún cruce.'+(nx&&T[nx.a]&&T[nx.b]?' Abre el torneo <b>'+T[nx.a].t+' – '+T[nx.b].t+'</b> ('+uclLbl(nx.key).toLowerCase()+').':'')+'</div></div>'}
+var nx2=uclNext(X);if(pl.length&&nx2&&T[nx2.a]&&T[nx2.b])h+='<p class="hint">Próximo cruce: <b>'+T[nx2.a].t+' – '+T[nx2.b].t+'</b> ('+uclLbl(nx2.key).toLowerCase()+').</p>';
+$("uclr").innerHTML=h}
+/* resumen en la portada con enlace a la pestaña */
+function renderUclTeaser(X){
+var el=$("uclt");if(!X.any){el.innerHTML="";return}
+var nx=uclNext(X),tx=X.champ?'Campeón: <b>'+T[X.champ].t+'</b> ('+T[X.champ].p+')':nx&&T[nx.a]&&T[nx.b]?'Próximo cruce: <b>'+T[nx.a].t+' – '+T[nx.b].t+'</b><br><span class="tt">'+uclLbl(nx.key)+'</span>':'Cruces por decidir';
+el.innerHTML='<div class="uclt"><div class="uh">'+STARS+'<span>Torneo de final de temporada</span><b>Mercadona Champions League</b><p>'+tx+'</p><p class="tt">'+X.played+' de 5 cruces jugados</p></div><button class="cta" type="button" data-go="8">Ver la Champions</button></div>'}
+/* ficha de un cruce de la Champions */
+function ucSheet(key){
+var X=uclTies(table()),t=X[key];if(!t||!t.g||!T[t.a]||!T[t.b])return '<p class="empty">Cruce no encontrado.</p>';
+var w=uclWin(t),h='<div class="mj">⭐ Mercadona Champions League · '+uclLbl(key)+(t.fecha?' · '+esc(fmt(t.fecha)):'')+'</div><div class="mh"><button class="tm" data-t="'+t.a+'">'+logo(t.a)+nmp(t.a)+'</button><span class="sc">'+t.g[0]+'<i>-</i>'+t.g[1]+'</span><button class="tm" data-t="'+t.b+'">'+logo(t.b)+nmp(t.b)+'</button></div>';
+if(w)h+='<p class="note" style="text-align:center;margin-top:0">'+(t.g[0]===t.g[1]?'Empate y penaltis: pasa ':'Pasa ')+'<b>'+T[w].t+'</b>'+(key==="final"?' y es el campeón':'')+'.</p>';
+if(t.st){h+='<div class="fbox">'+SK.map(function(q){var l=n0(t.st.l[q[0]]),v=n0(t.st.v[q[0]]),mx=Math.max(l,v)||1,u=q[0]==="pos"?"%":"";
+return '<div class="ms"><div class="l3"><b class="'+(l>v?"hi":"")+'">'+l+u+'</b><span>'+q[1]+'</span><b class="'+(v>l?"hi":"")+'">'+v+u+'</b></div><div class="sbar"><div><i class="'+(l>=v&&l?"on":"")+'" style="width:'+(l/mx*100)+'%"></i></div><div><i class="'+(v>=l&&v?"on":"")+'" style="width:'+(v/mx*100)+'%"></i></div></div></div>'}).join("")+'</div><p class="note">Datos de la pantalla final de eFootball.</p>'}
+else h+='<div class="fbox"><p style="margin:0" class="tt">Este cruce no tiene las estadísticas de eFootball apuntadas.</p></div>';
+return h}
+/* campeón de la liga cuando se han jugado todos los partidos */
+function renderChamp(L){
+var el=$("champ");if(nPlayed()<NMATCH||!L.length||!L[0].pj){el.innerHTML="";return}
+var r=L[0],id=r.id,n=ARCH?ARCH.n:curN();
+el.innerHTML='<button class="champ1 art" data-t="'+id+'"'+artA(id)+'><span class="k">🏆 Campeón de la Superliga Covirán · Temporada '+n+'</span>'+logo(id)+'<b>'+esc(T[id].p)+'</b><span class="tm2">'+T[id].t+(PL[id]&&PL[id].apodo?' · «'+esc(PL[id].apodo)+'»':'')+'</span><span class="rec">'+r.pts+' puntos · '+r.pg+' victorias · '+r.pe+' empates · '+r.pp+' derrotas · '+dgt(r)+' goles</span></button>'}
 /* instalar como app */
 var dp=null;
 window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;renderInstall()});
@@ -1035,8 +1113,10 @@ $("shx").addEventListener("click",closeSheet);
 $("shback").addEventListener("click",function(){var s=stack.pop();if(s){curSheet=null;openSheet(s,true);stack.pop();$("shback").hidden=!stack.length}});
 $("sh").addEventListener("click",function(e){if(e.target===this)closeSheet()});
 document.addEventListener("click",function(e){
-var x2=e.target.closest?e.target.closest("[data-ins],[data-cmp],[data-arch],[data-ev],#archx,#tema"):null;
+var x2=e.target.closest?e.target.closest("[data-ins],[data-cmp],[data-arch],[data-ev],[data-u],[data-go],#archx,#tema"):null;
 if(x2){
+if(x2.hasAttribute("data-u")){openSheet({type:"u",id:x2.getAttribute("data-u")},$("sh").contains(x2));return}
+if(x2.hasAttribute("data-go")){tab(+x2.getAttribute("data-go"));return}
 if(x2.hasAttribute("data-ins")){openSheet({type:"i"},false);return}
 if(x2.hasAttribute("data-cmp")){closeSheet();cmpA=x2.getAttribute("data-cmp");if(cmpB===cmpA)cmpB=null;tab(3);renderCmp(table());var ch=$("cmph");if(ch.scrollIntoView)ch.scrollIntoView({block:"start"});return}
 if(x2.hasAttribute("data-arch")){verTemporada(+x2.getAttribute("data-arch"));return}
@@ -1091,7 +1171,10 @@ var P={};Object.keys(T).forEach(function(i){P[i]={liga:0,ucl:0,lidl:0,sL:0,sU:0,
 var b=lBase();Object.keys(b).forEach(function(i){P[i].lidl+=b[i]});
 lTor().forEach(function(x){P[x.campeon].lidl++;if(P[x.subcampeon])P[x.subcampeon].sLi++});
 sTem().forEach(function(x){var o=x.liga.orden;if(P[o[0]])P[o[0]].liga++;if(P[o[1]])P[o[1]].sL++;var c=x.champions;if(c&&P[c.campeon])P[c.campeon].ucl++;if(c&&P[c.sub])P[c.sub].sU++});
+/* la temporada actual cuenta en cuanto se acaba, aunque aún no se haya cerrado desde el admin */
+var C=curTit();if(C){P[C.liga].liga++;if(P[C.sub])P[C.sub].sL++;if(C.ucl){P[C.ucl.campeon].ucl++;if(P[C.ucl.sub])P[C.ucl.sub].sU++}}
 return P}
+function curTit(){var L=table();if(nPlayed()<NMATCH||curClosed(L))return null;return{n:curN(),liga:L[0].id,sub:L[1]&&L[1].id,ucl:uclRes(L)}}
 function curClosed(L){var S=sTem(),l=S[S.length-1];if(!l||!nPlayed())return false;return+l.partidos===nPlayed()&&l.liga.orden.join()===L.map(function(r){return r.id}).join()}
 function uclRes(L){
 var any=L.some(function(r){return r.pj>0}),q=L.slice(0,6).map(function(r){return r.id});
@@ -1121,6 +1204,7 @@ function palBox(id){
 var P=pal()[id],S=sTem(),b=lBase()[id],reg=lTor().filter(function(x){return x.campeon===id}).length;
 var lg=S.filter(function(x){return x.liga.orden[0]===id}).map(function(x){return"T"+x.n});
 var uc=S.filter(function(x){return x.champions&&x.champions.campeon===id}).map(function(x){return"T"+x.n});
+var C=curTit();if(C&&C.liga===id)lg.push("T"+C.n);if(C&&C.ucl&&C.ucl.campeon===id)uc.push("T"+C.n);
 function row(ic,t,n,det){return '<div class="pr"><span class="pi2">'+ic+'</span><span><b>'+t+'</b>'+(det?'<em>'+det+'</em>':'')+'</span><span class="pn2">'+n+'</span></div>'}
 var ld=b?(b+" anterior"+(b>1?"es":"")+" a la web"+(reg?" + "+reg+" registrado"+(reg>1?"s":""):"")):(reg?reg+" registrado"+(reg>1?"s":""):"");
 return '<div class="fbox"><h4>Palmarés</h4>'+row("🏆","Superliga Covirán",P.liga,lg.length?"Temporadas: "+lg.join(", "):"")+row("⭐","Mercadona Champions League",P.ucl,uc.length?"Ediciones: "+uc.join(", "):"")+row("🥇","Torneo Lidl",P.lidl,ld)+
@@ -1155,8 +1239,10 @@ function tvTem(L){
 var S=sTem().slice().reverse(),cl=curClosed(L),maxN=S.reduce(function(m,x){return Math.max(m,+x.n||0)},0);
 var h='<div class="card">';
 if(!cl){var n=nPlayed();
-h+='<div class="ts live"><div class="tsh"><b>Temporada '+(maxN+1)+'</b><span>'+(n?'En juego · '+n+'/'+NMATCH+' partidos':'Por empezar')+'</span></div>'+
-(n?'<div class="tsl"><div><i>Líder</i>'+tmn(L[0].id)+'<span class="tt">'+L[0].pts+' pts</span></div></div>':'<p class="tt" style="margin:8px 0 0">Cuando acabe la liga se guardará aquí con su campeón.</p>')+'</div>'}
+var fin=n>=NMATCH,uc0=fin?uclRes(L):null;
+h+='<div class="ts live"><div class="tsh"><b>Temporada '+(maxN+1)+'</b><span>'+(fin?'Liga terminada'+(uc0?'':' · Champions en juego'):n?'En juego · '+n+'/'+NMATCH+' partidos':'Por empezar')+'</span></div>'+
+(fin?'<div class="tsl"><div><i>🏆 Campeón</i>'+tmn(L[0].id,"sm")+'<span class="tt">'+L[0].pts+' pts</span></div><div><i>2º</i>'+tmn(L[1].id)+'</div><div><i>3º</i>'+tmn(L[2].id)+'</div>'+(uc0?'<div><i>⭐ Champions</i>'+tmn(uc0.campeon,"sm")+'</div>':'')+'</div>':
+n?'<div class="tsl"><div><i>Líder</i>'+tmn(L[0].id)+'<span class="tt">'+L[0].pts+' pts</span></div></div>':'<p class="tt" style="margin:8px 0 0">Cuando acabe la liga se guardará aquí con su campeón.</p>')+'</div>'}
 h+=S.map(function(x){var o=x.liga.orden,c=x.champions;
 return '<div class="ts"><div class="tsh"><b>Temporada '+esc(x.n)+'</b><span>'+(x.fecha?esc(fmt(x.fecha)):"")+'</span></div><div class="tsl">'+
 '<div><i>🏆 Campeón</i>'+tmn(o[0],"sm")+'</div><div><i>2º</i>'+tmn(o[1])+'</div>'+(o[2]?'<div><i>3º</i>'+tmn(o[2])+'</div>':'')+
@@ -1294,7 +1380,7 @@ var b=f.querySelector("button[type=submit]");b.disabled=true;say("Enviando…");
 db("/rest/v1/inscripciones",{nombre:v("nombre"),usuario:v("usuario"),equipo:v("equipo")||null,contacto:v("contacto"),mensaje:v("mensaje")||null},true)
 .then(function(){f.reset();say("¡Hecho! Tu inscripción ha llegado. Te escribiremos pronto.","ok")})
 .catch(function(){say("No se ha podido enviar. Inténtalo otra vez en un rato.","bad")}).then(function(){b.disabled=false})});
-function sheetHtml(s){return s.type==="t"?ficha(s.id):s.type==="i"?formIns():matchSheet(s.id)}
+function sheetHtml(s){return s.type==="t"?ficha(s.id):s.type==="i"?formIns():s.type==="u"?ucSheet(s.id):matchSheet(s.id)}
 
 /* ---------- tema, banda de archivo y pie ---------- */
 var TEMI={auto:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>',
@@ -1316,11 +1402,11 @@ function renderAll(){
 for(var q=0;q<J.length;q++){if(!doneJ(q)){cur=q;break}}
 EVO=null;var L=table();
 $("upd").textContent=fecha?"Actualizado el "+fmt(fecha)+".":"";
-renderProg();renderAviso(L);renderNext();renderTable(L);renderUCL(L);renderInstall();
+renderProg();renderAviso(L);renderNext();renderChamp(L);renderTable(L);renderUCL(L);renderInstall();
 renderChips();renderJ();renderStats(L);renderPlayers(L);renderPosts();renderGoals();renderTitulos(L);
 renderEvo();renderCmp(L);renderExtras();
 if(curSheet&&curSheet.type!=="i"&&$("sh").open)$("shb").innerHTML=sheetHtml(curSheet)}
-var NAMES=["tabla","jornadas","stats","jugadores","cronicas","golazos","titulos"],NT=NAMES.length,OLD={calendario:2,resultados:2};
+var NAMES=["tabla","jornadas","stats","jugadores","cronicas","golazos","titulos","champions"],NT=NAMES.length,OLD={calendario:2,resultados:2};
 function tab(n,keep){
 for(var i=1;i<=NT;i++){$("v"+i).hidden=n!==i;$("t"+i).setAttribute("aria-selected",n===i)}
 if(n===2)renderChips();
