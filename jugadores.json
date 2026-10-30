@@ -2,60 +2,67 @@
   "dm": {
     "apodo": "Doubl3 D",
     "bio": "Doble impacto, doble peligro y el doble de talento en el terreno de juego. DOUBL3 D es impredecible por naturaleza: un jugador que domina tanto el perfil zurdo como el diestro y rompe cualquier esquema táctico del rival. Su estilo combina la clase para repartir juego con la agresividad suficiente para romper redes. Jugar contra él es saber que estás a un solo parpadeo de recibir un golpe doble.\"",
-    "foto": "fotos/dm.jpg?v=1791678139202"
+    "foto": "fotos/dm.jpg?v=1791678139202",
+    "escudo": "fotos/escudo-dm.png?v=1793320000000"
   },
   "rb": {
     "apodo": "El Culer",
     "bio": "\"El Culer\" representa la pasión, el orgullo de un estilo inconfundible y la fe ciega en una idea de juego. Inspirado en la identidad histórica del Barça, su fútbol no se entiende sin la posesión dominante, el toque rápido y el control absoluto del ritmo del partido. Para él, la pelota es el único elemento que garantiza la victoria: si el rival no la tiene, no puede hacer daño.",
     "foto": "fotos/rb.jpg?v=1791570337300",
-    "escudo": "fotos/escudo-rb.png?v=1791842649197"
+    "escudo": "fotos/escudo-rb.png?v=1793320000000"
   },
   "th": {
     "apodo": "El Mago",
     "bio": "Hablar de \"El Mago\" en la liga de eFootball es hablar de la creatividad sin límites. Su apodo no es casualidad: en el campo virtual es capaz de inventar líneas de pase donde solo hay piernas rivales y encontrar huecos invisibles para cualquier otro jugador. No busca la jugada predecible ni el camino directo; su fútbol se basa en la fantasía, el regate impredecible en un baldosa y los recursos técn",
-    "foto": "fotos/th.jpg?v=1791561142518"
+    "foto": "fotos/th.jpg?v=1791561142518",
+    "escudo": "fotos/escudo-th.png?v=1793320000000"
   },
   "md": {
     "apodo": "EL NESSAB",
     "bio": "​\"El arte del engaño llevado al fútbol. ELNESSAB no necesita superar a la defensa con velocidad pura; le basta con hacerles creer lo que él quiere. Es el maestro del amague, el pase sin mirar y el penalti a cámara lenta. Hace que los defensas caigan en sus trampas una y otra vez, convirtiendo cada partido en un espectáculo donde la inteligencia y la pillería siempre se llevan los tres puntos.\"",
-    "foto": "fotos/md.jpg?v=1791573455370"
+    "foto": "fotos/md.jpg?v=1791573455370",
+    "escudo": "fotos/escudo-md.png?v=1793320000000"
   },
   "hs": {
     "apodo": "Lilb 47",
     "bio": "​\"Con el ritmo del barrio en el cuerpo y la precisión del calibre 47 en la pierna. Lilb47 juega con una tranquilidad que desespera al rival, combinando un dribbling fluido con una pegada quirúrgica desde cualquier distancia. No le pesan los minutos finales ni la presión de la grada: se mueve en el campo como si estuviera en la pista de su casa, listo para clavar el balón en la escuadra...",
     "foto": "fotos/hs.jpg?v=1791558449323",
-    "escudo": ""
+    "escudo": "fotos/escudo-hs.png?v=1793320000000"
   },
   "zk": {
     "apodo": "El 3askari",
     "bio": "​\"En el campo no hay espacio para la duda ni para la improvisación; hay una estrategia que cumplir hasta el minuto noventa. Encarnando el espíritu del '3askari', su juego se basa en el honor, la disciplina de hierro y una defensa inquebrantable. Con los colores del AS FAR por bandera, salta al césped no solo a competir, sino a luchar cada balón como si fuera una batalla decisiva por el respeto...",
-    "foto": "fotos/zk.jpg?v=1791569339893"
+    "foto": "fotos/zk.jpg?v=1791569339893",
+    "escudo": "fotos/escudo-zk.png?v=1793320000000"
   },
   "bd": {
     "apodo": "eldelvnoche",
     "bio": "​El Rey de la Noche y CEO de la Liga\nLíder de la competición y CEO de la Covirán SuperLeague. Competidor nato con los colores de Boca Juniors, \"eldelvnoche\" se ha consolidado como la gran referencia del torneo. Su apodo evoca a ese jugador peligroso y concentrado que impone su ritmo cuando las luces se apagan y la presión aprieta al máximo.",
-    "foto": "fotos/bd.jpg?v=1791560081758"
+    "foto": "fotos/bd.jpg?v=1791560081758",
+    "escudo": "fotos/escudo-bd.png?v=1793320000000"
   },
   "ej": {
     "apodo": "YOICHI ISAGI",
     "bio": "​\"El campo de juego no es un terreno de césped, es un tablero tridimensional que solo él puede descifrar por completo. Inspirado en el egoísmo puro de Yoichi Isagi, este jugador utiliza la 'metavisión' para predecir el movimiento de compañeros y rivales antes de que sucedan. Analiza el caos, encuentra el punto ciego de la defensa y huele la 'olor a gol' para definir al primer toque\"",
-    "foto": "fotos/ej.jpg?v=1791576097390"
+    "foto": "fotos/ej.jpg?v=1791576097390",
+    "escudo": "fotos/escudo-ej.png?v=1793320000000"
   },
   "fd": {
     "apodo": "El Tiburón Azúl",
     "bio": "​\"Silencioso, paciente y letal. Cuando salta al terreno de juego, el rival huele el peligro antes de ver llegar el balón. Apodado 'El Tiburón Azul', su estilo no perdona los errores: detecta la mínima debilidad en la defensa contraria para embestir con un ataque rápido, voraz e eimparable. En su territorio no se juega al fútbol, se lucha por sobrevivir a su mordisco goleador.\"",
-    "foto": "fotos/fd.jpg?v=1791560002917"
+    "foto": "fotos/fd.jpg?v=1791560002917",
+    "escudo": "fotos/escudo-fd.png?v=1793320000000"
   },
   "ch": {
     "apodo": "El Niño",
     "bio": "​\"Surgido de las sombras de Heliópolis y bendecido por el fuego verdiblanco, El Niño es un velocista imparable. Su sonrisa desafiante infunde aliento a sus aliados y desató el pánico en las filas rivales.\"",
     "foto": "fotos/ch.jpg?v=1791842724116",
-    "escudo": "fotos/escudo-ch.png?v=1791842499233"
+    "escudo": "fotos/escudo-ch.png?v=1793320000000"
   },
   "hi": {
     "apodo": "El Matador",
     "bio": "Carisma, sangre fría y una voracidad goleadora que paraliza a las defensas. Cuando 'El Matador' entra en el área rival, la sentencia ya está firmada. Es el clásico rematador que vive del gol: aguarda su momento, desmarca en el segundo exacto y ejecuta con la elegancia y la contundencia de un auténtico ejecutor. No necesita diez oportunidades; le basta un solo disparo para mandar el balón al fondo",
     "foto": "fotos/hi.jpg?v=1791570929099",
-    "escudo": "fotos/escudo-hi.png?v=1791842629479"
+    "escudo": "fotos/escudo-hi.png?v=1793320000000"
   }
 }
