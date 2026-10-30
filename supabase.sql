@@ -261,3 +261,70 @@ end;
 $$;
 drop trigger if exists avisa_comentario on comentarios;
 create trigger avisa_comentario after insert on comentarios for each row execute function avisar_comentario();
+
+
+-- =====================================================================
+-- DIRECTOS · retransmisiones de partidos (ejecutar DESPUÉS de las partes FASE 3 y AVISOS)
+-- El jugador emite con YouTube, Twitch o Kick y pega el enlace; la web lo muestra y avisa al resto.
+-- =====================================================================
+create table if not exists directos (
+  id bigint generated always as identity primary key,
+  creado timestamptz not null default now(),
+  autor text not null references jugadores (id) on delete cascade,
+  titulo text not null check (char_length(titulo) between 3 and 90),
+  url text not null check (
+    url ~ '^https://(www\.|m\.)?youtube\.com/(watch\?v=[A-Za-z0-9_-]{11}|live/[A-Za-z0-9_-]{11})([&?][A-Za-z0-9_=&.%-]*)?$'
+    or url ~ '^https://youtu\.be/[A-Za-z0-9_-]{11}([?&][A-Za-z0-9_=&.%-]*)?$'
+    or url ~ '^https://(www\.)?(twitch\.tv|kick\.com)/[A-Za-z0-9_-]{3,25}/?$'
+  ),
+  estado text not null default 'en_directo' check (estado in ('en_directo', 'finalizado')),
+  fin timestamptz
+);
+create index if not exists directos_estado on directos (estado, creado desc);
+alter table directos enable row level security;
+drop policy if exists "ver directos" on directos;
+create policy "ver directos" on directos for select to anon, authenticated using (true);
+drop policy if exists "emitir como jugador" on directos;
+create policy "emitir como jugador" on directos for insert to authenticated with check (autor = mi_jugador() and estado = 'en_directo');
+drop policy if exists "borrar el propio o admin" on directos;
+create policy "borrar el propio directo o admin" on directos for delete to authenticated using (autor = mi_jugador() or es_admin());
+
+-- Terminar un directo propio (no se puede editar nada más)
+create or replace function finalizar_directo(p_id bigint) returns void
+language sql security definer set search_path = public as $$
+  update directos set estado = 'finalizado', fin = now()
+  where id = p_id and estado = 'en_directo' and (autor = mi_jugador() or es_admin());
+$$;
+grant execute on function finalizar_directo(bigint) to authenticated;
+
+-- Un jugador solo puede tener un directo activo y máximo 6 por hora; además avisa a los suscritos
+create or replace function preparar_directo() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  if (select count(*) from directos where autor = new.autor and creado > now() - interval '1 hour') >= 6 then
+    raise exception 'Demasiados directos seguidos. Espera un rato.';
+  end if;
+  update directos set estado = 'finalizado', fin = now() where autor = new.autor and estado = 'en_directo';
+  return new;
+end;
+$$;
+drop trigger if exists prepara_directo on directos;
+create trigger prepara_directo before insert on directos for each row execute function preparar_directo();
+
+create or replace function avisar_directo() returns trigger
+language plpgsql security definer set search_path = public as $$
+begin
+  perform avisar(jsonb_build_object('tipo', 'directo', 'autor', new.autor, 'titulo', new.titulo));
+  return new;
+end;
+$$;
+drop trigger if exists avisa_directo on directos;
+create trigger avisa_directo after insert on directos for each row execute function avisar_directo();
+
+-- Canal propio del jugador (Twitch o Kick), para no pegar el enlace cada vez que emite
+alter table jugadores add column if not exists canal text check (canal is null or canal ~ '^https://(www\.)?(twitch\.tv|kick\.com)/[A-Za-z0-9_-]{3,25}/?$');
+create or replace function guardar_canal(p_url text) returns void
+language sql security definer set search_path = public as $$
+  update jugadores set canal = nullif(p_url, '') where user_id = auth.uid();
+$$;
+grant execute on function guardar_canal(text) to authenticated;

@@ -483,6 +483,28 @@ html[data-tema=claro] .rr .v{color:var(--text)}
 .fbtn{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border:1px dashed var(--line);border-radius:var(--r-sm);color:var(--text);font-weight:600;font-size:14px;cursor:pointer}
 .fbtn:hover{border-color:var(--acc)}
 @media (max-width:480px){#avisos span{display:none}.tools{gap:6px}}
+/* directos */
+.livb{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 10px;padding:12px 14px;border:1px solid rgba(229,23,63,.55);border-left:4px solid var(--red);border-radius:var(--r);background:linear-gradient(90deg,rgba(229,23,63,.18),var(--glass) 70%);color:var(--text);text-align:left}
+.livb b{display:block;font:800 18px/1.1 var(--f-d);text-transform:uppercase}
+.livb em{display:block;font-style:normal;color:var(--mute);font-size:13px}
+.livb .live-dot{flex:none}
+.livv{margin-left:auto;color:var(--acc);font:800 16px var(--f-d);text-transform:uppercase}
+.dcard{margin:0 0 14px;padding:14px 16px;border:1px solid var(--line);border-top:2px solid var(--red);border-radius:var(--r);background:var(--glass);box-shadow:var(--sh1)}
+.dh{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.dh b{font:800 20px var(--f-d);text-transform:uppercase}
+.dcard h3{margin:6px 0 10px;font:700 22px/1.1 var(--f-d);text-transform:uppercase}
+.dplay{position:relative;aspect-ratio:16/9;border-radius:var(--r-sm);overflow:hidden;background:#000}
+.dplay iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.dact{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.dact .lnk{margin-top:0}
+.guia details{margin:0 0 8px;border:1px solid var(--line);border-radius:var(--r);background:var(--glass)}
+.guia summary{padding:12px 14px;cursor:pointer;font:800 18px var(--f-d);text-transform:uppercase;list-style:none}
+.guia summary::-webkit-details-marker{display:none}
+.guia summary::after{content:"+";float:right;color:var(--acc)}
+.guia details[open] summary::after{content:"–"}
+.guia details>*:not(summary){margin:0 14px 12px;font-size:15px}
+.guia ol,.guia ul{padding-left:20px}
+.guia li{margin:6px 0}
 /* pie */
 .ft{padding:16px 0 0;text-align:center;color:var(--mute);font:500 13px var(--f-d);letter-spacing:.14em;text-transform:uppercase}
 .ftl{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 16px;margin-top:10px;font:700 14px var(--f-d);text-transform:uppercase;letter-spacing:.08em}

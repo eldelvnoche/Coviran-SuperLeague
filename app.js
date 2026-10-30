@@ -622,7 +622,7 @@ var b=f.querySelector("button[type=submit]");b.disabled=true;say("Enviando…");
 db("/rest/v1/inscripciones",{nombre:v("nombre"),usuario:v("usuario"),equipo:v("equipo")||null,contacto:v("contacto"),mensaje:v("mensaje")||null},true)
 .then(function(){f.reset();say("¡Hecho! Tu inscripción ha llegado. Te escribiremos pronto.","ok")})
 .catch(function(){say("No se ha podido enviar. Inténtalo otra vez en un rato.","bad")}).then(function(){b.disabled=false})});
-function sheetHtml(s){return s.type==="t"?ficha(s.id):s.type==="i"?formIns():s.type==="u"?ucSheet(s.id):s.type==="b"?(window.Avisos?Avisos.sheet():""):/^[lan]$/.test(s.type)?(window.Com?Com.sheet(s.type):""):matchSheet(s.id)}
+function sheetHtml(s){return s.type==="t"?ficha(s.id):s.type==="i"?formIns():s.type==="u"?ucSheet(s.id):s.type==="b"?(window.Avisos?Avisos.sheet():""):s.type==="s"?(window.Dir?Dir.sheet():""):/^[lan]$/.test(s.type)?(window.Com?Com.sheet(s.type):""):matchSheet(s.id)}
 
 /* ---------- tema, banda de archivo y pie ---------- */
 var TEMI={auto:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 0 0 16z" fill="currentColor"/></svg>',

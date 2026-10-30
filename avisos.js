@@ -2,8 +2,8 @@
    Funciona con el service worker (sw.js) y las funciones de Supabase (ver supabase.sql, parte AVISOS). */
 (function(){
 var LS="sl-avisos",SW="serviceWorker" in navigator&&"PushManager" in window&&"Notification" in window;
-var PREFS={resultados:true,cronicas:true,comentarios:true},ENVIANDO=false;
-var ETQ=[["resultados","Resultados, jornadas y Champions"],["cronicas","Crónicas nuevas y golazos"],["comentarios","Comentarios en mis crónicas (solo si has entrado con tu usuario)"]];
+var PREFS={resultados:true,cronicas:true,comentarios:true,directos:true},ENVIANDO=false;
+var ETQ=[["resultados","Resultados, jornadas y Champions"],["cronicas","Crónicas nuevas y golazos"],["comentarios","Comentarios en mis crónicas (solo si has entrado con tu usuario)"],["directos","Directos en vivo de los partidos"]];
 
 function ok(){return typeof dbOk==="function"&&dbOk()&&CFG.push&&typeof CFG.push.vapidPublic==="string"&&CFG.push.vapidPublic.length>60}
 function ios(){return/iPad|iPhone|iPod/.test(navigator.userAgent)||(navigator.platform==="MacIntel"&&navigator.maxTouchPoints>1)}

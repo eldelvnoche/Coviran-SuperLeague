@@ -15,7 +15,7 @@ type Aviso = {
   cuerpo: string;
   url: string;
   tag: string;
-  pref: "resultados" | "cronicas" | "comentarios";
+  pref: "resultados" | "cronicas" | "comentarios" | "directos";
   destino?: string;
   excluir?: string;
 };
@@ -46,6 +46,15 @@ function construir(b: Record<string, unknown>): Aviso | null {
       return { titulo: corto(b.titulo || "Nuevo resultado", 80), cuerpo: corto(b.texto, 160), url: "#jornadas", tag: "resultado", pref: "resultados" };
     case "champions":
       return { titulo: corto(b.titulo || "Mercadona Champions League", 80), cuerpo: corto(b.texto, 160), url: "#champions", tag: "champions", pref: "resultados" };
+    case "directo":
+      return {
+        titulo: `${autor} está en directo`,
+        cuerpo: corto(b.titulo, 120),
+        url: "#directos",
+        tag: "directo",
+        pref: "directos",
+        excluir: String(b.autor ?? "") || undefined,
+      };
     case "golazo":
       return { titulo: "Nuevo golazo", cuerpo: corto(b.titulo, 120), url: "#golazos", tag: "golazo", pref: "cronicas" };
     default:

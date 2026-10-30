@@ -141,6 +141,8 @@ vigente().then(function(){return subir(fl)}).then(function(foto){return api("POS
 window.Com={
 init:function(){if(!on()){cuenta();return}leer();cuenta();cargar().then(function(){cuenta();pintar()});if(S&&S.exp-Date.now()<90000)refrescar().then(cuenta)},
 sheet:hoja,
+yo:function(){return S&&S.id},
+api:function(m,p,b,o){return vigente().then(function(){return api(m,p,b,o)})},
 rpc:function(n,b){return vigente().then(function(){return api("POST","/rest/v1/rpc/"+n,b)})},
 preparar:preparar,
 render:pintar,

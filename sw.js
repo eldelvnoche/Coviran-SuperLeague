@@ -1,8 +1,8 @@
 /* Service worker de la Superliga Covirán: permite instalar la web como app.
    Siempre intenta la red primero (para ver los resultados al momento)
    y solo usa la copia guardada si no hay conexión. */
-var CACHE="superliga-v6";
-var BASE=["./","index.html","styles.css","app.js","comunidad.js","avisos.js","logo.svg","favicon.png","icon-192.png","icon-app-192.png","icon-app-512.png","manifest.json"];
+var CACHE="superliga-v7";
+var BASE=["./","index.html","styles.css","app.js","comunidad.js","avisos.js","directos.js","logo.svg","favicon.png","icon-192.png","icon-app-192.png","icon-app-512.png","manifest.json"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(BASE)}).catch(function(){}));self.skipWaiting()});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k!==CACHE}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});
 self.addEventListener("fetch",function(e){
