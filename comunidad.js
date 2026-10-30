@@ -44,12 +44,18 @@ function cuando(iso){var d=new Date(iso);if(isNaN(d))return"";return d.toLocaleD
 /* reduce la foto a 1600 px y la pasa a JPEG antes de subirla (menos datos y sin metadatos del móvil) */
 function preparar(file){return new Promise(function(ok,ko){
 if(!file||!/^image\/(jpeg|png|webp)$/.test(file.type))return ko(new Error("La foto debe ser JPG, PNG o WebP."));
-var im=new Image(),u=URL.createObjectURL(file);
+if(window.createImageBitmap){createImageBitmap(file).then(function(bm){dibujar(bm,bm.width,bm.height,ok,ko)}).catch(function(){viaImagen(file,ok,ko)});return}
+viaImagen(file,ok,ko)})}
+function dibujar(src,w,h,ok,ko){var m=1600,k=Math.min(1,m/Math.max(w,h)),c=document.createElement("canvas");
+c.width=Math.max(1,Math.round(w*k));c.height=Math.max(1,Math.round(h*k));
+var x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,c.width,c.height);x.drawImage(src,0,0,c.width,c.height);
+c.toBlob(function(b){b&&b.size<=3000000?ok(b):ko(new Error("La foto es demasiado grande."))},"image/jpeg",.82)}
+function viaImagen(file,ok,ko){var im=new Image(),u=URL.createObjectURL(file);
 im.onload=function(){URL.revokeObjectURL(u);var m=1600,k=Math.min(1,m/Math.max(im.width,im.height)),c=document.createElement("canvas");
 c.width=Math.max(1,Math.round(im.width*k));c.height=Math.max(1,Math.round(im.height*k));
 var x=c.getContext("2d");x.fillStyle="#000";x.fillRect(0,0,c.width,c.height);x.drawImage(im,0,0,c.width,c.height);
 c.toBlob(function(b){b&&b.size<=3000000?ok(b):ko(new Error("La foto es demasiado grande."))},"image/jpeg",.82)};
-im.onerror=function(){URL.revokeObjectURL(u);ko(new Error("No se ha podido leer la foto."))};im.src=u})}
+im.onerror=function(){URL.revokeObjectURL(u);ko(new Error("No se ha podido leer la foto."))};im.src=u}
 function subir(file){if(!file)return Promise.resolve(null);
 return preparar(file).then(function(b){var p=S.id+"/"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)+".jpg";
 return api("POST","/storage/v1/object/fotos-liga/"+p,b,{raw:true,h:{"Content-Type":"image/jpeg","x-upsert":"false"}}).then(function(){return p})})}
@@ -135,6 +141,7 @@ vigente().then(function(){return subir(fl)}).then(function(foto){return api("POS
 window.Com={
 init:function(){if(!on()){cuenta();return}leer();cuenta();cargar().then(function(){cuenta();pintar()});if(S&&S.exp-Date.now()<90000)refrescar().then(cuenta)},
 sheet:hoja,
+preparar:preparar,
 render:pintar,
 activo:function(){return on()}};
 window.renderPosts=function(){if(window.Com&&on()&&(LISTO||S)&&!ARCH)pintar();else pintarBase()};
