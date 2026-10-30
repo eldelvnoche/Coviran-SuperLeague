@@ -411,7 +411,7 @@ function lose(t){var w=uclWin(t);return w?(w===t.a?t.b:t.a):null}
 return{campeon:c,sub:lose(f),semis:[lose(s1),lose(s2)].filter(Boolean),acceso:[lose(p1),lose(p2)].filter(Boolean)}}
 /* ---------- Coviran Rating: ranking general de 0 a 1000 ----------
    Cada competición da una nota de 0 a 100 y pesa un porcentaje de la nota final. */
-var RW=[["liga","Superliga Covirán",50,"#e5173f"],["ucl","Mercadona Champions League",30,"#a07bff"],["lidl","Torneo Lidl",15,"#e3b341"],["ami","Amistosos",5,"#38bdf8"]];
+var RW=[["liga","Superliga Covirán",50,"#e0b13c"],["ucl","Mercadona Champions League",30,"#a07bff"],["lidl","Torneo Lidl",15,"#e5173f"],["ami","Amistosos",5,"#38bdf8"]];
 var TIERS=[[800,"Leyenda"],[650,"Élite"],[500,"Pro"],[350,"Titular"],[0,"Promesa"]];
 function tier(sc){for(var i=0;i<TIERS.length;i++)if(sc>=TIERS[i][0])return TIERS[i][1];return"Promesa"}
 /* amistosos: nota de 0 a 100 (la rellena el sistema de amistosos). Sin partidos jugados la nota es neutra (50) y no mueve a nadie */
