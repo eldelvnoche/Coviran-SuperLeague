@@ -598,6 +598,60 @@ main>section:not([hidden]){animation:secIn .4s cubic-bezier(.2,.8,.2,1) both}
 @supports (animation-timeline:view()){
 .row,.pj,.po,.gl,.fbox,.rc,.bc,.ts,.tl,.mc,.it,.rg,.pm{animation:rv linear both;animation-timeline:view();animation-range:entry 0% entry 55%}
 @keyframes rv{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}}}
+
+/* ===== v8: estética global. Póster de los 11 jugadores de fondo, carbón de estadio, cristal y sombras profundas ===== */
+:root{--bg:#0a0c11;--panel:rgba(17,20,28,.82);--panel2:rgba(28,32,43,.88);--line:rgba(255,255,255,.09);--text:#f2f4f8;--mute:#9ba2b4;--glass:rgba(14,17,24,.74);--tint:rgba(255,255,255,.025);--shadow:rgba(0,0,0,.6);--r:6px;
+--sh1:0 1px 0 rgba(255,255,255,.05) inset,0 10px 24px -14px rgba(0,0,0,.85);--sh2:0 1px 0 rgba(255,255,255,.06) inset,0 28px 56px -30px rgba(0,0,0,.95),0 2px 6px -2px rgba(0,0,0,.5)}
+html[data-tema=claro]{--bg:#eef0f4;--panel:rgba(255,255,255,.9);--panel2:rgba(240,242,246,.94);--line:rgba(10,12,17,.1);--glass:rgba(255,255,255,.86);--tint:rgba(0,0,0,.025);--sh1:0 1px 0 rgba(255,255,255,.8) inset,0 8px 20px -14px rgba(10,12,17,.35);--sh2:0 1px 0 rgba(255,255,255,.9) inset,0 22px 44px -28px rgba(10,12,17,.45)}
+body{background:var(--bg)}
+/* el póster: nítido arriba y oscureciéndose hacia abajo para que se lea todo */
+html body::before{background:linear-gradient(180deg,rgba(10,12,17,.3) 0%,rgba(10,12,17,.72) 32%,rgba(10,12,17,.9) 62%,rgba(10,12,17,.95) 100%),url(fondo-web.jpg) center 30%/cover no-repeat,#0a0c11!important}
+/* móvil: el póster ampliado y subido para que la fila de jugadores quede detrás del título */
+@media (max-width:700px){html body::before{background:linear-gradient(180deg,rgba(10,12,17,.25) 0,rgba(10,12,17,.55) 200px,rgba(10,12,17,.92) 360px,#0a0c11 470px),url(fondo-movil.jpg) 60% -150px/260% auto no-repeat,#0a0c11!important}
+html[data-tema=claro] body::before{background:linear-gradient(180deg,rgba(238,240,244,.3) 0,rgba(238,240,244,.6) 200px,rgba(238,240,244,.95) 360px,#eef0f4 470px),url(fondo-movil.jpg) 60% -150px/260% auto no-repeat,#eef0f4!important}}
+html[data-tema=claro] body::before{background:linear-gradient(180deg,rgba(238,240,244,.45) 0%,rgba(238,240,244,.86) 32%,rgba(238,240,244,.95) 62%,#eef0f4 100%),url(fondo-web.jpg) center 30%/cover no-repeat,#eef0f4!important}
+/* cabecera transparente: se ve el póster detrás del título */
+html header{background:linear-gradient(180deg,rgba(10,12,17,0) 0%,rgba(10,12,17,.35) 70%,rgba(10,12,17,.75) 100%);border-bottom:1px solid var(--line);padding-top:58px;padding-bottom:40px}
+html header h1{filter:drop-shadow(0 4px 18px rgba(0,0,0,.85))}
+html header p,html header .prog{text-shadow:0 2px 8px rgba(0,0,0,.9)}
+html header .prog .bar{background:rgba(255,255,255,.15)}
+.band{opacity:.9}
+/* paneles de cristal con borde fino y acento rojo arriba */
+.card,.pc,.rc,.bc,.ins,.fbox,.cd,.s2,.ucl,.tinfo,.don,.archb{border-radius:var(--r)!important}
+.card{background:var(--glass);border:1px solid var(--line);border-top:2px solid var(--acc);box-shadow:var(--sh2);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2)}
+.card.soft{border-top:1px solid var(--line);box-shadow:var(--sh1)}
+.pc,.rc,.bc,.ins,.fbox,.tinfo{background:var(--glass);border:1px solid var(--line);box-shadow:var(--sh1);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.rc>b,.pc .big,.it .v,.rg .v{letter-spacing:-.01em}
+.pc.p1{border:1px solid var(--trophy);box-shadow:0 0 0 1px rgba(227,179,65,.25),0 24px 50px -24px rgba(227,179,65,.45)}
+#pl .pj.art{border-radius:var(--r);border:1px solid var(--line);border-left:3px solid var(--acc);box-shadow:var(--sh2)}
+.cmph .tm.art{border-radius:var(--r)}
+.aviso{border-radius:var(--r);clip-path:none;box-shadow:0 22px 44px -24px rgba(229,23,63,.7)}
+.ucl{box-shadow:var(--sh2)}
+/* filas de tabla y listas más limpias */
+.row,.mc,.rg,.pm,.hl,.it{border-color:var(--line)}
+.row:nth-child(even),.mc:nth-child(even),.rg:nth-child(even),.pm:nth-child(even){background:var(--tint)}
+.hdr{color:var(--mute);border-bottom:1px solid var(--line)}
+.n.pt{border-radius:4px;box-shadow:0 6px 14px -8px rgba(229,23,63,.9)}
+/* botones */
+.cta{border-radius:5px;clip-path:none;background:linear-gradient(180deg,#f0234b,#c10f33);box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 10px 22px -12px rgba(229,23,63,.9)}
+.cta:hover{filter:brightness(1.08)}
+.lnk{border-radius:5px;border-width:1px;background:rgba(229,23,63,.06)}
+.lnk:hover{background:rgba(229,23,63,.14)}
+.chips button,.chips.sm button{border-radius:5px;border:1px solid var(--line);background:var(--glass);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.chips button[aria-pressed="true"]{background:linear-gradient(180deg,#f0234b,#c10f33);border-color:transparent;box-shadow:0 8px 18px -10px rgba(229,23,63,.9)}
+.bdg{border-radius:4px;border-color:var(--line);background:var(--panel2)}
+.tema{border-radius:5px;background:rgba(10,12,17,.55);border-color:rgba(255,255,255,.18)}
+/* títulos de sección con línea de campo */
+.vt{text-shadow:0 4px 24px rgba(0,0,0,.7)}
+.sec-h::after{background:linear-gradient(90deg,rgba(255,255,255,.22),transparent)}
+html[data-tema=claro] .sec-h::after{background:linear-gradient(90deg,rgba(10,12,17,.2),transparent)}
+html[data-tema=claro] .vt,html[data-tema=claro] header h1{text-shadow:none}
+/* barra inferior y fichas */
+nav{background:rgba(10,12,17,.86);border-top:1px solid var(--line);box-shadow:0 -12px 30px -18px rgba(0,0,0,.9)}
+dialog.sh{background:#0d1016;border-radius:var(--r) var(--r) 0 0}
+html[data-tema=claro] dialog.sh{background:#f6f7fa}
+@media (min-width:700px){dialog.sh{border-radius:var(--r)}}
+.shbar{background:inherit}
 </style>
 <script>
 /* Tema: auto (el del sistema), claro u oscuro. Va aquí para que no parpadee al cargar */
