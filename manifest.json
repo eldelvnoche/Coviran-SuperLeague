@@ -1,14 +1,14 @@
 {
   "name": "Superliga Covirán",
   "short_name": "Superliga",
-  "description": "Clasificación, jornadas, estadísticas y crónicas de la Superliga Covirán de eFootball.",
+  "description": "Clasificación, jornadas, estadísticas, crónicas y Mercadona Champions League de la Superliga Covirán de eFootball.",
   "lang": "es",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
-  "background_color": "#070a1a",
-  "theme_color": "#070a1a",
+  "orientation": "any",
+  "background_color": "#0a0c11",
+  "theme_color": "#0a0c11",
   "icons": [
     {
       "src": "icon-app-192.png",
