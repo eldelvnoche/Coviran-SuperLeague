@@ -35,10 +35,11 @@ function salir(){var tk=S&&S.tk;S=null;guardar();if(tk)api("POST","/auth/v1/logo
 
 /* ---------- datos ---------- */
 function cargar(){if(!on())return Promise.resolve();
-var a=api("GET","/rest/v1/publicaciones?select=id,creado,autor,titulo,texto,foto,jornada&order=creado.desc&limit=60",null,{tok:null}).then(function(r){POSTS=Array.isArray(r)?r.filter(function(x){return T[x.autor]}):[]});
-var b=api("GET","/rest/v1/comentarios?select=id,creado,autor,ref,texto,foto&order=creado.asc&limit=1000",null,{tok:null}).then(function(r){CM={};(Array.isArray(r)?r:[]).forEach(function(c){if(!T[c.autor])return;(CM[c.ref]=CM[c.ref]||[]).push(c)})});
+var a=api("GET","/rest/v1/publicaciones?select=id,creado,autor,titulo,texto,foto,video,jornada&order=creado.desc&limit=60",null,{tok:null}).then(function(r){POSTS=Array.isArray(r)?r.filter(function(x){return T[x.autor]}):[]});
+var b=api("GET","/rest/v1/comentarios?select=id,creado,autor,ref,texto,foto,video&order=creado.asc&limit=1000",null,{tok:null}).then(function(r){CM={};(Array.isArray(r)?r:[]).forEach(function(c){if(!T[c.autor])return;(CM[c.ref]=CM[c.ref]||[]).push(c)})});
 return Promise.all([a,b]).then(function(){LISTO=true}).catch(function(){LISTO=false})}
 function fotoUrl(p){return typeof p==="string"&&PATH.test(p)?base()+"/storage/v1/object/public/fotos-liga/"+p:""}
+function videoUrl(p){return typeof p==="string"&&PATH.test(p)?base()+"/storage/v1/object/public/videos-liga/"+p:""}
 function cuando(iso){var d=new Date(iso);if(isNaN(d))return"";return d.toLocaleDateString("es-ES",{day:"numeric",month:"short"})+" · "+d.toLocaleTimeString("es-ES",{hour:"2-digit",minute:"2-digit"})}
 
 /* reduce la foto a 1600 px y la pasa a JPEG antes de subirla (menos datos y sin metadatos del móvil) */
@@ -59,15 +60,26 @@ im.onerror=function(){URL.revokeObjectURL(u);ko(new Error("No se ha podido leer 
 function subir(file){if(!file)return Promise.resolve(null);
 return preparar(file).then(function(b){var p=S.id+"/"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)+".jpg";
 return api("POST","/storage/v1/object/fotos-liga/"+p,b,{raw:true,h:{"Content-Type":"image/jpeg","x-upsert":"false"}}).then(function(){return p})})}
+/* el vídeo se sube tal cual (recortarlo en el móvil ya lo hace el jugador): solo se valida el tipo y el tamaño */
+var EXTV={"video/mp4":"mp4","video/webm":"webm","video/quicktime":"mov"};
+function subirVideo(file){if(!file)return Promise.resolve(null);
+var ext=EXTV[file.type];
+if(!ext)return Promise.reject(new Error("El vídeo debe ser MP4, WebM o MOV."));
+if(file.size>25000000)return Promise.reject(new Error("El vídeo no puede pasar de 25 MB. Recórtalo o bájale la calidad."));
+var p=S.id+"/"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)+"."+ext;
+return api("POST","/storage/v1/object/videos-liga/"+p,file,{raw:true,h:{"Content-Type":file.type,"x-upsert":"false"}}).then(function(){return p})}
+/* una publicación o comentario lleva foto O vídeo, nunca los dos */
+function subirMedia(file){if(!file)return Promise.resolve({foto:null,video:null});
+return /^video\//.test(file.type)?subirVideo(file).then(function(p){return{foto:null,video:p}}):subir(file).then(function(p){return{foto:p,video:null}})}
 
 /* ---------- pintar Crónicas (junta las del admin y las de los jugadores) ---------- */
 function persona(id){return T[id]?'<span class="by">'+logo(id,"xs")+'<span>'+esc(T[id].p)+' · '+esc(T[id].t)+'</span></span>':''}
 function comentarios(ref){
 var L=CM[ref]||[],ab=!!OPEN[ref];
 var h='<div class="cm"><button class="cmb" type="button" data-com="cmt" data-ref="'+ref+'" aria-expanded="'+ab+'">💬 Comentarios <b>'+L.length+'</b></button>';
-if(ab){h+='<div class="cml">'+(L.length?L.map(function(c){var f=fotoUrl(c.foto),mio=S&&S.id===c.autor;
-return '<div class="cmi"><div class="cmh">'+persona(c.autor)+'<span class="cmt">'+esc(cuando(c.creado))+'</span>'+(mio?'<button class="cmx" type="button" data-com="delc" data-id="'+(+c.id)+'" aria-label="Borrar mi comentario">✕</button>':'')+'</div><p>'+esc(c.texto).replace(/\n/g,"<br>")+'</p>'+(f?'<img class="cmf" loading="lazy" decoding="async" alt="Foto de '+esc(T[c.autor].p)+'" src="'+f+'">':'')+'</div>'}).join(""):'<p class="tt">Todavía no hay comentarios.</p>');
-h+=S?'<form class="cmform" data-ref="'+ref+'"><textarea name="t" maxlength="600" rows="2" required placeholder="Escribe un comentario…" aria-label="Comentario"></textarea><div class="cmact"><label class="fbtn">📷 Foto<input type="file" name="f" accept="image/jpeg,image/png,image/webp" hidden></label><span class="tt" data-fn></span><button class="cta" type="submit">Comentar</button></div><p class="fmsg" role="status"></p></form>':'<p class="tt">Los jugadores pueden <button class="lk" type="button" data-com="login">entrar</button> para comentar.</p>';
+if(ab){h+='<div class="cml">'+(L.length?L.map(function(c){var f=fotoUrl(c.foto),v=videoUrl(c.video),mio=S&&S.id===c.autor;
+return '<div class="cmi"><div class="cmh">'+persona(c.autor)+'<span class="cmt">'+esc(cuando(c.creado))+'</span>'+(mio?'<button class="cmx" type="button" data-com="delc" data-id="'+(+c.id)+'" aria-label="Borrar mi comentario">✕</button>':'')+'</div><p>'+esc(c.texto).replace(/\n/g,"<br>")+'</p>'+(f?'<img class="cmf" loading="lazy" decoding="async" alt="Foto de '+esc(T[c.autor].p)+'" src="'+f+'">':'')+(v?'<video class="cmf" controls preload="metadata" src="'+v+'"></video>':'')+'</div>'}).join(""):'<p class="tt">Todavía no hay comentarios.</p>');
+h+=S?'<form class="cmform" data-ref="'+ref+'"><textarea name="t" maxlength="600" rows="2" required placeholder="Escribe un comentario…" aria-label="Comentario"></textarea><div class="cmact"><label class="fbtn">📷🎥 Foto o vídeo<input type="file" name="f" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden></label><span class="tt" data-fn></span><button class="cta" type="submit">Comentar</button></div><p class="fmsg" role="status"></p></form>':'<p class="tt">Los jugadores pueden <button class="lk" type="button" data-com="login">entrar</button> para comentar.</p>';
 h+='</div>'}
 return h+'</div>'}
 function cronicas(){
@@ -85,9 +97,10 @@ if(x.k==="c"){var meta=(p.jornada?"Jornada "+(+p.jornada):"")+(p.jornada&&p.fech
 var im=okFoto(p.foto)?'<img class="pf" alt="" loading="lazy" decoding="async" src="'+p.foto+'">':'';
 var body=String(p.texto||"").split(/\n{2,}/).map(function(z){return '<p>'+esc(z).replace(/\n/g,"<br>")+'</p>'}).join("");
 return '<article class="po"><div class="mt">'+esc(meta)+'</div><h3>'+esc(p.titulo)+'</h3>'+im+body+(/^[0-9]{1,16}$/.test(String(p.id))?comentarios("c:"+p.id):'')+'</article>'}
-var f=fotoUrl(p.foto),mio=S&&S.id===p.autor;
+var f=fotoUrl(p.foto),v=videoUrl(p.video),mio=S&&S.id===p.autor;
 return '<article class="po comu"><div class="mt">Comunidad'+(p.jornada?" · Jornada "+(+p.jornada):"")+' · '+esc(cuando(p.creado))+'</div><h3>'+esc(p.titulo)+'</h3><div class="pau">'+persona(p.autor)+(mio?'<button class="cmx" type="button" data-com="delp" data-id="'+(+p.id)+'">Borrar</button>':'')+'</div>'+
 (f?'<img class="pf" alt="Foto de la crónica de '+esc(T[p.autor].p)+'" loading="lazy" decoding="async" src="'+f+'">':'')+
+(v?'<video class="pf" controls preload="metadata" src="'+v+'"></video>':'')+
 String(p.texto).split(/\n{2,}/).map(function(z){return '<p>'+esc(z).replace(/\n/g,"<br>")+'</p>'}).join("")+comentarios("p:"+p.id)+'</article>'}).join("")||'<div class="empty">Aún no hay crónicas.</div>'}
 
 /* ---------- cabecera ---------- */
@@ -103,7 +116,7 @@ if(tipo==="l")return '<div class="mj">Zona de jugadores</div><h3 class="fti">Ent
 if(!S)return hoja("l");
 if(tipo==="a")return '<div class="mj">Mi cuenta</div><h3 class="fti">'+esc(T[S.id].p)+' · '+esc(T[S.id].t)+'</h3>'+(S.pc?'':'<p class="fmsg bad">Por seguridad, cambia ahora la contraseña temporal.</p>')+'<p class="tt">Usuario: <b>'+esc(S.usuario)+'</b></p><form id="passf" class="frm" novalidate><label>Contraseña nueva (mínimo 8 caracteres)<input name="n" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label><label>Repite la contraseña nueva<input name="n2" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label><button class="cta" type="submit">Cambiar contraseña</button><p class="fmsg" id="pm" role="status"></p></form><p><button class="lnk" type="button" data-com="logout">Cerrar sesión</button></p>';
 if(tipo==="n"){var o='<option value="">Sin jornada</option>';for(var i=1;i<=J.length;i++)o+='<option value="'+i+'">Jornada '+i+'</option>';
-return '<div class="mj">Nueva crónica</div><h3 class="fti">Cuenta tu jornada</h3><form id="postf" class="frm" novalidate><label>Título<input name="t" maxlength="90" required></label><label>Jornada (opcional)<select name="j">'+o+'</select></label><label>Texto<textarea name="x" maxlength="4000" rows="7" required></textarea></label><label class="fbtn">📷 Añadir una foto<input type="file" name="f" accept="image/jpeg,image/png,image/webp" hidden></label><span class="tt" data-fn></span><button class="cta" type="submit">Publicar</button><p class="fmsg" id="nm" role="status"></p></form>'}
+return '<div class="mj">Nueva crónica</div><h3 class="fti">Cuenta tu jornada</h3><form id="postf" class="frm" novalidate><label>Título<input name="t" maxlength="90" required></label><label>Jornada (opcional)<select name="j">'+o+'</select></label><label>Texto<textarea name="x" maxlength="4000" rows="7" required></textarea></label><label class="fbtn">📷🎥 Añadir una foto o un vídeo<input type="file" name="f" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden></label><span class="tt" data-fn></span><p class="tt">El vídeo, hasta 25 MB (MP4, WebM o MOV).</p><button class="cta" type="submit">Publicar</button><p class="fmsg" id="nm" role="status"></p></form>'}
 return""}
 function di(id,t,c){var m=$(id);if(m){m.textContent=t;m.className="fmsg "+(c||"")}}
 function fin(){ENVIANDO=false}
@@ -130,11 +143,11 @@ vigente().then(function(){return api("PUT","/auth/v1/user",{password:n})}).then(
 else if(f.id==="postf"){e.preventDefault();if(ENVIANDO||!S)return;var t=f.elements.t.value.trim(),x=f.elements.x.value.trim(),j=f.elements.j.value;
 if(t.length<3||!x){di("nm","Escribe un título (mínimo 3 letras) y el texto.","bad");return}
 ENVIANDO=true;di("nm","Publicando…");var file=f.elements.f.files[0];
-vigente().then(function(){return subir(file)}).then(function(foto){return api("POST","/rest/v1/publicaciones",{autor:S.id,titulo:t,texto:x,foto:foto,jornada:j?+j:null},{h:{"Content-Type":"application/json","Prefer":"return=minimal"}})})
+vigente().then(function(){return subirMedia(file)}).then(function(m){return api("POST","/rest/v1/publicaciones",{autor:S.id,titulo:t,texto:x,foto:m.foto,video:m.video,jornada:j?+j:null},{h:{"Content-Type":"application/json","Prefer":"return=minimal"}})})
 .then(cargar).then(function(){pintar();closeSheet()}).catch(function(er){di("nm",er.message,"bad")}).then(fin)}
 else if(f.classList&&f.classList.contains("cmform")){e.preventDefault();if(ENVIANDO||!S)return;var ref=f.getAttribute("data-ref"),tx=f.elements.t.value.trim(),m=f.querySelector(".fmsg");
 if(!tx)return;ENVIANDO=true;m.textContent="Enviando…";m.className="fmsg";var fl=f.elements.f.files[0];
-vigente().then(function(){return subir(fl)}).then(function(foto){return api("POST","/rest/v1/comentarios",{autor:S.id,ref:ref,texto:tx,foto:foto},{h:{"Content-Type":"application/json","Prefer":"return=minimal"}})})
+vigente().then(function(){return subirMedia(fl)}).then(function(md){return api("POST","/rest/v1/comentarios",{autor:S.id,ref:ref,texto:tx,foto:md.foto,video:md.video},{h:{"Content-Type":"application/json","Prefer":"return=minimal"}})})
 .then(cargar).then(pintar).catch(function(er){m.textContent=er.message;m.className="fmsg bad"}).then(fin)}});
 
 /* ---------- arranque ---------- */

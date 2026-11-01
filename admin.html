@@ -709,12 +709,12 @@ $("irel").addEventListener("click",function(){loadIns()});
 /* moderación de la comunidad */
 var MOD=[];
 function loadMod(){say("mmsg","Cargando...");
-return Promise.all([dbReq("/rest/v1/publicaciones?select=id,creado,autor,titulo,texto,oculto&order=creado.desc&limit=40"),dbReq("/rest/v1/comentarios?select=id,creado,autor,ref,texto,oculto&order=creado.desc&limit=60")])
+return Promise.all([dbReq("/rest/v1/publicaciones?select=id,creado,autor,titulo,texto,foto,video,oculto&order=creado.desc&limit=40"),dbReq("/rest/v1/comentarios?select=id,creado,autor,ref,texto,foto,video,oculto&order=creado.desc&limit=60")])
 .then(function(r){MOD=(r[0]||[]).map(function(x){x.k="publicaciones";return x}).concat((r[1]||[]).map(function(x){x.k="comentarios";return x}));
 MOD.sort(function(a,b){return String(b.creado).localeCompare(String(a.creado))});
 $("mcount").textContent="("+MOD.length+")";say("mmsg","");
 $("mlist").innerHTML=MOD.map(function(x){var nm=T[x.autor]?T[x.autor].p:x.autor;
-return '<div class="li" style="display:block;opacity:'+(x.oculto?.5:1)+'"><span><b>'+(x.k==="publicaciones"?"Crónica":"Comentario")+'</b> · '+esc(nm)+' · '+esc(String(x.creado).slice(0,16).replace("T"," "))+(x.oculto?" · OCULTO":"")+'<small>'+esc(x.titulo?x.titulo+" — ":"")+esc(String(x.texto).slice(0,140))+'</small></span><span class="row2"><button class="sec" data-mo="'+x.k+'|'+(+x.id)+'|'+(x.oculto?"0":"1")+'">'+(x.oculto?"Mostrar":"Ocultar")+'</button><button class="sec" data-mb="'+x.k+'|'+(+x.id)+'">Borrar</button></span></div>'}).join("")||'<p class="mute">Todavía no hay nada de la comunidad.</p>'})
+return '<div class="li" style="display:block;opacity:'+(x.oculto?.5:1)+'"><span><b>'+(x.k==="publicaciones"?"Crónica":"Comentario")+'</b> · '+esc(nm)+' · '+esc(String(x.creado).slice(0,16).replace("T"," "))+(x.oculto?" · OCULTO":"")+(x.foto?" · 📷 foto":"")+(x.video?" · 🎥 vídeo":"")+'<small>'+esc(x.titulo?x.titulo+" — ":"")+esc(String(x.texto).slice(0,140))+'</small></span><span class="row2"><button class="sec" data-mo="'+x.k+'|'+(+x.id)+'|'+(x.oculto?"0":"1")+'">'+(x.oculto?"Mostrar":"Ocultar")+'</button><button class="sec" data-mb="'+x.k+'|'+(+x.id)+'">Borrar</button></span></div>'}).join("")||'<p class="mute">Todavía no hay nada de la comunidad.</p>'})
 .catch(function(e){say("mmsg",e.message+" (¿has ejecutado la parte FASE 3 de supabase.sql?)",true)})}
 $("mrel").addEventListener("click",loadMod);
 $("mlist").addEventListener("click",function(e){var o=e.target.getAttribute("data-mo"),d=e.target.getAttribute("data-mb");

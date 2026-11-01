@@ -180,6 +180,21 @@ drop policy if exists "borrar mi foto o admin" on storage.objects;
 create policy "borrar mi foto o admin" on storage.objects for delete to authenticated
   using (bucket_id = 'fotos-liga' and ((storage.foldername(name))[1] = mi_jugador() or es_admin()));
 
+-- Vídeos de crónicas y comentarios (FASE 3B). Mismo esquema que las fotos: cubo propio, carpeta por jugador, más tamaño máximo
+alter table publicaciones add column if not exists video text check (video is null or video ~ '^[a-z]{2}/[A-Za-z0-9_.-]{1,80}$');
+alter table comentarios add column if not exists video text check (video is null or video ~ '^[a-z]{2}/[A-Za-z0-9_.-]{1,80}$');
+
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('videos-liga', 'videos-liga', true, 26214400, array['video/mp4', 'video/webm', 'video/quicktime'])
+on conflict (id) do update set public = true, file_size_limit = 26214400, allowed_mime_types = array['video/mp4', 'video/webm', 'video/quicktime'];
+
+drop policy if exists "subir video en mi carpeta" on storage.objects;
+create policy "subir video en mi carpeta" on storage.objects for insert to authenticated
+  with check (bucket_id = 'videos-liga' and (storage.foldername(name))[1] = mi_jugador());
+drop policy if exists "borrar mi video o admin" on storage.objects;
+create policy "borrar mi video o admin" on storage.objects for delete to authenticated
+  using (bucket_id = 'videos-liga' and ((storage.foldername(name))[1] = mi_jugador() or es_admin()));
+
 
 -- =====================================================================
 -- AVISOS · notificaciones push (ejecutar DESPUÉS de la parte FASE 3)
