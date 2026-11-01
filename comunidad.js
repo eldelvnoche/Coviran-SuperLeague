@@ -65,7 +65,7 @@ var EXTV={"video/mp4":"mp4","video/webm":"webm","video/quicktime":"mov"};
 function subirVideo(file){if(!file)return Promise.resolve(null);
 var ext=EXTV[file.type];
 if(!ext)return Promise.reject(new Error("El vídeo debe ser MP4, WebM o MOV."));
-if(file.size>25000000)return Promise.reject(new Error("El vídeo no puede pasar de 25 MB. Recórtalo o bájale la calidad."));
+if(file.size>52428800)return Promise.reject(new Error("El vídeo no puede pasar de 50 MB (es el máximo del plan gratis de Supabase). Recorta el clip o bájale la calidad de grabación en el móvil."));
 var p=S.id+"/"+Date.now().toString(36)+Math.random().toString(36).slice(2,7)+"."+ext;
 return api("POST","/storage/v1/object/videos-liga/"+p,file,{raw:true,h:{"Content-Type":file.type,"x-upsert":"false"}}).then(function(){return p})}
 /* una publicación o comentario lleva foto O vídeo, nunca los dos */
@@ -116,7 +116,7 @@ if(tipo==="l")return '<div class="mj">Zona de jugadores</div><h3 class="fti">Ent
 if(!S)return hoja("l");
 if(tipo==="a")return '<div class="mj">Mi cuenta</div><h3 class="fti">'+esc(T[S.id].p)+' · '+esc(T[S.id].t)+'</h3>'+(S.pc?'':'<p class="fmsg bad">Por seguridad, cambia ahora la contraseña temporal.</p>')+'<p class="tt">Usuario: <b>'+esc(S.usuario)+'</b></p><form id="passf" class="frm" novalidate><label>Contraseña nueva (mínimo 8 caracteres)<input name="n" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label><label>Repite la contraseña nueva<input name="n2" type="password" autocomplete="new-password" minlength="8" maxlength="72" required></label><button class="cta" type="submit">Cambiar contraseña</button><p class="fmsg" id="pm" role="status"></p></form><p><button class="lnk" type="button" data-com="logout">Cerrar sesión</button></p>';
 if(tipo==="n"){var o='<option value="">Sin jornada</option>';for(var i=1;i<=J.length;i++)o+='<option value="'+i+'">Jornada '+i+'</option>';
-return '<div class="mj">Nueva crónica</div><h3 class="fti">Cuenta tu jornada</h3><form id="postf" class="frm" novalidate><label>Título<input name="t" maxlength="90" required></label><label>Jornada (opcional)<select name="j">'+o+'</select></label><label>Texto<textarea name="x" maxlength="4000" rows="7" required></textarea></label><label class="fbtn">📷🎥 Añadir una foto o un vídeo<input type="file" name="f" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden></label><span class="tt" data-fn></span><p class="tt">El vídeo, hasta 25 MB (MP4, WebM o MOV).</p><button class="cta" type="submit">Publicar</button><p class="fmsg" id="nm" role="status"></p></form>'}
+return '<div class="mj">Nueva crónica</div><h3 class="fti">Cuenta tu jornada</h3><form id="postf" class="frm" novalidate><label>Título<input name="t" maxlength="90" required></label><label>Jornada (opcional)<select name="j">'+o+'</select></label><label>Texto<textarea name="x" maxlength="4000" rows="7" required></textarea></label><label class="fbtn">📷🎥 Añadir una foto o un vídeo<input type="file" name="f" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden></label><span class="tt" data-fn></span><p class="tt">El vídeo, hasta 50 MB (MP4, WebM o MOV). Si no entra, graba con menos calidad o recorta el clip.</p><button class="cta" type="submit">Publicar</button><p class="fmsg" id="nm" role="status"></p></form>'}
 return""}
 function di(id,t,c){var m=$(id);if(m){m.textContent=t;m.className="fmsg "+(c||"")}}
 function fin(){ENVIANDO=false}

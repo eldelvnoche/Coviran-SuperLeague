@@ -185,8 +185,8 @@ alter table publicaciones add column if not exists video text check (video is nu
 alter table comentarios add column if not exists video text check (video is null or video ~ '^[a-z]{2}/[A-Za-z0-9_.-]{1,80}$');
 
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('videos-liga', 'videos-liga', true, 26214400, array['video/mp4', 'video/webm', 'video/quicktime'])
-on conflict (id) do update set public = true, file_size_limit = 26214400, allowed_mime_types = array['video/mp4', 'video/webm', 'video/quicktime'];
+values ('videos-liga', 'videos-liga', true, 52428800, array['video/mp4', 'video/webm', 'video/quicktime'])
+on conflict (id) do update set public = true, file_size_limit = 52428800, allowed_mime_types = array['video/mp4', 'video/webm', 'video/quicktime'];
 
 drop policy if exists "subir video en mi carpeta" on storage.objects;
 create policy "subir video en mi carpeta" on storage.objects for insert to authenticated
